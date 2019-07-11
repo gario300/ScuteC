@@ -1,0 +1,25 @@
+{
+  "name": "client",
+  "version": "1.0.0",
+  "description": "My stylish Nuxt.js project",
+  "author": "gario300",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/auth": "^4.8.1",
+    "@nuxtjs/axios": "^5.3.6",
+    "@nuxtjs/bulma": "^1.2.1",
+    "axios": "^0.19.0",
+    "nuxt": "^2.0.0",
+    "vee-validate": "^2.2.11",
+    "vue-router": "^3.0.7"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.9"
+  }
+}
