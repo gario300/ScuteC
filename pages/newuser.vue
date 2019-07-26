@@ -88,7 +88,7 @@
             },
 			async subirimagen(userId){
                 console.log("Uploading imamge");
-				await this.$axios.post('/account/updateavatar', {
+				await this.$axios.post('/account/updateProfilePic', {
 				  avatar: this.image,
 				  id: userId
                 })
