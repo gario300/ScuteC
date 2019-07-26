@@ -12,23 +12,22 @@
                     <div class="field">
                         <div class="file is-success is-fullwidth has-name is-boxed">
                             <label class="file-label">
-                            <input class="file-input" type="file" name="resume" accept="image/png, image/jpeg" @change="onFileChange"> 
-                            <span class="file-cta">
-                            <span class="file-icon">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                            </span>
-                            <span class="file-label">
-                                Selecciona una imagen
-                            </span>
-                            </span>
-                        </label>
+                                <input class="file-input" type="file" name="resume" accept="image/png, image/jpeg" @change="onFileChange"> 
+                                <span class="file-cta">
+                                <span class="file-icon">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                </span>
+                                <span class="file-label">
+                                    Selecciona una imagen
+                                </span>
+                                </span>
+                            </label>
+                         </div>
                     </div>
-                </div>
-
-                <div class="field">
-                    <button v-show="mostrarsubir == true" class="button is-success">Subir e ir a Home!</button>
-                </div>
-            </form>
+                    <div class="field">
+                        <button v-show="mostrarsubir == true" class="button is-success">Subir e ir a Home!</button>
+                    </div>
+                </form>
             </div>
         </div>
         
@@ -59,7 +58,8 @@
                 image:'',
                 imagen: {},
                 mostrarsubir: false,
-                yo: {}
+                yo: {},
+				file:{}
             }
         },
         created(){
@@ -73,20 +73,29 @@
                 if (!files.length)
                 return;
                 this.createImage(files[0]);
+				this.file = files[0];
                 this.mostrarsubir = true;
-                },
-            
+            },
             createImage(file) {
                 let image = new Image();
                 let reader = new FileReader();
                 let vm = this;
                 reader.onload = (e) => {
-                vm.image = e.target.result;
-                vm.imagen = e.target.result;
+					vm.image = e.target.result;
+					vm.imagen = e.target.result;
                 };
                 reader.readAsDataURL(file);
-                },
-        //Metodo Me
+            },
+			async subirimagen(userId){
+                console.log("Uploading imamge");
+				await this.$axios.post('/account/updateavatar', {
+				  avatar: this.image,
+				  id: userId
+                })
+                console.log("Listo")
+				//this.$router.push('newuser')
+			},
+			//Metodo Me
             me(){
                 this.$axios.get('/account/me')
                     .then(response => {
@@ -96,12 +105,6 @@
             },
 
         //metodo put
-            
-
-
-        
-        
-        
     }
 }
 </script>

@@ -112,20 +112,22 @@ export default {
       username:'',
       email: '',
       password: ''
-  }
+	}
   },
 
     methods:{
 
       async signup() {
       try {
-        await this.$axios.post('signup', {
+        console.log("Signin up");
+        await this.$axios.post('/signup', {
           name: this.name,
           username: this.username,
           email: this.email,
           password: this.password
         })
-
+		
+		console.log("local");
         await this.$auth.loginWith('local', {
           data: {
             email: this.email,
@@ -134,13 +136,14 @@ export default {
         
 
         })
-        console.log('holamundo')
-        this.$router.push('newuser')
+        console.log('holamundo');
+        this.$router.push('/newuser')
         
         
 
       } catch (e) {
-        console.log(e)
+		console.log("Error");
+        console.log(e);
       }
     },
       
