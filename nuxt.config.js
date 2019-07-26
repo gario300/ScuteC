@@ -50,14 +50,21 @@ export default {
     baseURL: 'http://127.0.0.1:3333'
   },
   auth: {
+    token: { prefix: 'token' },
     strategies: {
       local: {
         endpoints: {
-          login: { url: '/login', method: 'post', propertyName: 'data.token' },
-          user: { url: '/account/me', method: 'get', propertyName: 'data' },
+          login: { url: 'login', method: 'post', propertyName: 'data.token' },
+          user: { url: 'account/me', method: 'get', propertyName: 'data' },
           logout: false
         }
-      }
+      },
+    },  
+    cookie: {
+      name: 'token',
+    },
+    redirect: {
+      login: '/',
     }
   },
 

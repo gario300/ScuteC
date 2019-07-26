@@ -135,7 +135,7 @@ export default {
 
         })
         console.log('holamundo')
-        this.$router.push('home')
+        this.$router.push('newuser')
         
         
 
