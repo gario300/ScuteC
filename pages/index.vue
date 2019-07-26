@@ -119,8 +119,7 @@ export default {
 
       async signup() {
       try {
-        console.log("Signin up");
-        await this.$axios.post('/signup', {
+        await this.$axios.post('signup', {
           name: this.name,
           username: this.username,
           email: this.email,
@@ -137,7 +136,7 @@ export default {
 
         })
         console.log('holamundo');
-        this.$router.push('/newuser')
+        this.$router.push('newuser')
         
         
 
