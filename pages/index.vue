@@ -114,8 +114,16 @@ export default {
       password: ''
 	}
   },
+  mounted() {
+      setTimeout(() => {
+      this.moveToDashboard()
+      }, 1000)
+  },
 
     methods:{
+      moveToDashboard() {
+      this.$router.push('home')
+    },
 
       async signup() {
       try {
@@ -151,6 +159,21 @@ export default {
         this.register.valor ++;
       }
     },
+    
+    async login() {
+      try {
+        await this.$auth.loginWith('local', {
+          data: {
+            email: this.email,
+            password: this.password
+          }
+        })
+
+        this.$router.push('home')
+      } catch (e) {
+        this.error = e.response.data.message
+      }
+    }
     
 
 

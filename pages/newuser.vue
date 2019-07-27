@@ -86,14 +86,15 @@
                 };
                 reader.readAsDataURL(file);
             },
-			async subirimagen(userId){
+            
+            async subirimagen(userId){
                 console.log("Uploading imamge");
 				await this.$axios.post('/account/updateProfilePic', {
 				  avatar: this.image,
 				  id: userId
                 })
                 console.log("Listo")
-				//this.$router.push('newuser')
+				this.$router.push('home')
 			},
 			//Metodo Me
             me(){
