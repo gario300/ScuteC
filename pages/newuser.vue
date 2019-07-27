@@ -35,7 +35,7 @@
         <div class="columns is-centered">
             <div id="imagen" class="column is-half ">
                 <figure v-show="mostrarsubir == true" class="image is-256x256">
-                    <img class="is-rounded" :src="image"  alt="Image">
+                    <img class="is-rounded" :src="image"  alt="Image" >
                 </figure>
             </div>
             </div>
