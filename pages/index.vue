@@ -14,15 +14,15 @@
 
                 <div v-if="register.valor ==1" class="form">
                   <h1 class="title is-4">¡Loggeate y gana dinero publicando tus dibujos!</h1>
-                    <form id="Login">
+                    <form @submit.prevent="login">
                       <div class="Field">
                       <div class="control">
-                        <input class="input" type="email"  placeholder="Escribe tu Nombre de Usuario">
+                        <input class="input" v-model="email" type="email"  placeholder="Escribe tu Nombre de Usuario">
                       </div>
                     </div>
                     <div class="Field">
                     <div class="control">
-                      <input class="input" type="password" placeholder="Escribe tu Contraseña" >
+                      <input class="input" v-model="password" type="password" placeholder="Escribe tu Contraseña" >
                     </div>
                     </div>
                     <div class="field">
