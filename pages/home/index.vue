@@ -66,54 +66,46 @@
         <!-- Post-box -->
         <div class="colums">
             <div class="column is-8 is-offset-2">
-                <div  class="box">
-                    <div v-for="post in posts" class="box">
-  <article class="media">
-    <div class="media-left">
-      <figure class="image is-64x64">
-        <img class="is-rounded" :src="post.user.avatar">
+            <div id="contenedor" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">   
+  <div  v-for="post in posts" :posts.sync="posts"
+    :user="yo" :key="post.id" class="box">
+  <article  class="media">
+    <div  class="media-left">
+      <figure  class="image is-64x64">
+        <img id="postuserimage" class="is-rounded" :src="post.user.avatar">
       </figure>
+      <small  id="partner" class="button is-small is-rounded is-outlined"> <span>Partner</span></small>
     </div>
-    <div class="media-content">
-      <div class="content">
+    <div id="barra" class="media-content">
+      <div class="content">     
         <p>
-          <strong>{{post.user.username}}</strong>
+          <strong>{{post.user.username}}</strong>  <small>{{moment(post.created_at).fromNow()}}</small>  <small>
+            <button v-if="post.user_id == yo.id" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button>
+          </small>
           <br>
           {{post.post}}
         </p>
-      </div>
-      <div v-show="post.image !== null" class="box">
+      </div>  
         <figure class="image">
-            <img :src="post.image">
-        </figure>
+            <img  :src="post.image" v-show="post.image !== null">
+        </figure> 
+        
+          <favorite
+    :post="post"
+    :replies="replies"
+    :favorites.sync="post.favorites"
+    :user="yo"
+    /> 
     </div>
-      <nav class="level is-mobile">
-        <div class="level-left">
-          <a class="level-item" aria-label="reply">
-            <span class="icon is-small">
-              <i class="fas fa-reply" aria-hidden="true"></i>
-            </span>
-          </a>
-          <a class="level-item" aria-label="retweet">
-            <span class="icon is-small">
-              <i class="fas fa-retweet" aria-hidden="true"></i>
-            </span>
-          </a>
-          <a class="level-item" aria-label="like">
-            <span class="icon is-small">
-              <i class="fas fa-heart" aria-hidden="true"></i>
-            </span>
-          </a>
-        </div>
-      </nav>
-    </div>
+    
   </article>
     
 </div>
+ 
+</div> 
+   
+</div>
 
-                </div>
-
-            </div>
         </div>
         <!-- Post-box -->
          </div>
@@ -124,12 +116,16 @@
 
 <script>
 import navbar from '../../components/navbar'
-import userbox from '../../components/userbox'
+import favorite from '../../components/favorite'
+
+
+
+let moment = require ('moment')
     
     export default {
         middleware: ['auth'],
         components:{
-            navbar
+            navbar, favorite
         },
         data(){
             return{
@@ -139,15 +135,24 @@ import userbox from '../../components/userbox'
                 file:{},
                 imagepreview : false,
                 vimodel: '',
-                posts:[]
-
+                posts:[],
+                moment : moment,
+                prueba: [],
+                busy : false,
+                limit: 10,
+                results: []
             }
         },
         created(){
             this.me()
-            this.timeline()
+            this.loadMore()
+
+            
         },
         methods:{
+            
+                 
+            //Funciones de usuario y posteo   
             me(){
                 this.$axios.get('/account/me')
                     .then(response => {
@@ -193,21 +198,46 @@ import userbox from '../../components/userbox'
                     this.image = '';
                     this.textinbox = '';
                     this.imagepreview = false;
+                    this.timeline()
                 }).catch (e =>{
                     console.log(e)
                 })
             },
-            timeline(){
-                this.$axios.get('/users/timeline')
+            
+            async timeline(){
+              await  this.$axios.get('users/timeline')
                 .then(response => {
-                    this.posts = response.data.data.reverse()
-                    console.log(this.posts)
+                    this.posts = (response.data.data)
                 }).catch (e =>{
                     console.log(e)
                 })
-            }
-        }
+            },
+            loadMore() {
+      console.log("scrolling");
+      
+      this.busy = true;   
+      this.$axios.get("users/timeline").then(response => {
+        const append = response.data.data.slice (this.posts.length,this.posts.length + this.limit )
+        this.posts = this.posts.concat(append);
+        console.log(this.posts)
+        
+      this.busy = false;
+      }).catch( (err) => {
+          console.log(err)
+        this.busy = false;
+      })
+        
+    
+    },
+            eliminarpost(id){
+                this.$axios.delete('posts/destroy/'+id)
+                .then(data =>{                    
+                this.timeline();
+                })
+            },
+            
     }
+}
 </script>
 
 <style scoped>
@@ -220,8 +250,9 @@ import userbox from '../../components/userbox'
 #post{
     margin-top: 20px !important;
 }
-
-
+#menupost{
+    float: right ;
+}
 
 #cajaimagen{
     margin-top: 10px;
@@ -236,5 +267,25 @@ import userbox from '../../components/userbox'
 #columnbox{
     margin-top: 25px;
 }
+
+
+#togglepost{
+    display:inline-block;
+}
+#postuserimage{
+    max-height: 64px !important;
+    max-width: 64px !important;
+    width: 64px !important;
+    height: 64px !important;
+}
+#barra{
+    height: auto !important;
+    overflow-y: hidden !important;
+}
+#partner{
+    color:rgb(124, 28, 133) !important;
+    border-color:rgb(124, 28, 133) !important;
+}
+
 
 </style>

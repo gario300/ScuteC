@@ -30,6 +30,7 @@ export default {
   */
   plugins: [
     '~plugins/vee-validate.js',
+    { src: '~plugins/vue-infinite-scroll.js', ssr: false },
   ],
   /*
   ** Nuxt.js modules
@@ -40,6 +41,7 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/auth',
+    ['@nuxtjs/moment', { locales: ['es'], defaultLocale: 'es' }]
   
   ],
   /*
@@ -73,7 +75,7 @@ export default {
   ** Build configuration
   */
   build: 
-  {vendor: ['vee-validate'],
+  {vendor: ['vee-validate','vue-infinite-scroll'],
     postcss: {
       preset: {
         features: {
@@ -81,6 +83,7 @@ export default {
         }
       }
     },
+    
     /*
     ** You can extend webpack config here
     */
