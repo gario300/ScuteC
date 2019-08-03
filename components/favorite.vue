@@ -5,6 +5,7 @@
           <nuxt-link :to="`/reply/${post.id}`" id="nolike" class="level-item" aria-label="reply">
             <span  class="icon is-small">
               <i class="fas fa-reply" aria-hidden="true"></i>
+              {{ replies.length }}
             </span>
           </nuxt-link>
           <a id="nolike" class="level-item" aria-label="retweet">

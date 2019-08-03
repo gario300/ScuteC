@@ -3,7 +3,7 @@
             <div class="container" id="Cntainernav">
                 <div class="columns is-mobile">
                     <div class="column is-offset-1">
-                        <a class="Elz" href="#"><span><i class="fas fa-home fa-lg"></i></span></a>
+                        <a class="Elz" href="#" @click="home"><span><i class="fas fa-home fa-lg"></i></span></a>
                     </div>
                     <div class="column">
                         <a href="#" class="Elz"><span><i class="fas fa-bell fa-lg"></i></span></a>
@@ -28,7 +28,13 @@
 
 <script>
     export default {
-        name: 'navbar'
+        name: 'navbar',
+        methods: {
+            home(){
+                this.$router.push('/home')
+                }
+            
+        }
   
     }
 </script>

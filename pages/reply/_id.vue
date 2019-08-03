@@ -4,6 +4,7 @@
     <div class="container">
         <div id="contenedor" class="columns">
             <div class="column is-10 is-offset-1">
+                <!-- post -->
                 <div class="box is-mobile">
                     <article class="media">
                         <div class="media-left">
@@ -19,19 +20,53 @@
                                     {{post.post}}
                                     </p>
                                         </div>
+                                        <figure class="image">
+                                         <img  :src="post.image" v-show="post.image !== null">
+                                         </figure> 
                                         <favorite
-                                        :post="post"
-                                        :replies="post.replies"
-                                        :favorites.sync="post.favorites"
-                                        :user="yo"
-                                        ></favorite> 
+                                    :post="post"
+                                    :replies="replies"
+                                    :favorites="favorites"
+                                    :user="yo"
+                                    /> 
+                                    <button class="button is-text" @click="regresar">Regresar</button>
                                         </div>
+            
+                                    
                                     </article>
-
-
                 </div>
             </div>
         </div>
+        <!-- post -->
+
+
+        <!-- currentuserbox -->
+            <div class="columns is-mobile is-centered is-multiline">
+                <div class="column is-narrow">
+                    
+                </div>
+                <br>
+                <div class="column ">
+                    
+                    <form @submit.prevent="responder">
+                        <div class="field is-grouped">
+                            <figure class="image is-64x64">
+                        <img class="is-rounded" :src="yo.avatar" alt="">
+                    </figure>
+                            <textarea v-model="reply" placeholder="Responde" class="input is-success is-medium"></textarea>
+                        <div class="control">
+                            <button class="button is-success is-medium"><i class="fas fa-reply"></i></button>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        <!-- currentuserbox -->
+
+
+        <!-- replies -->
+            <replies :replies="replies"/>
+        <!-- replies -->
     </div>
     </div>
 </template>
@@ -39,13 +74,14 @@
 <script>
 import navbar from '../../components/navbar'
 import favorite from '../../components/favorite'
+import replies from '../../components/replies'
 
 let moment = require ('moment')
 
     export default {
         middleware: ['auth'],
         components:{
-            navbar, favorite
+            navbar, favorite, replies
         },
         data(){
             return{              
@@ -53,7 +89,9 @@ let moment = require ('moment')
                 yo:{},
                 postuser:{},
                 replies:[],
-                post:{}
+                post:{},
+                reply: '',
+                favorites:[]
             }
         },
         created(){
@@ -75,12 +113,22 @@ let moment = require ('moment')
                    await this.$axios.get(`/posts/${this.$route.params.id}`)
                     .then(response => {
                     this.postuser = response.data.data.user
+                    this.replies = response.data.data.replies
                     this.post =response.data.data
-                    console.log(this.post)
+                    this.favorites = response.data.data.favorites
                     })
-                    
-                    
-                }
+                 },
+                 async responder(){
+                     await this.$axios.post(`/posts/reply/${this.post.id}`, {
+                         reply : this.reply
+                     }).then(response => {
+                        this.reply = ''
+                        this.getpost()
+                    })
+                 },
+                 regresar (){
+                     this.$router.go(-1)
+                 }
             }
 }
         

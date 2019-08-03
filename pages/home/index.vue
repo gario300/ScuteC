@@ -11,7 +11,7 @@
                         <article id="media" class="media">
                         <div class="media-left">
                                 <figure class="image is-256x256">
-                                    <img id="avatar" class="is-rounded" :src="`${yo.avatar}`">
+                                    <nuxt-link :to="`/user/${yo.username}`"><img id="avatar" class="is-rounded" :src="`${yo.avatar}`"></nuxt-link>
                                  </figure>
                         </div>
                         <div class="mediacontent">
@@ -72,27 +72,28 @@
   <article  class="media">
     <div  class="media-left">
       <figure  class="image is-64x64">
-        <img id="postuserimage" class="is-rounded" :src="post.user.avatar">
+        <nuxt-link :to="`/user/${post.user.username}`"><img id="postuserimage" class="is-rounded" :src="post.user.avatar"></nuxt-link>
       </figure>
-      <small  id="partner" class="button is-small is-rounded is-outlined"> <span>Partner</span></small>
+      <small v-if="post.user.Partner == true"  id="partner" class="button is-small is-rounded is-outlined"> <span>Partner</span></small>
     </div>
     <div id="barra" class="media-content">
       <div class="content">     
         <p>
           <strong>{{post.user.username}}</strong>  <small>{{moment(post.created_at).fromNow()}}</small>  <small>
             <button v-if="post.user_id == yo.id" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button>
+            <span id="seguir"><i class="fas fa-star"></i></span>
           </small>
           <br>
-          {{post.post}}
+          {{post.post}} 
         </p>
+        
       </div>  
         <figure class="image">
             <img  :src="post.image" v-show="post.image !== null">
         </figure> 
-        
           <favorite
     :post="post"
-    :replies="replies"
+    :replies.sync="post.replies"
     :favorites.sync="post.favorites"
     :user="yo"
     /> 
@@ -108,6 +109,11 @@
 
         </div>
         <!-- Post-box -->
+        <div v-show="busy == true" class="columns is-centered">
+            <div class="column is-half">
+                <button class="button is-fullwidth is-loading"></button>
+            </div>
+        </div>
          </div>
         
 
