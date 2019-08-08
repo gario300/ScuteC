@@ -188,8 +188,6 @@ let moment = require ('moment')
                 removeImage: function (e) {
                 this.image = '';
                 this.imagepreview = false;
-                console.log  (this.image)
-                console.log  (this.file)
                 },
                 //postear
             post (id){
@@ -225,7 +223,6 @@ let moment = require ('moment')
       this.$axios.get("users/timeline").then(response => {
         const append = response.data.data.slice (this.posts.length,this.posts.length + this.limit )
         this.posts = this.posts.concat(append);
-        console.log(this.posts)
         
       this.busy = false;
       }).catch( (err) => {

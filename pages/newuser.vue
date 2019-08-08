@@ -93,7 +93,6 @@
 				  avatar: this.image,
 				  id: userId
                 })
-                console.log("Listo")
 				this.$router.push('home')
 			},
 			//Metodo Me
@@ -101,7 +100,6 @@
                 this.$axios.get('/account/me')
                     .then(response => {
                         this.yo = response.data.data;
-                        console.log(this.yo)
                     })
             },
 

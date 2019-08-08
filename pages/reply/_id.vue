@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="contenedor_principal">
     <navbar></navbar>
     <div class="container">
         <div id="contenedor" class="columns">
@@ -136,6 +136,11 @@ let moment = require ('moment')
 <style scoped>
 #contenedor{
     margin-top: 10px;
+}
+#contenedor_principal{
+     overflow-x:hidden;
+     overflow-y:hidden;
+     width: auto;
 }
 
 </style>

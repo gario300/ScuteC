@@ -206,7 +206,6 @@ let moment = require ('moment')
                     this.posts = response.data.data.posts.reverse()
                     this.userid = response.data.data.id
                     this.ufollowers = response.data.data.followers
-                    console.log(this.userid)
                     if(this.user.id == this.yo.id){
                      this.currentuser =  true
                     }
