@@ -31,9 +31,7 @@
                                     /> 
                                     <button class="button is-text" @click="regresar">Regresar</button>
                                         </div>
-            
-                                    
-                                    </article>
+                    </article>
                 </div>
             </div>
         </div>

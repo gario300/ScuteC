@@ -6,7 +6,7 @@
                         <a class="Elz" href="#" @click="home"><span><i class="fas fa-home fa-lg"></i></span></a>
                     </div>
                     <div class="column">
-                        <a href="#" class="Elz"><span><i class="fas fa-bell fa-lg"></i></span></a>
+                        <a href="#" class="Elz" ><span><i class="fas fa-bell fa-lg"></i></span></a>
                     </div>
                     <div class="column ">
                         <a href="#" class="Elz"><span><i class="fas fa-envelope fa-lg"></i></span></a>
@@ -18,7 +18,7 @@
                         <a href="#" class="Elz"><span><i class="fas fa-search fa-lg"></i></span></a>
                     </div>
                     <div class="column">
-                        <a href="#" class="Elz"><span><i class="fas fa-bars fa-lg"></i></span></a>
+                        <a href="#" @click="menu" class="Elz"><span><i class="fas fa-bars fa-lg"></i></span></a>
                     </div>
                 </div>
             </div>
@@ -32,6 +32,9 @@
         methods: {
             home(){
                 this.$router.push('/home')
+                },
+                menu(){
+                    this.$router.push('/menu')
                 }
             
         }

@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="contenedor_principal">
         <navbar></navbar>
 
 
@@ -291,6 +291,10 @@ let moment = require ('moment')
 #partner{
     color:rgb(124, 28, 133) !important;
     border-color:rgb(124, 28, 133) !important;
+}
+#contenedor_principal{
+     overflow-x:hidden;
+     overflow-y:hidden;
 }
 
 
