@@ -87,7 +87,7 @@
 </template>
 
 <script>
-import fail from '@/components/fail';
+
 
 /*class uregister{
   constructor(name, username, email, password){

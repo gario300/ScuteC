@@ -70,9 +70,9 @@
 </template>
 
 <script>
-import navbar from '../../components/navbar'
-import favorite from '../../components/favorite'
-import replies from '../../components/replies'
+import navbar from '@/components/navbar'
+import favorite from '@/components/favorite'
+import replies from '@/components/replies'
 
 let moment = require ('moment')
 

@@ -17,7 +17,7 @@
 
 <script>
 
-import navbar from '../../components/navbar'
+import navbar from '@/components/navbar'
     export default {
         middleware: ['auth'],
         name:'menu',
