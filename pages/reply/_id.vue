@@ -46,7 +46,7 @@
                 <br>
                 <div class="column ">
                     
-                    <form @submit.prevent="responder">
+                    <form @submit.prevent="responder(this.postuser.id)">
                         <div class="field is-grouped">
                             <figure id="avatar" class="image is-64x64">
                         <img class="is-rounded" :src="yo.avatar" alt="">
@@ -116,9 +116,10 @@ let moment = require ('moment')
                     this.favorites = response.data.data.favorites
                     })
                  },
-                 async responder(){
+                 async responder(postid){
                      await this.$axios.post(`/posts/reply/${this.post.id}`, {
-                         reply : this.reply
+                         reply : this.reply,
+                         post_id : postid
                      }).then(response => {
                         this.reply = ''
                         this.getpost()
