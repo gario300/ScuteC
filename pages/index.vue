@@ -101,7 +101,6 @@
 export default {
 
   components: {
-    fail,
   },
 
   data() {
