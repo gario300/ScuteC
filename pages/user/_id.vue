@@ -20,7 +20,7 @@
             </div>
             <div id="caja">
                 <figure class="image is-128x128">
-                    <img class="is-rounded" :src="user.avatar" alt="">
+                    <img id="avatar" class="is-rounded" :src="user.avatar" alt="">
                 </figure>
                 </div>  
         </div>
@@ -42,7 +42,7 @@
             </div>
                 <div id="caja">
                 <figure class="image is-128x128">
-                    <img class="is-rounded" :src="user.avatar" alt="">
+                    <img id="avatar" class="is-rounded" :src="user.avatar" alt="">
                 </figure>
                 </div>               
         </div>
@@ -123,7 +123,7 @@
                 <div v-for="post in posts" class="box">
   <article class="media">
     <div class="media-left">
-      <figure class="image is-64x64">
+      <figure id="avatarpost" class="image is-64x64">
         <img class="is-rounded" :src="post.user.avatar" alt="Image">
       </figure>
     </div>
@@ -333,6 +333,18 @@ let moment = require ('moment')
 }
 #eliminar{
     float: right ;
+}
+#avatar{
+    height:128px;
+    width:128px;
+    max-width: 128px;
+    max-height: 128px;
+}
+#avatarpost{
+    height:64px;
+    width:64px;
+    max-width: 64px;
+    max-height: 66px;
 }
 
 

@@ -9,7 +9,7 @@
                     <article class="media">
                         <div class="media-left">
                         <figure class="image is-64x64">
-                        <img class="is-rounded" :src="postuser.avatar">
+                        <img class="is-rounded" id="avatar" :src="postuser.avatar">
                         </figure>
                         </div>
                         <div class="media-content">
@@ -48,7 +48,7 @@
                     
                     <form @submit.prevent="responder">
                         <div class="field is-grouped">
-                            <figure class="image is-64x64">
+                            <figure id="avatar" class="image is-64x64">
                         <img class="is-rounded" :src="yo.avatar" alt="">
                     </figure>
                             <textarea v-model="reply" placeholder="Responde" class="input is-success is-medium"></textarea>
@@ -141,6 +141,12 @@ let moment = require ('moment')
      overflow-x:hidden;
      overflow-y:hidden;
      width: auto;
+}
+#avatar{
+    height:64px;
+    width:64px;
+    max-width: 64px;
+    max-height: 66px;
 }
 
 </style>
