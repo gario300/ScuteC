@@ -121,8 +121,8 @@
 </template>
 
 <script>
-import navbar from '../../components/navbar'
-import favorite from '../../components/favorite'
+import navbar from '@/components/navbar'
+import favorite from '@/components/favorite'
 
 
 
