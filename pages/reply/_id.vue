@@ -48,8 +48,8 @@
                     
                     <form @submit.prevent="responder(post.id, yo.id)">
                         <div class="field is-grouped">
-                            <figure id="avatar" class="image is-64x64">
-                        <img class="is-rounded" :src="yo.avatar" alt="">
+                            <figure  class="image is-64x64">
+                        <img id="avatar" class="is-rounded" :src="yo.avatar" alt="">
                     </figure>
                             <textarea v-model="reply" placeholder="Responde" class="input is-success is-medium"></textarea>
                         <div class="control">

@@ -6,7 +6,7 @@
   <article class="media">
     <div class="media-left">
       <figure class="image is-64x64">
-        <img class="is-rounded" :src="reply.user.avatar" alt="Image">
+        <img id="avatar" class="is-rounded" :src="reply.user.avatar" alt="Image">
       </figure>
     </div>
     <div class="media-content">
@@ -45,6 +45,14 @@ let moment = require('moment')
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+#avatar{
+    height:64px;
+    width:64px;
+    min-width: 64px;
+    max-width: 64px;
+    max-width: 64px;
+    max-height: 66px;
+}
 
 </style>

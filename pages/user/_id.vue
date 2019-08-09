@@ -123,8 +123,8 @@
                 <div v-for="post in posts" class="box">
   <article class="media">
     <div class="media-left">
-      <figure id="avatarpost" class="image is-64x64">
-        <img class="is-rounded" :src="post.user.avatar" alt="Image">
+      <figure  class="image is-64x64">
+        <img id="avatarpost" class="is-rounded" :src="post.user.avatar" alt="Image">
       </figure>
     </div>
     <div id="barra" class="media-content">
