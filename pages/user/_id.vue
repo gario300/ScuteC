@@ -343,6 +343,8 @@ let moment = require ('moment')
 #avatarpost{
     height:64px;
     width:64px;
+    min-width: 64px;
+    max-width: 64px;
     max-width: 64px;
     max-height: 66px;
 }
