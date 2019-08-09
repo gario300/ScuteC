@@ -46,7 +46,7 @@
                 <br>
                 <div class="column ">
                     
-                    <form @submit.prevent="responder(this.postuser.id)">
+                    <form @submit.prevent="responder(this.post.id)">
                         <div class="field is-grouped">
                             <figure id="avatar" class="image is-64x64">
                         <img class="is-rounded" :src="yo.avatar" alt="">
