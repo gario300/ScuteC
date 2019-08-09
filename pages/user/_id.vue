@@ -157,10 +157,10 @@
 </template>
 
 <script>
-import navbar from '../../components/navbar'
-import favorite from '../../components/favorite'
-import profilebody from '../../components/profilebody'
-import botones from '../../components/botonesseguir'
+import navbar from '@/components/navbar'
+import favorite from '@/components/favorite'
+import profilebody from '@/components/profilebody'
+import botones from '@/components/botonesseguir'
 let moment = require ('moment')
 
     export default {
