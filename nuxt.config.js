@@ -49,7 +49,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://127.0.0.1:3333'
+    baseURL: 'https://scute-serv.herokuapp.com'
   },
   auth: {
     token: { prefix: 'token' },
