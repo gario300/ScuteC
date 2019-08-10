@@ -192,6 +192,7 @@ let moment = require ('moment')
                 //postear
             post (id){
                 this.$axios.post('/post', {
+                    user_id : id,
                     post: this.textinbox,
                     image : this.image
 
