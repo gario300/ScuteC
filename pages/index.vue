@@ -144,6 +144,7 @@ export default {
         })
         console.log('holamundo');
         await this.$axios.post('/account/primerlogro')
+        
         this.$router.push('newuser')
         
         
