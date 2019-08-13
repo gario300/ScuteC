@@ -82,6 +82,7 @@
         </div>
       </div>
       <footer><div id="foot">
+              <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=PB1dzJRw04TIPLuUfdnl9o9SyBS0VWXbL4cODREIUNmJTuDzEyPEiE6Zv8Qm"></script></span>
             </div></footer>
   </div>
 </template>
