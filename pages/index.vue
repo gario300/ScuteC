@@ -215,13 +215,13 @@ bottom: 10px;
 }
 #foot{
   width: 100%;
-  height: auto;
+  height: 30px;
   background-color: #23d160;
   z-index: 1;
 }
 
 #foot div{
-float: right;
+float: left;
 }
 
 
