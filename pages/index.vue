@@ -220,8 +220,8 @@ bottom: 10px;
   z-index: 1;
 }
 
-#foot div{
-float: left;
+#foot span{
+float: right;
 }
 
 
