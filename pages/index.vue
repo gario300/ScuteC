@@ -219,6 +219,9 @@ bottom: 10px;
   z-index: 1;
 }
 
+#siteseal{
+  float: right;
+}
 
 
 
