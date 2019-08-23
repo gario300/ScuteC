@@ -26,7 +26,9 @@
                          </div>
                     </div>
                     <div class="field">
-                        <button v-show="mostrarsubir == true" class="button is-success">Subir e ir a Home!</button>
+                        <div class="button is-success is-loading is-fullwidth" v-if="cargandoimagen == true">Subir e ir a Home!</div>
+                        <button v-else v-show="mostrarsubir == true" class="button is-success">Subir e ir a Home!</button>
+                        
                     </div>
                 </form>
             </div>
@@ -141,7 +143,8 @@
                 useravatar: true,
                 cargando: true,
                 error : false,
-                errorsubida: false
+                errorsubida: false,
+                cargandoimagen: false
             }
         },
         beforeCreate(){
@@ -182,10 +185,11 @@
             },
             
             async subirimagen(){
-                console.log("Uploading imamge");
+                this.cargandoimagen = true
 				await this.$axios.put('/account/updateProfilePic', {
                   avatar: this.image
-                }).catch (error => {
+                })
+                .catch (error => {
                     this.errorsubida = true
                 })
 				await this.$router.push('home')
