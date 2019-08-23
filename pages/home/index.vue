@@ -290,9 +290,11 @@ let moment = require ('moment')
 }
 
 #postimage{
+    height: 100% !important;
     background-repeat: no-repeat;
+    background-color:black;
     background-position: center;
-    background-size: 100% ;
+    background-size: 100% auto ;
 }
 
 
