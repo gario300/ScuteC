@@ -201,5 +201,13 @@ import profilebody from '@/components/profilebody.vue';
     top: 10px;
     margin-bottom: 15px;
 }
+figure img{
+    width: 128px !important;
+    height: 128px !important;
+    min-width: 128px !important;
+    min-height: 128px!important;
+    max-width: 128px !important;
+    max-height: 128px !important;
+}
 
 </style>
