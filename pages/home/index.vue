@@ -87,9 +87,9 @@
         </p>
         
       </div>  
-        <figure class="image">
-            <img  :src="post.image" v-show="post.image !== null">
-        </figure> 
+        <div id="postimage" class="image is-4by3" v-show="post.image !== null" v-bind:style="{ 'background-image': 'url(' + post.image + ')' }">
+
+        </div>
           <favorite
     :post="post"
     :replies.sync="post.replies"
@@ -287,6 +287,12 @@ let moment = require ('moment')
 #contenedor_principal{
      overflow-x:hidden;
      overflow-y:hidden;
+}
+
+#postimage{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% ;
 }
 
 

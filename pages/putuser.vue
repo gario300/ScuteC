@@ -56,6 +56,12 @@
             </div>
 
             <div class="columns is-centered">
+                <div id="imagen" class="column is-12">
+                <p v-if="errorsubida == true" class="help is-danger">hola mundo</p>
+                </div>
+            </div>
+
+            <div class="columns is-centered">
                 <div class="column is-half" id="home">
                     <nuxt-link class="button is-light" to="/home">Ir a home sin guardar</nuxt-link> 
                 </div>
@@ -134,7 +140,8 @@
                 file:{},
                 useravatar: true,
                 cargando: true,
-                error : false
+                error : false,
+                errorsubida: false
             }
         },
         beforeCreate(){
@@ -177,9 +184,16 @@
             async subirimagen(){
                 console.log("Uploading imamge");
 				await this.$axios.put('/account/updateProfilePic', {
-				  avatar: this.image,
+                  avatar: this.image
                 })
-				this.$router.push('home')
+                .catch (error => {
+                     if(error = 413) {
+                        console.log(error)
+                        this.errorsubida = true
+                     } else {
+                         this.$router.push('home')
+                     }
+                })
             },
             
             async updateinfo (){
