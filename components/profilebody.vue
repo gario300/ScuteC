@@ -4,7 +4,7 @@
 
     <div class="columns is-centered is-mobile">
         <div class="column is-12">
-            <div class="tabs is-centered">
+            <div id="menu" class="tabs is-centered">
                 <ul>
                     <li><nuxt-link :to="`/user/${user.username}`">Posts <br> <strong> {{ posts.length }} </strong> </nuxt-link></li>
                     <li><button class="button is-white is-normal">Albums </button></li>
@@ -62,6 +62,9 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+#menu{
+    height: auto;
+}
 
 </style>

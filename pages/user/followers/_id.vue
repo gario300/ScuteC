@@ -15,6 +15,7 @@
         :actualuser="actualuser"
         :ufavorites="favorites"
         />
+        <div class="container">
         <div  class="columns is-centered is-tablet is-multiline">
             <div id="margin" v-for="follower in followers" class="column is-2">
                 <div class="box">
@@ -26,8 +27,8 @@
                         </div>
                     </div>
                     <div class="columns is-centered">
-                        <div id="cajafollow" class="column is-half">
-                            <h4 class="title is-12">{{follower.username}}</h4>
+                        <div id="cajafollow" class="column is-full">
+                            <h4 class="title is-5">{{follower.username}}</h4>
                         </div>
                     </div>
                     <div class="columns">
@@ -46,6 +47,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         </template>
     </div>

@@ -1,6 +1,5 @@
 <template>
     <div>
-        <template >
         <div v-if="user.portada == null || portadapreview == true" id="portada" v-bind:style="{ 'background-image': 'url(' + portada + ')' }">
             <div id="contenedorportada" v-if="actualuser == true">
             <form @submit.prevent="subirportada">
@@ -61,8 +60,6 @@
                 </div>
             </div>
         </template>
-        <div class="columns is-centered">
-            <div class="column is-12">
             <profilebody
             :user="user"
             :posts="posts"
@@ -71,10 +68,6 @@
             :ufavorites="ufavorites"
             :currentuser="currentuser"
             />
-
-            </div>
-        </div>
-        </template>
     </div>
 </template>
 
