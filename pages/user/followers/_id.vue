@@ -1,7 +1,10 @@
 <template>
     <div id="contenedor_principal">
         <navbar></navbar>
-        <template>
+        <template v-if="cargandoperfil == true">
+            <div class="button is-loading is-white is-fullwidth"></div>
+        </template>
+        <template v-else>
         <userheader
         :currentuser="currentuser"
         :following="following"
@@ -82,7 +85,9 @@ import userheader from '@/components/userheader.vue'
             this.userdata()
         },
         mounted(){
-
+            setTimeout(() => {
+            this.primeracarga()
+             }, 2000)
         },
         methods: {
                 async userdata() {
