@@ -9,13 +9,15 @@
                     <article class="media">
                         <div class="media-left">
                         <figure class="image is-64x64">
+                        <nuxt-link :to="`/user/${postuser.username}`" >
                         <img class="is-rounded" id="avatar" :src="postuser.avatar">
+                        </nuxt-link> 
                         </figure>
                         </div>
                         <div class="media-content">
                             <div class="content">
                                 <p>
-                                    <strong>{{postuser.username}}</strong>  <small>{{moment(post.created_at).fromNow()}}</small>
+                                   <nuxt-link id="link" :to="`/user/${postuser.username}`" ><strong>{{postuser.username}}</strong></nuxt-link> <small>{{moment(post.created_at).fromNow()}}</small>
                                     <br>
                                     {{post.post}}
                                     </p>
@@ -157,6 +159,9 @@ let moment = require ('moment')
     max-width: 64px;
     max-width: 64px;
     max-height: 66px;
+}
+#link{
+  color: black
 }
 
 </style>

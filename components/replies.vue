@@ -5,14 +5,18 @@
                 <div class="box" v-for="reply in replies">
   <article class="media">
     <div class="media-left">
-      <figure class="image is-64x64">
-        <img id="avatar" class="is-rounded" :src="reply.user.avatar" alt="Image">
-      </figure>
+      <nuxt-link :to="`/user/${reply.username}`">
+        <figure class="image is-64x64">
+          <img id="avatar" class="is-rounded" :src="reply.user.avatar" alt="Image">
+        </figure>
+      </nuxt-link>
     </div>
     <div class="media-content">
       <div class="content">
         <p>
-          <strong>{{reply.user.username}}</strong> <small>{{moment(reply.created_at).fromNow()}}</small>
+          <nuxt-link id="link" :to="`/user/${reply.username}`">
+            <strong>{{reply.user.username}}</strong> 
+          </nuxt-link> <small>{{moment(reply.created_at).fromNow()}}</small>
           <br>
           {{reply.reply}}
         </p>
@@ -53,6 +57,10 @@ let moment = require('moment')
     max-width: 64px;
     max-width: 64px;
     max-height: 66px;
+}
+
+#link{
+  color: black
 }
 
 </style>

@@ -18,7 +18,11 @@
                                 <form @submit.prevent="post">
                                     <div class="columns is-centered is-mobile">
                                         <div class="column is-9">
-                                            <textarea v-model="textinbox" class="textarea is-success is-large" placeholder="Publica algo..."  @postinbox="vimodel = $event"></textarea>
+                                            <textarea v-model="textinbox" v-on:keyup="countdown" class="textarea is-success is-large" :placeholder="placeholder"  @postinbox="vimodel = $event"></textarea>
+                                            <span id="contador" class="help is-success" v-bind:class="{'help is-danger': hasError }">
+                                                {{remainingCount}}
+                                            </span>
+
                                         </div>
                                         <div class="column" >
                                             
@@ -78,7 +82,7 @@
     <div id="barra" class="media-content">
       <div class="content">     
         <p>
-          <strong>{{post.user.username}}</strong>  <small>{{moment(post.created_at).fromNow()}}</small>  <small>
+           <nuxt-link id="link" :to="`/user/${post.user.username}`"><strong>{{post.user.username}}</strong></nuxt-link>  <small>{{moment(post.created_at).fromNow()}}</small>  <small>
             <button v-if="post.user_id == currentuser.id" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button>
             <span id="seguir"><i class="fas fa-star"></i></span>
           </small>
@@ -151,6 +155,11 @@ let moment = require ('moment')
                 busy : false,
                 limit: 10,
                 results: [],
+                placeholder: 'Escribe Algo Rapido..',
+                //contador
+                maxCount: 300,
+                remainingCount: 300,
+                hasError: false
             }
         },
         created(){
@@ -159,8 +168,10 @@ let moment = require ('moment')
             
         },
         methods:{
-            
-                 
+            countdown: function() {
+            this.remainingCount = this.maxCount - this.textinbox.length;
+            this.hasError = this.remainingCount < 0;
+            },
             //Funciones de usuario y posteo   
             //imagen
             onFileChange(e) {
@@ -187,6 +198,9 @@ let moment = require ('moment')
                 },
                 //postear
             post (){
+                if(this.textinbox.length == 0){
+                    this.placeholder = 'No puede estar vacio'
+                } else {
                 this.$axios.post('/post', {
                     post: this.textinbox,
                     image : this.image
@@ -197,10 +211,11 @@ let moment = require ('moment')
                     this.image = '';
                     this.textinbox = '';
                     this.imagepreview = false;
+                    this.remainingCount = 300
                     this.timeline()
                 }).catch (e =>{
                     console.log(e)
-                })
+                })}
             },
             
             async timeline(){
@@ -295,6 +310,13 @@ let moment = require ('moment')
     background-color:black;
     background-position: center;
     background-size: 100% auto ;
+}
+
+#link{
+    color:black
+}
+#contador {
+    float: right !important;
 }
 
 

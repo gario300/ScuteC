@@ -62,13 +62,21 @@
             <div class="columns is-centered is-mobile">
                 <div class="column is-narrow">
                     <div class="box">
+                        <div id="asd" class="columns is-gapless is-mobile">
+                            <div class="column is-12">
+                                <span id="contador" class="help is-success" v-bind:class="{'help is-danger': hasError }">
+                                    {{remainingCount}}
+                                 </span>
+                            </div>
+                        </div>
                         <form @submit.prevent="post(yo.id)">
                             <div class="field has-addons">
                                 <div class="control">
-                                    <input class="input is-large is-success" type="text" v-model="textbox" placeholder="Escribe algo rapido...">
+                                    <input class="input is-large is-success" type="text" v-on:keyup="countdown" v-model="textbox" placeholder="Escribe algo rapido...">                                   
                                 </div>
                                 <div class="field">
                                     <div class="file is-right is-success is-large">
+                                        
                                         <label class="file-label">
                                             <input class="file-input" type="file" name="resume" @change="onFileChange2">
                                             <span class="file-cta">
@@ -142,9 +150,9 @@
           {{post.post}}
         </p>
       </div>
-      <figure class="image">
-            <img  :src="post.image" v-show="post.image !== null">
-        </figure> 
+      <div id="postimage" class="image is-4by3" v-show="post.image !== null" v-bind:style="{ 'background-image': 'url(' + post.image + ')' }">
+
+        </div>
       <favorite
     :post="post"
     :replies.sync="post.replies"
@@ -197,6 +205,10 @@ let moment = require ('moment')
                 postpreview: false,
                 currentuser: false,
                 cargandoperfil:true,
+                //contador
+                maxCount: 300,
+                remainingCount: 300,
+                hasError: false
             }
         },
         created(){
@@ -208,6 +220,10 @@ let moment = require ('moment')
              }, 2000)
         },
         methods:{
+            countdown: function() {
+            this.remainingCount = this.maxCount - this.textbox.length;
+            this.hasError = this.remainingCount < 0;
+            },
             async data(username){
                 await this.$axios.get('/account/me')
                     .then(response => {
@@ -291,6 +307,7 @@ let moment = require ('moment')
                     this.postimage = '';
                     this.textbox = '';
                     this.postpreview = false;
+                    this.remainingCount= 300
                     this.data()
                 }).catch (e =>{
                     console.log(e)
@@ -367,6 +384,20 @@ let moment = require ('moment')
     max-width: 64px;
     max-width: 64px;
     max-height: 66px;
+}
+
+#postimage{
+    height: 100% !important;
+    background-repeat: no-repeat;
+    background-color:black;
+    background-position: center;
+    background-size: 100% auto ;
+}
+#contador {
+    float:right;
+}
+#asd{
+    margin: 0px !important
 }
 
 
