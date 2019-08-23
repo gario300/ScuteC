@@ -155,7 +155,7 @@ let moment = require ('moment')
                 busy : false,
                 limit: 10,
                 results: [],
-                placeholder: 'Escribe Algo Rapido..',
+                placeholder: 'Publica algo',
                 //contador
                 maxCount: 300,
                 remainingCount: 300,
