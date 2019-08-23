@@ -55,7 +55,6 @@
                         notification_type : respuesta,
                         receptor_id :  id
                     })
-                this.$router.go(this.$router.currentRoute)
         },
         unFollow(Id) {
                 this.$axios.delete(`/users/unfollow/${this.user.id}`)
@@ -64,7 +63,6 @@
                             return u.id !== Id
                         })
                     })
-                       this.$router.go(this.$router.currentRoute)
             }
         },
 

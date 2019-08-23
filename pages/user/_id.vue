@@ -110,7 +110,7 @@
         <template v-else>
       <div>
             <botones
-            :usuarioactual="yo"
+            :usuarioactual="currentuser"
             :following="following"
             :user="user"
             />
@@ -176,6 +176,7 @@ import navbar from '@/components/navbar.vue';
 import favorite from '@/components/favorite.vue';
 import profilebody from '@/components/profilebody.vue';
 import botones from '@/components/botonesseguir.vue';
+import {mapState} from 'vuex';
 let moment = require ('moment')
 
     export default {
@@ -183,6 +184,11 @@ let moment = require ('moment')
         name: 'userheader',
         components:{
             navbar, favorite, profilebody,botones
+        },
+        computed: {
+        ...mapState([
+        'currentuser', 'following'
+        ])
         },
         data(){
             return{
@@ -194,7 +200,6 @@ let moment = require ('moment')
                 ufavorites:{},
                 currentuserid:{},
                 userid: {},
-                following:[],
                 moment:moment,
                 portada:'',
                 portadapreview:false,
@@ -212,6 +217,7 @@ let moment = require ('moment')
             }
         },
         created(){
+            this.$store.dispatch('getusuario')
             this.data()
         },
         mounted(){
