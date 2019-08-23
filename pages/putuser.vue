@@ -185,15 +185,10 @@
                 console.log("Uploading imamge");
 				await this.$axios.put('/account/updateProfilePic', {
                   avatar: this.image
+                }).catch (error => {
+                    this.errorsubida = true
                 })
-                .catch (error => {
-                     if(error = 413) {
-                        console.log(error)
-                        this.errorsubida = true
-                     } else {
-                         this.$router.push('home')
-                     }
-                })
+				await this.$router.push('home')
             },
             
             async updateinfo (){
