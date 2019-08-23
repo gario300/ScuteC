@@ -1,5 +1,5 @@
 <template >
-  <div>
+  <div id="contenedorprincipal">
       <div>
         <div id="Homepagenav">
           <div id="logo">
@@ -12,7 +12,7 @@
             <div class="columns is-mobile is-centered">
               <div class="column is-10">
 
-                <div v-if="register.valor ==1" class="form">
+                <div v-if="register.valor ==1" id="form" class="form">
                   <h1 class="title is-4">¡Loggeate y gana dinero publicando tus dibujos!</h1>
                     <form @submit.prevent="login">
                       <div class="Field">
@@ -34,7 +34,7 @@
                   </form>
                   <span>¿Aún no tienes cuenta? <button @click="mostrar" class="button is-success is-small">¡Registrate aquí!</button></span>
                 </div>
-                <div v-else class="form">
+                <div v-else class="form" id="form2">
                   <h3 class="title is-4">¡Registrate y gana dinero publicando tus dibujos!</h3>
     
                 <form method="post" id="Login" @submit.prevent="signup">
@@ -71,8 +71,7 @@
                     <span>¿Solo vienes de visita? <a href="">¡Oprime aquí!</a></span>
                   </form>
                 
-                </div>
-                <span id="siteseal"><script async type="text/javascript" src="https://seal.godaddy.com/getSeal?sealID=PB1dzJRw04TIPLuUfdnl9o9SyBS0VWXbL4cODREIUNmJTuDzEyPEiE6Zv8Qm"></script></span>
+                </div>               
               </div>
               
             </div>
@@ -143,9 +142,8 @@ export default {
 
         })
         console.log('holamundo');
-        await this.$axios.post('/account/primerlogro')
         
-        this.$router.push('newuser')
+        this.$router.push('putuser')
         
         
 
@@ -225,12 +223,20 @@ bottom: 10px;
 
 
 
-.form{
+#form{
   background-color: black;
   padding: 1em;
   opacity: .70;
   border-radius: 7px;
-  margin-top: 5.2em;
+  margin-top: 4em;
+}
+
+#form2{
+  background-color: black;
+  padding: 1em;
+  opacity: .70;
+  border-radius: 7px;
+  margin-top: 1em;
 }
 
 
@@ -250,6 +256,11 @@ bottom: 10px;
 
 h1{
   color: white;
+}
+#contenedorprincipal{
+     overflow-x:hidden;
+     overflow-y:hidden;
+     width: auto;
 }
 
 </style>

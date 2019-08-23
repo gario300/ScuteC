@@ -42,13 +42,18 @@
                 }
         },
         methods: {
-            seguir (id) {
+            async seguir (id) {
 
-                this.$axios.post('/users/follow', {
+                await this.$axios.post('/users/follow', {
                     user_id: id
                 })
                     .then(response => {
                         this.usuarioactual.following.push({ id: id })
+                    })
+                let respuesta = 'Ahora te sigue'
+                    await this.$axios.post(`/notif/newnoti`,{
+                        notification_type : respuesta,
+                        receptor_id :  id
                     })
                 this.$router.go(this.$router.currentRoute)
         },

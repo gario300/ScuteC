@@ -2,6 +2,10 @@
     <!-- Portada -->
     <div id="contenedor_principal">
         <navbar></navbar>
+        <template v-if="cargandoperfil == true">
+            <div class="button is-loading is-white is-fullwidth"></div>
+        </template>
+        <template v-else>
         <div v-if="user.portada == null || portadapreview == true" id="portada" v-bind:style="{ 'background-image': 'url(' + portada + ')' }">
             <div id="contenedorportada" v-if="currentuser == true">
             <form @submit.prevent="subirportada">
@@ -112,6 +116,8 @@
         :user="user"
         :posts="posts"
         :ufollowers="ufollowers"
+        :ufollowing="ufollowing"
+        :ufavorites="ufavorites"
         :currentuser="yo"
         />
     
@@ -151,6 +157,7 @@
             </div>
         </div>
     </div>
+</template>
     
 
     </div>
@@ -175,6 +182,8 @@ let moment = require ('moment')
                 user:{},
                 posts:{},
                 ufollowers:{},
+                ufollowing: {},
+                ufavorites:{},
                 currentuserid:{},
                 userid: {},
                 following:[],
@@ -186,11 +195,17 @@ let moment = require ('moment')
                 postfile:{},
                 textbox:'',
                 postpreview: false,
-                currentuser: false
+                currentuser: false,
+                cargandoperfil:true,
             }
         },
         created(){
             this.data()
+        },
+        mounted(){
+            setTimeout(() => {
+            this.primeracarga()
+             }, 2000)
         },
         methods:{
             async data(username){
@@ -206,6 +221,8 @@ let moment = require ('moment')
                     this.posts = response.data.data.posts.reverse()
                     this.userid = response.data.data.id
                     this.ufollowers = response.data.data.followers
+                    this.ufollowing = response.data.data.following
+                    this.ufavorites = response.data.data.favorites
                     if(this.user.id == this.yo.id){
                      this.currentuser =  true
                     }
@@ -284,6 +301,9 @@ let moment = require ('moment')
                 .then(data =>{                    
                 this.data();
                 })
+            },
+            primeracarga(){
+                this.cargandoperfil = false
             }
     }  
 }
@@ -322,9 +342,8 @@ let moment = require ('moment')
 }
 
 #contenedor_principal{
-     overflow-x:hidden;
-     overflow-y:hidden;
-     width: auto;
+     overflow-x:hidden !important;
+     overflow-y:hidden !important;
 }
 #barra{
      overflow-y:hidden;
@@ -334,6 +353,8 @@ let moment = require ('moment')
     float: right ;
 }
 #avatar{
+    min-width: 128px;
+    min-height: 128px;
     height:128px;
     width:128px;
     max-width: 128px;

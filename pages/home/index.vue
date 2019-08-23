@@ -1,8 +1,7 @@
 <template>
     <div id="contenedor_principal">
-        <navbar></navbar>
-
-
+        <navbar
+        />
         <!-- Userbox -->
     <div class="container">
        <div id="columnbox" class="columns is-centered ">
@@ -11,12 +10,12 @@
                         <article id="media" class="media">
                         <div class="media-left">
                                 <figure class="image is-256x256">
-                                    <nuxt-link :to="`/user/${yo.username}`"><img id="avatar" class="is-rounded" :src="`${yo.avatar}`"></nuxt-link>
+                                    <nuxt-link :to="`/user/${currentuser.username}`"><img id="avatar" class="is-rounded" :src="`${currentuser.avatar}`"></nuxt-link>
                                  </figure>
                         </div>
                         <div class="mediacontent">
                             <div class="content">
-                                <form @submit.prevent="post(yo.id)">
+                                <form @submit.prevent="post">
                                     <div class="columns is-centered is-mobile">
                                         <div class="column is-9">
                                             <textarea v-model="textinbox" class="textarea is-success is-large" placeholder="Publica algo..."  @postinbox="vimodel = $event"></textarea>
@@ -68,7 +67,7 @@
             <div class="column is-8 is-offset-2">
             <div id="contenedor" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">   
   <div  v-for="post in posts" :posts.sync="posts"
-    :user="yo" :key="post.id" class="box">
+    :user="currentuser" :key="post.id" class="box">
   <article  class="media">
     <div  class="media-left">
       <figure  class="image is-64x64">
@@ -80,7 +79,7 @@
       <div class="content">     
         <p>
           <strong>{{post.user.username}}</strong>  <small>{{moment(post.created_at).fromNow()}}</small>  <small>
-            <button v-if="post.user_id == yo.id" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button>
+            <button v-if="post.user_id == currentuser.id" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button>
             <span id="seguir"><i class="fas fa-star"></i></span>
           </small>
           <br>
@@ -95,7 +94,7 @@
     :post="post"
     :replies.sync="post.replies"
     :favorites.sync="post.favorites"
-    :user="yo"
+    :user="currentuser"
     /> 
     </div>
     
@@ -123,6 +122,7 @@
 <script>
 import navbar from '@/components/navbar'
 import favorite from '@/components/favorite'
+import {mapState} from 'vuex'
 
 
 
@@ -133,10 +133,14 @@ let moment = require ('moment')
         components:{
             navbar, favorite
         },
+        computed: {
+        ...mapState([
+        'currentuser'
+        ])
+        },
         data(){
             return{
                 textinbox: '',
-                yo:{},
                 image:'',
                 file:{},
                 imagepreview : false,
@@ -146,26 +150,18 @@ let moment = require ('moment')
                 prueba: [],
                 busy : false,
                 limit: 10,
-                results: []
+                results: [],
             }
         },
         created(){
-            this.me()
+            this.$store.dispatch('getusuario')
             this.loadMore()
-
             
         },
         methods:{
             
                  
             //Funciones de usuario y posteo   
-            me(){
-                this.$axios.get('/account/me')
-                    .then(response => {
-                        this.yo = response.data.data;
-                        console.log(this.yo)
-                    })
-            },
             //imagen
             onFileChange(e) {
                 let files = e.target.files || e.dataTransfer.files;
@@ -190,7 +186,7 @@ let moment = require ('moment')
                 this.imagepreview = false;
                 },
                 //postear
-            post (id){
+            post (){
                 this.$axios.post('/post', {
                     post: this.textinbox,
                     image : this.image

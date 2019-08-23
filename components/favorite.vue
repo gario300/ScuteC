@@ -68,13 +68,17 @@
             }
         },
         methods:{
-            favorite(){
-                this.$axios.post('/favorites/create', 
+            async favorite(){
+                await this.$axios.post('/favorites/create', 
                    
                    { post_id: this.post.id },
                                                         
                 ).then(response => {
                         this.favorites.push(response.data.data)
+                    })
+                    let respuesta = 'Añadió un ♥ a tu publicación '
+                    await this.$axios.post(`/notif/newnoti/${this.post.id}`,{
+                        notification_type : respuesta
                     })
                 
             }, 

@@ -46,7 +46,7 @@
                 <br>
                 <div class="column ">
                     
-                    <form @submit.prevent="responder(post.id, yo.id)">
+                    <form @submit.prevent="responder(post.id, yo.id, post.user.id)">
                         <div class="field is-grouped">
                             <figure  class="image is-64x64">
                         <img id="avatar" class="is-rounded" :src="yo.avatar" alt="">
@@ -89,7 +89,8 @@ let moment = require ('moment')
                 replies:[],
                 post:{},
                 reply: '',
-                favorites:[]
+                favorites:[],
+                
             }
         },
         created(){
@@ -116,15 +117,20 @@ let moment = require ('moment')
                     this.favorites = response.data.data.favorites
                     })
                  },
-                 async responder(postid, yoid){
+                 async responder(postid, yoid, postuid){
                      await this.$axios.post(`/posts/reply/${this.post.id}`, {
                          reply : this.reply,
                          post_id : postid,
                          user_id : yoid
                      }).then(response => {
                         this.reply = ''
-                        this.getpost()
                     })
+                    let respuesta = 'Respondió a tu publicación'
+                    await this.$axios.post(`/notif/newnoti/${this.post.id}`,{
+                        
+                        notification_type : respuesta
+                    })
+                     this.getpost()
                  },
                  regresar (){
                      this.$router.go(-1)

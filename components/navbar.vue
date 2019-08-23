@@ -1,12 +1,13 @@
 <template>
+<div>
         <nav id="NavS">
             <div class="container" id="Cntainernav">
-                <div class="columns is-mobile">
-                    <div class="column is-offset-1">
+                <div class="columns is-mobile is-gapless">
+                    <div class="column" >
                         <a class="Elz" href="#" @click="home"><span><i class="fas fa-home fa-lg"></i></span></a>
                     </div>
                     <div class="column">
-                        <a href="#" class="Elz" ><span><i class="fas fa-bell fa-lg"></i></span></a>
+                        <a href="#" class="Elz" @click="notificationspush" ><span><i class="fas fa-bell fa-lg"></i>{{notif.length}}</span></a>
                     </div>
                     <div class="column ">
                         <a href="#" class="Elz"><span><i class="fas fa-envelope fa-lg"></i></span></a>
@@ -23,18 +24,53 @@
                 </div>
             </div>
         </nav>
-
+    </div>
 </template>
 
 <script>
+import goals  from '@/components/goals'
     export default {
         name: 'navbar',
+        components: {
+            goals
+        },
+        
+        data(){
+            return{
+                homenav: false,
+                notif: []
+            }
+        },
+        created (){
+            this.getnotif()
+
+        },
+        mounted(){
+            setInterval(() => {
+            this.getnotif()
+            }, 30000)
+        },
         methods: {
             home(){
                 this.$router.push('/home')
+            
+            },
+            menu(){
+                this.$router.push('/menu')
                 },
-                menu(){
-                    this.$router.push('/menu')
+                async notificationspush(){
+                    this.$router.push('/user/notifications')
+                
+                },
+
+                async getnotif(){
+                    await  this.$axios.get('notif/getnotiview')
+                    .then(response => {
+                    this.notif = response.data.data
+                    })
+
+                    
+
                 }
             
         }
@@ -49,6 +85,7 @@
     background-color: #23d160;
 }
 #Cntainernav{
+    margin: none !important;
     padding-top: 3px;
 
 }
@@ -57,5 +94,13 @@
     color: #178d40;
 
 }
+#Cntainernav div{
+    display: flex;
+    justify-content: center;
 
+}
+#home{
+    width: 100% !important;
+    height: 100% !important;
+}
 </style>
