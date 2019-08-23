@@ -17,7 +17,7 @@
                     <form @submit.prevent="login">
                       <div class="Field">
                       <div class="control">
-                        <input class="input" v-model="email" type="email"  placeholder="Escribe tu Nombre de Usuario">
+                        <input class="input" v-model="email" type="email"  placeholder="Escribe tu Email">
                       </div>
                     </div>
                     <div class="Field">

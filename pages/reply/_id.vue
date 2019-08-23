@@ -114,7 +114,7 @@ let moment = require ('moment')
                    await this.$axios.get(`/posts/${this.$route.params.id}`)
                     .then(response => {
                     this.postuser = response.data.data.user
-                    this.replies = response.data.data.replies
+                    this.replies = response.data.data.replies.reverse()
                     this.post =response.data.data
                     this.favorites = response.data.data.favorites
                     })
