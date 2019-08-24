@@ -1,7 +1,7 @@
 export const strict = false
 export const state = () => ({
   
-    currentuser:[],
+    currentuser:{},
     following: []
   })
   

@@ -7,7 +7,7 @@
         </template>
         <template v-else>
         <div v-if="user.portada == null || portadapreview == true" id="portada" v-bind:style="{ 'background-image': 'url(' + portada + ')' }">
-            <div id="contenedorportada" v-if="currentuser == true">
+            <div id="contenedorportada" v-if="currentuser.id == user.id">
             <form @submit.prevent="subirportada">
                 <div class="field">
                     <div class="file is-success">
@@ -29,7 +29,7 @@
                 </div>  
         </div>
         <div v-else id="portada" v-bind:style="{ 'background-image': 'url(' + user.portada + ')' }">
-            <div id="contenedorportada" v-if="currentuser == true">
+            <div id="contenedorportada" v-if="currentuser.id == user.id">
             <form @submit.prevent="subirportada">
                 <div class="field">
                     <div class="file is-success">
@@ -57,7 +57,7 @@
         <!-- Portada -->
 
         <!-- textbox -->
-        <template v-if="currentuser == true">
+        <template v-if="currentuser.id == user.id">
         <div class="container">
             <div class="columns is-centered is-mobile">
                 <div class="column is-narrow">
@@ -69,7 +69,7 @@
                                  </span>
                             </div>
                         </div>
-                        <form @submit.prevent="post(yo.id)">
+                        <form @submit.prevent="post(currentuser.id)">
                             <div class="field has-addons">
                                 <div class="control">
                                     <input class="input is-large is-success" type="text" v-on:keyup="countdown" v-model="textbox" placeholder="Escribe algo rapido...">                                   
@@ -126,7 +126,7 @@
         :ufollowers="ufollowers"
         :ufollowing="ufollowing"
         :ufavorites="ufavorites"
-        :currentuser="yo"
+        :currentuser="currentuser"
         />
     
 <h1 class="title is-1"></h1>
@@ -145,7 +145,7 @@
       <div class="content">
         <p>
           <strong>{{post.user.username}}</strong> <small>{{moment(post.created_at).fromNow()}}</small>
-          <small id="eliminar"><button v-if="currentuser == true" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button></small>
+          <small id="eliminar"><button v-if="currentuser.id == user.id" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button></small>
           <br>
           {{post.post}}
         </p>
@@ -157,7 +157,7 @@
     :post="post"
     :replies.sync="post.replies"
     :favorites.sync="post.favorites"
-    :user="yo"
+    :user="currentuser"
     /> 
     </div>
   </article>
@@ -192,7 +192,6 @@ let moment = require ('moment')
         },
         data(){
             return{
-                yo:{},
                 user:{},
                 posts:{},
                 ufollowers:{},
@@ -208,7 +207,7 @@ let moment = require ('moment')
                 postfile:{},
                 textbox:'',
                 postpreview: false,
-                currentuser: false,
+                usuarioactual: false,
                 cargandoperfil:true,
                 //contador
                 maxCount: 300,
@@ -231,12 +230,6 @@ let moment = require ('moment')
             this.hasError = this.remainingCount < 0;
             },
             async data(username){
-                await this.$axios.get('/account/me')
-                    .then(response => {
-                        this.yo = response.data.data;
-                        this.following = response.data.data.following
-                        this.currentuserid = response.data.data.id
-                    })
                 await this.$axios.get(`account/${this.$route.params.id}`)
                     .then(response => {
                     this.user = response.data.data
@@ -245,9 +238,6 @@ let moment = require ('moment')
                     this.ufollowers = response.data.data.followers
                     this.ufollowing = response.data.data.following
                     this.ufavorites = response.data.data.favorites
-                    if(this.user.id == this.yo.id){
-                     this.currentuser =  true
-                    }
 
                     })
                     

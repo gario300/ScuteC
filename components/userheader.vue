@@ -54,7 +54,7 @@
                         <botones 
                         :user="user"
                         :usuarioactual="currentuser"
-                        :following="following"
+                        :yofollowing="yofollowing"
                         />
                     </div>
                 </div>
@@ -89,7 +89,7 @@ import profilebody from '@/components/profilebody.vue';
                 type: Object,
                 required:true
             },
-            following:{
+            yofollowing:{
                 type: Array,
                 required:true
             },

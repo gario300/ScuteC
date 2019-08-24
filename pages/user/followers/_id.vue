@@ -7,7 +7,7 @@
         <template v-else>
         <userheader
         :currentuser="currentuser"
-        :following="following"
+        :yofollowing="following"
         :user="user"
         :posts="posts"
         :followers="followers"
