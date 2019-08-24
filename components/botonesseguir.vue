@@ -23,17 +23,20 @@
                 required: true
             },
             usuarioactual: {
-                type: Object,
+                type: Array,
                 required: true
             },
-            following:{
+            yofollowing:{
                 type: Array,
                 required: true
             }
         },
         computed:{
+            isLoggedIn () {
+                return !!this.usuarioactual
+            },
             isFollowing() {
-                for (const following of this.following) {
+                for (const following of this.yofollowing) {
                     if (following.id === this.user.id) {
                         return true
                     }
@@ -42,24 +45,24 @@
                 }
         },
         methods: {
-            async seguir (id) {
+            async seguir (userid) {
 
                 await this.$axios.post('/users/follow', {
-                    user_id: id
+                    user_id: userid
                 })
                     .then(response => {
-                        this.usuarioactual.following.push({ id: id })
+                        this.yofollowing.push({ id: userid })
                     })
                 let respuesta = 'Ahora te sigue'
                     await this.$axios.post(`/notif/newnoti`,{
                         notification_type : respuesta,
-                        receptor_id :  id
+                        receptor_id :  userid
                     })
         },
         unFollow(Id) {
                 this.$axios.delete(`/users/unfollow/${this.user.id}`)
                     .then(response => {
-                        this.usuarioactual.following = this.usuarioactual.following.filter(u => {
+                        this.yofollowing = this.yofollowing.filter(u => {
                             return u.id !== Id
                         })
                     })

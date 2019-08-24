@@ -111,7 +111,7 @@
       <div>
             <botones
             :usuarioactual="currentuser"
-            :following="following"
+            :yofollowing="following"
             :user="user"
             />
     </div> 
