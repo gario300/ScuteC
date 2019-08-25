@@ -5,7 +5,7 @@
                 <div class="box" v-for="reply in replies">
   <article class="media">
     <div class="media-left">
-      <nuxt-link :to="`/user/${reply.username}`">
+      <nuxt-link :to="`/user/${reply.user.username}`">
         <figure class="image is-64x64">
           <img id="avatar" class="is-rounded" :src="reply.user.avatar" alt="Image">
         </figure>
@@ -14,7 +14,7 @@
     <div class="media-content">
       <div class="content">
         <p>
-          <nuxt-link id="link" :to="`/user/${reply.username}`">
+          <nuxt-link id="link" :to="`/user/${reply.user.username}`">
             <strong>{{reply.user.username}}</strong> 
           </nuxt-link> <small>{{moment(reply.created_at).fromNow()}}</small>
           <br>

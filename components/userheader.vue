@@ -67,6 +67,7 @@
             :ufollowing="ufollowing"
             :ufavorites="ufavorites"
             :currentuser="currentuser"
+            :click="click"
             />
     </div>
 </template>
@@ -112,6 +113,10 @@ import profilebody from '@/components/profilebody.vue';
             ufavorites: {
                 type: Object,
                 required:  true
+            },
+            click:{
+                type: Object,
+                required: true
             }
         },
         data(){

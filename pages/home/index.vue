@@ -1,7 +1,6 @@
 <template>
     <div id="contenedor_principal">
-        <navbar
-        />
+        <navbar/>
         <!-- Userbox -->
     <div class="container">
        <div id="columnbox" class="columns is-centered ">
