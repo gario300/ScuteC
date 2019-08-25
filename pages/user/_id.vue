@@ -12,7 +12,7 @@
         :ufavorites="favorites"
         :click="click"
         />
-        <template v-if="currentuser.id == user.id && click.posts == true">
+        <template v-if="currentuser.id == user.id && click.postss == true">
         <div id="textbox" class="container">
             <div class="columns is-centered is-mobile">
                 <div class="column is-narrow">
