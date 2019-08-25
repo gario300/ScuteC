@@ -79,6 +79,7 @@
 }
 .columns{
     margin-top: 15px !important;
+    margin-bottom: 15px !important;
 }
 #column{
     display: flex;
