@@ -135,7 +135,7 @@ export default {
 
     methods:{
       moveToDashboard() {
-      this.$router.push('home')
+      this.$router.push('galeria')
     },
 
       async signup() {
@@ -191,7 +191,7 @@ export default {
           }
         })
 
-        this.$router.push('home')
+        this.$router.push('galeria')
       } catch (e) {
         this.error.tipo4 = true
       }

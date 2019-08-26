@@ -27,7 +27,7 @@
                     </div>
                     <div class="field">
                         <div class="button is-success is-loading is-fullwidth" v-if="cargandoimagen == true">Subir e ir a Home!</div>
-                        <button v-else v-show="mostrarsubir == true" class="button is-success">Subir e ir a Home!</button>
+                        <button v-else v-show="mostrarsubir == true" class="button is-success">Subir e ir a Galería!</button>
                         
                     </div>
                 </form>
@@ -65,7 +65,7 @@
 
             <div class="columns is-centered">
                 <div class="column is-half" id="home">
-                    <nuxt-link class="button is-light" to="/home">Ir a home sin guardar</nuxt-link> 
+                    <nuxt-link class="button is-light" to="/galeria">Ir a galería sin guardar</nuxt-link> 
                 </div>
             </div>
         </template>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="field">
                     <div class="control">
-                     <button class="button is-success is-full-width">Actualizar e ir a Home</button>
+                     <button class="button is-success is-full-width">Actualizar e ir a Galería</button>
                      <p class="help is-danger" v-if="error ==true">Ninguno de estos campos <br> puede estar vacio</p>
                     </div>
                 </div>
@@ -192,7 +192,7 @@
                 .catch (error => {
                     this.errorsubida = true
                 })
-				await this.$router.push('home')
+				await this.$router.push('galeria')
             },
             
             async updateinfo (){
@@ -204,7 +204,7 @@
                   edad: this.edad,
                   bio:this.bio
                 })
-                this.$router.push('home')
+                this.$router.push('galeria')
                 }
             },
 			//Metodo Me

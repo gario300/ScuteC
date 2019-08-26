@@ -4,7 +4,7 @@
             <div class="container" id="Cntainernav">
                 <div class="columns is-mobile is-gapless">
                     <div class="column" >
-                        <a class="Elz" href="#" @click="home"><span><i class="fas fa-home fa-lg"></i></span></a>
+                        <a class="Elz" href="#" @click="home"><span><i class="fas fa-camera-retro fa-lg"></i></span></a>
                     </div>
                     <div class="column">
                         <a href="#" class="Elz" @click="notificationspush" ><span><i class="fas fa-bell fa-lg"></i>{{notif.length}}</span></a>
@@ -13,7 +13,7 @@
                         <a href="#" class="Elz"><span><i class="fas fa-envelope fa-lg"></i></span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" class="Elz"><span><i class="fas fa-star fa-lg"></i></span></a>
+                        <a href="#" @click="destacado" class="Elz"><span><i class="fas fa-star fa-lg"></i></span></a>
                     </div>
                     <div class="column ">
                         <a href="#" class="Elz"><span><i class="fas fa-search fa-lg"></i></span></a>
@@ -52,8 +52,11 @@ import goals  from '@/components/goals'
         },
         methods: {
             home(){
-                this.$router.push('/home')
+                this.$router.push('/galeria')
             
+            },
+            destacado(){
+               this.$router.push('/destacado') 
             },
             menu(){
                 this.$router.push('/menu')
