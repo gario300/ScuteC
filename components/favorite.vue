@@ -8,11 +8,6 @@
               {{ replies.length }}
             </span>
           </nuxt-link>
-          <a id="nolike" class="level-item" aria-label="retweet">
-            <span class="icon is-small">
-              <i class="fas fa-retweet" aria-hidden="true"></i>
-            </span>
-          </a>
           <a id="like" v-if="isFavoritedByUser" @click="quitarfavorito" class="level-item" aria-label="like">
             <span class="icon is-small">
               <i class="fas fa-heart" aria-hidden="true"></i>
@@ -23,6 +18,11 @@
             <span class="icon is-small">
               <i class="fas fa-heart" aria-hidden="true"></i>
               {{ favorites.length }}
+            </span>
+          </a>
+          <a id="gift" class="level-item" aria-label="retweet">
+            <span class="icon is-small">
+              <i aria-hidden="true" class="fas fa-gift"></i> 
             </span>
           </a>
         </div>
@@ -100,6 +100,9 @@
 
 <style scoped>
 
+#posticons{
+  margin-top: 10px;
+}
 #like{
     color:red !important;
 
@@ -113,6 +116,10 @@
 }
 #posticons, a{
     margin-right:20px !important;
+}
+
+#gift{
+  color: plum
 }
 
 </style>

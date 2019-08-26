@@ -13,7 +13,7 @@
                         <a href="#" class="Elz"><span><i class="fas fa-envelope fa-lg"></i></span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" class="Elz"><span><i class="fas fa-user-alt fa-lg"></i></span></a>
+                        <a href="#" class="Elz"><span><i class="fas fa-star fa-lg"></i></span></a>
                     </div>
                     <div class="column ">
                         <a href="#" class="Elz"><span><i class="fas fa-search fa-lg"></i></span></a>

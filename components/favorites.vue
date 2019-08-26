@@ -23,15 +23,15 @@
                                 {{ufavorite.post.replies.length}}
                                 </span>
                             </a>
-                            <a class="level-item" aria-label="retweet">
-                                <span class="icon is-normal">
-                                <i class="fas fa-retweet" aria-hidden="true"></i>
-                                </span>
-                            </a>
                             <a class="level-item" aria-label="like">
                                 <span class="icon is-normal">
                                 <i class="fas fa-heart" aria-hidden="true"></i>
                                 {{ufavorite.post.favorites.length}}
+                                </span>
+                            </a>
+                            <a id="gift" class="level-item" aria-label="retweet">
+                                <span class="icon is-small">
+                                <i aria-hidden="true" class="fas fa-gift"></i> 
                                 </span>
                             </a>
                             </div>
@@ -59,6 +59,8 @@
                 type: Object,
                 required: true
             }
+        },
+        methods:{
         }
     }
 </script>
@@ -93,5 +95,10 @@ h2{
 }
 a{
     color: #23d160;
+}
+.animation:hover{
+    animation: swing 1s ease;
+    animation-iteration-count: 1;
+        
 }
 </style>
