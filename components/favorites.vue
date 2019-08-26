@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div class="columns is-centered is-multiline">
+        <div class="columns is-multiline">
             <div class="column is-2" v-for="ufavorite in ufavorites" v-if="ufavorite.post.image !== null">
                 <nuxt-link :to="`/reply/${ufavorite.post.id}`"><div id="favoriteimage" 
                 v-bind:style="{ 'background-image': 'url(' + ufavorite.post.image + ')' }"

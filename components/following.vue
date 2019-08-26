@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="container">
         <div class="columns is-centered is-tablet is-multiline">
                 <div v-for="ufollowing in ufollowings" class="column is-2">
                     <div class="box">

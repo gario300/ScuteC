@@ -1,87 +1,91 @@
 <template >
-  <div id="contenedorprincipal">
-      <div>
-        <div id="Homepagenav">
-          <div id="logo">
-            <img src="logo.png">
-            <h2>Scute</h2>
-          </div>
-        </div>
-        <div id="banner">
-          <div class="container">
-            <div class="columns is-mobile is-centered">
-              <div class="column is-10">
-
-                <div v-if="register.valor ==1" id="form" class="form">
-                  <h1 class="title is-4">¡Loggeate y gana dinero publicando tus dibujos!</h1>
-                    <form @submit.prevent="login">
-                      <div class="Field">
-                      <div class="control">
-                        <input class="input" v-model="email" type="email"  placeholder="Escribe tu Email">
-                      </div>
-                    </div>
-                    <div class="Field">
-                    <div class="control">
-                      <input class="input" v-model="password" type="password" placeholder="Escribe tu Contraseña" >
-                    </div>
-                    </div>
-                    <div class="field">
-                      <div class="control">
-                        <button class="button is-success is-fullwidth">Login!</button>
-                      </div>
-                    </div>
-                    <span>¿Solo vienes de visita? <a href="">¡Oprime aquí!</a></span>
-                  </form>
-                  <span>¿Aún no tienes cuenta? <button @click="mostrar" class="button is-success is-small">¡Registrate aquí!</button></span>
+  <div id="contenedorprincipal" style="width:100%; height:100%;">
+    <nav class="navbar is-success">
+      <figure class="image is-64x64">
+        <img src="https://res.cloudinary.com/scute/image/upload/v1566791684/recursos/kkk_l5cccj.png" alt="">
+      </figure>
+      <h3 class="title is-4 navbar-item">Scute</h3>
+    </nav>
+    <div class="container">
+        <div class="columns is-centered is-mobile">
+          <div class="column is-12">
+            <div id="box1" class="box" v-if="register.valor ==1">
+              <div id="formtitle"><h1 class="title is-5">Loggeate y gana dinero dibujando</h1></div>
+              <div class="form">
+                <span v-if="error.tipo4 == true" class="help is-danger">Error, usuario y/o contraseña incorrectos</span>
+                <form @submit.prevent="login">
+                <div class="field">
+                  <div class="control">
+                    <input type="mail" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo4}" v-model="email" placeholder="Escribe tu Email">
+                  </div>
                 </div>
-                <div v-else class="form" id="form2">
-                  <h3 class="title is-4">¡Registrate y gana dinero publicando tus dibujos!</h3>
-    
-                <form method="post" id="Login" @submit.prevent="signup">
-                      <div class="Field">
-                      <div class="control">
-                        <input class="input" type="text" name="name" v-model="name" v-validate="'required'"  placeholder="Escribe tu Nombre">
-                      </div>
-                    </div>
-
-                        <div class="Field">
-                      <div class="control">
-                        <input class="input" type="text" name="username" v-model="username" v-validate="'required'"  placeholder="Escribe tu Nombre de usuario">
-                      </div>
-                    </div>
-
-                    <div class="Field">
-                      <div class="control">
-                        <input class="input" type="e-mail" name="email" v-model="email" v-validate="'required'" placeholder="Escribe tu E-mail">
-                      </div>
-                    </div>
-
-                      <div class="Field">
-                      <div class="control">
-                        <input class="input" type="Password" v-model="password"  placeholder="Escribe tu Contraseña">
-                      </div>
-                    </div>
-
-                    <div class="field">
-                      <div class="control">
-                        <button class="button is-success is-fullwidth">Registrame!</button>
-                      </div>
-                    </div>
-                    <span>Al hacer click en "Registrame!" estarás aceptando nuestros <a href="">Terminos y condiciones</a></span> <br>
-                    <span>¿Solo vienes de visita? <a href="">¡Oprime aquí!</a></span>
-                  </form>
-                
-                </div>               
+                <div class="field">
+                  <div class="control">
+                    <input type="password" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo4}" v-model="password" placeholder="Escribe tu contraseña">
+                  </div>
+                </div>
+                <div class="field">
+                  <div class="control">
+                    <button class="button is-success is-fullwidth">Login!</button>
+                    <span>¿Aún no tienes cuenta? <a @click="mostrar" > ¡Registrate aquí!</a> </span> <br>
+                    <span><a href="#">Olvidé mi contraseña</a></span>
+                  </div>
+                </div>
+                </form>
               </div>
-              
             </div>
 
-        </div>
+            <div v-else id="box2" class="box">
+              <div id="formtitle"><h1 class="title is-5">Registrate y gana dinero dibujando</h1></div>
+               <div class="form">
+                <form @submit.prevent="signup">
+                <span v-if="error.tipo3 == true" id="error" class="help is-danger">Verifica los siguientes datos, usuario y/o e-mail ya existentes</span>
+               <div class="field">
+                    <div class="control">
+                      <label>Escribe tu nombre</label>
+                      <input type="text" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo3}" v-model="name" v-name="name" v-validate="'required'" placeholder="No mayor a 10 Caracteres">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                      <label>Escribe tu nombre de usuario</label>
+                      <input type="text" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo3}" v-name="username" v-validate="'required'" v-model="username" placeholder="No mayor a 10 Caracteres">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                      <label>Escribe tu Email</label>
+                      <input type="email" v-bind:class="{'input is-fullwidth is-danger': error.tipo3}" class="input is-fullwidth" v-name="email" v-validate="'required'" v-model="email" placeholder="Una dirección Valida">
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                      <label>Escribe tu contraseña</label>
+                      <input type="password" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo1}" v-model="password" placeholder="No menor a 10 Caracteres">
+                      <span class="help is-danger" id="error" v-if="error.tipo1 == true">Ambas contraseñas no coinciden</span>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                      <label>Confirma tu contraseña</label>
+                      <input type="password" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo1}" v-model="confirmpassword" placeholder="Escribe nuevamente tu contraseña">
+                      <span id="error" class="help is-danger" v-if="error.tipo1 == true">Ambas contraseñas no coinciden</span>
+                    </div>
+                  </div>
+                  <div class="field">
+                    <div class="control">
+                      <button class="button is-fullwidth is-success" v-if="this.error.cargando == false">Registrame!</button>
+                      <button class="button is-fullwidth is-success is-loading" v-else>Registrame!</button>
+                      <span>Al hacer click en "Registrame!" estarás aceptando nuestros <a href="">Terminos y condiciones</a></span>
+                    </div>
+                  </div>
+                  </form>
+                </div>
+            </div>
           
+          </div>
         </div>
-      </div>
-      <footer><div id="foot">
-            </div></footer>
+    </div>
   </div>
 </template>
 
@@ -109,8 +113,12 @@ export default {
       name :'',
       username:'',
       email: '',
-      password: ''
+      password: '',
+      confirmpassword:'',
+      error:{tipo1: false, cargando:false, tipo3:false, tipo4:false }
 	}
+  },
+  created(){
   },
   mounted() {
       setTimeout(() => {
@@ -124,7 +132,9 @@ export default {
     },
 
       async signup() {
+      if(this.password == this.confirmpassword){
       try {
+        this.error.cargando = true
         await this.$axios.post('signup', {
           name: this.name,
           username: this.username,
@@ -148,12 +158,18 @@ export default {
         
 
       } catch (e) {
-		console.log("Error");
+    console.log("Error");
+        this.error.tipo3 = true
         console.log(e);
       }
+    } else{
+      this.error.tipo1 = true
+    }
+    this.error.cargando = false
     },
       
     mostrar (){
+
       if (this.register.valor == 1){
         this.register.valor ++;
       }
@@ -170,9 +186,9 @@ export default {
 
         this.$router.push('home')
       } catch (e) {
-        this.error = e.response.data.message
+        this.error.tipo4 = true
       }
-    }
+    },
     
 
 
@@ -184,83 +200,63 @@ export default {
 </script>
 
 <style scoped>
-#Homepagenav{
-  
-  height: 50px;
-  width: 100%;
-  background-color: #23d160
-}
-#logo{
-  position: relative;
-  left: 40%;
-}
-#Homepagenav img{
-  width:  45px;
-  height: 45px;
-}
-#Homepagenav h2{
-position: relative;
-display:inline-block;
-font-size: 33px !important;
-color: white;
-bottom: 10px;
-}
-#banner{
-  background-image: url('https://res.cloudinary.com/scute/image/upload/v1562085145/banner2-min_1_z9vzlb.png');
-  width: 100%;
-  height: 580px;
-}
-#foot{
-  width: 100%;
-  height: 30px;
-  background-color: #23d160;
-  z-index: 1;
-}
-
-#siteseal{
-  float: right;
-}
 
 
+nav{
+  display:flex;
+  justify-content: center;
+}
+h3{
+  margin:0% !important;
+  padding-left: 0px !important;
+  color:white;
+}
 
-#form{
+.box{
   background-color: black;
-  padding: 1em;
-  opacity: .70;
-  border-radius: 7px;
-  margin-top: 4em;
+  opacity: .70; 
 }
 
-#form2{
-  background-color: black;
-  padding: 1em;
-  opacity: .70;
-  border-radius: 7px;
-  margin-top: 1em;
+html, body{
+  height:100%
+  margin 0;
 }
 
-
-
-.control{
-  margin: 1em;
+#contenedorprincipal{
+  background-image: url('https://res.cloudinary.com/scute/image/upload/v1562085145/banner2-min_1_z9vzlb.png'); 
+  position: absolute;
+  height:100%;
+  overflow-x:hidden !important;
+  overflow-y:hidden !important;
 }
 
-#tit{
-  background-color:black;
-  opacity: .80;
-  border-radius: 7px;
-  padding: 1em;
-  margin-top: 1em !important;
-  z-index: 2 !important;
+#formtitle{
+  width: 100%;
+  display:flex;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
 h1{
+  font-weight: 700;
   color: white;
+  opacity: 1;
 }
-#contenedorprincipal{
-     overflow-x:hidden;
-     overflow-y:hidden;
-     width: auto;
+
+.box input,button{
+  opacity: 1 !important;
 }
+
+.box{
+  margin-top: 4em;
+}
+
+#box2{
+  margin-top: 2em;
+}
+#error, input{
+  margin-bottom: 0px !important;
+}
+
 
 </style>
