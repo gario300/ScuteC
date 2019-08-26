@@ -38,7 +38,7 @@
                                                 <span class="file-icon">
                                                     <i class="fas fa-images"></i>
                                                 </span>
-                     }                       </span>
+                                            </span>
                                         </label>
                                     </div>                                    
                                 </div>
