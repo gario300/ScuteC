@@ -85,6 +85,13 @@
           
           </div>
         </div>
+        <div v-if="register.valor == 1" class="columns is-centered">
+          <div id="formtitle" class="column is-12">
+            <figure  class="image is-128x128">
+              <img src="https://res.cloudinary.com/scute/image/upload/v1566837591/recursos/IgnorantSilverIsabellineshrike-max-1mb_qxrqn1.gif" alt="">
+            </figure>
+          </div>
+        </div>
     </div>
   </div>
 </template>
