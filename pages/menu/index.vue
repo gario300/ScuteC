@@ -59,6 +59,11 @@
                             Cambio de contraseña
                         </strong>
                     </li>
+                    <li class="list-item">
+                        <strong>
+                           <a @click="logout">Salir de la cuenta</a> 
+                        </strong>
+                    </li>
                     </ul>
 
                 </div>
@@ -87,7 +92,9 @@ import navbar from '@/components/navbar'
             this.me()
         },
         methods:{
-
+            async logout(){
+            await this.$auth.logout()
+            },
             me(){
                 this.$axios.get('/account/me')
                     .then(response => {
