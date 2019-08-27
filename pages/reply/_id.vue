@@ -28,8 +28,8 @@
                                         <favorite
                                     :post="post"
                                     :replies="replies"
-                                    :favorites="favorites"
-                                    :user="yo"
+                                    :favorites.sync="favorites"
+                                    :user="currentuser"
                                     /> 
                                     <button class="button is-text" @click="regresar">Regresar</button>
                                         </div>
@@ -48,10 +48,10 @@
                 <br>
                 <div class="column ">
                     
-                    <form @submit.prevent="responder(post.id, yo.id, post.user.id)">
+                    <form @submit.prevent="responder(post.id, post.user.id)">
                         <div class="field is-grouped">
                             <figure  class="image is-64x64">
-                        <img id="avatar" class="is-rounded" :src="yo.avatar" alt="">
+                        <img id="avatar" class="is-rounded" :src="currentuser.avatar" alt="">
                     </figure>
                             <textarea v-model="reply" placeholder="Responde" class="input is-success is-medium"></textarea>
                         <div class="control">
@@ -75,6 +75,7 @@
 import navbar from '@/components/navbar'
 import favorite from '@/components/favorite'
 import replies from '@/components/replies'
+import {mapState} from 'vuex'
 
 let moment = require ('moment')
 
@@ -83,10 +84,14 @@ let moment = require ('moment')
         components:{
             navbar, favorite, replies
         },
+        computed: {
+        ...mapState([
+        'currentuser'
+        ])
+        },
         data(){
             return{              
                 moment: moment,
-                yo:{},
                 postuser:{},
                 replies:[],
                 post:{},
@@ -96,34 +101,26 @@ let moment = require ('moment')
             }
         },
         created(){
-            this.me()
+            this.$store.dispatch('getusuario')
             this.getpost()
 
         },
             methods:{
-                
-                me(){
-                this.$axios.get('/account/me')
-                    .then(response => {
-                        this.yo = response.data.data;
-                        console.log(this.yo)
-                    })
-                },
 
                 async getpost(){
                    await this.$axios.get(`/posts/${this.$route.params.id}`)
                     .then(response => {
                     this.postuser = response.data.data.user
+                    this.favorites = response.data.data.favorites
                     this.replies = response.data.data.replies.reverse()
                     this.post =response.data.data
-                    this.favorites = response.data.data.favorites
                     })
                  },
                  async responder(postid, yoid, postuid){
                      await this.$axios.post(`/posts/reply/${this.post.id}`, {
                          reply : this.reply,
                          post_id : postid,
-                         user_id : yoid
+                         user_id : this.currentuser.id
                      }).then(response => {
                         this.reply = ''
                     })

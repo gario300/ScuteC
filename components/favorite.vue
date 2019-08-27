@@ -95,7 +95,7 @@
         computed:{
             isFavoritedByUser () {
                 for (const favorite of this.favorites) {
-                    if (favorite.user_id == this.user.id) {
+                    if (favorite.user_id === this.user.id) {
                         return true
                     }
                 }
@@ -129,8 +129,8 @@
                             return favorite.user_id !== this.user.id
                         })
                        this.$emit('update:favorites', filteredFavorites)
+                      this.block = false
                     })
-                    this.block = false
             }
         }
     }
