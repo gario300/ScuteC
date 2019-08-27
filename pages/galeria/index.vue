@@ -126,9 +126,6 @@
 import navbar from '@/components/navbar'
 import favorite from '@/components/favorite'
 import {mapState} from 'vuex'
-
-
-
 let moment = require ('moment')
     
     export default {

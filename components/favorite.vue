@@ -1,5 +1,6 @@
 <template>
     <div>
+      <template v-if="block == true">
         <nav id="posticons" class="level is-mobile">
         <div class="level-left">
           <nuxt-link :to="`/reply/${post.id}`" id="nolike" class="level-item" aria-label="reply">
@@ -8,7 +9,36 @@
               {{ replies.length }}
             </span>
           </nuxt-link>
-          <a id="like" v-if="isFavoritedByUser" @click="quitarfavorito" class="level-item" aria-label="like">
+          <a id="like" v-if="isFavoritedByUser " class="level-item" aria-label="like">
+            <span class="icon is-small">
+              <i class="fas fa-heart" aria-hidden="true"></i>
+              {{ favorites.length }}
+            </span>
+          </a>
+          <a id="nolike" v-else class="level-item" aria-label="like">
+            <span class="icon is-small">
+              <i class="fas fa-heart" aria-hidden="true"></i>
+              {{ favorites.length }}
+            </span>
+          </a>
+          <a id="gift" class="level-item" aria-label="retweet">
+            <span class="icon is-small">
+              <i aria-hidden="true" class="fas fa-gift"></i> 
+            </span>
+          </a>
+        </div>
+      </nav>      
+        </template>
+        <template v-else>
+        <nav id="posticons" class="level is-mobile">
+        <div class="level-left">
+          <nuxt-link :to="`/reply/${post.id}`" id="nolike" class="level-item" aria-label="reply">
+            <span  class="icon is-small">
+              <i class="fas fa-reply" aria-hidden="true"></i>
+              {{ replies.length }}
+            </span>
+          </nuxt-link>
+          <a id="like" v-if="isFavoritedByUser || block == true" @click="quitarfavorito" class="level-item" aria-label="like">
             <span class="icon is-small">
               <i class="fas fa-heart" aria-hidden="true"></i>
               {{ favorites.length }}
@@ -27,6 +57,7 @@
           </a>
         </div>
       </nav>
+      </template>
 
     </div>
 </template>
@@ -52,6 +83,11 @@
                 required: true
             }
         },
+        data(){
+          return{
+            block: false
+          }
+        },
         created(){
 
         },
@@ -69,30 +105,32 @@
         },
         methods:{
             async favorite(){
+              this.block = true
                 await this.$axios.post('/favorites/create', 
                    
                    { post_id: this.post.id },
                                                         
                 ).then(response => {
-                        this.favorites.push(response.data.data)
+                     this.favorites.push(response.data.data)
                     })
                     let respuesta = 'Añadió un ♥ a tu publicación '
                     await this.$axios.post(`/notif/newnoti/${this.post.id}`,{
                         notification_type : respuesta
                     })
+                    this.block = false
                 
             }, 
-            quitarfavorito () {
-
-                this.$axios.delete(`/favorites/destroy/${this.post.id}`, {
-                    })
+            async quitarfavorito () {
+              this.block = true
+                await this.$axios.delete(`/favorites/destroy/${this.post.id}`)
+                    
                     .then(response => {
                         const filteredFavorites = this.favorites.filter(favorite => {
                             return favorite.user_id !== this.user.id
                         })
-
-                        this.$emit('update:favorites', filteredFavorites)
+                       this.$emit('update:favorites', filteredFavorites)
                     })
+                    this.block = false
             }
         }
     }

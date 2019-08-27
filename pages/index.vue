@@ -259,7 +259,7 @@ h1{
 }
 
 #box2{
-  margin-top: 2em;
+  margin-top: .5em;
 }
 #error, input{
   margin-bottom: 0px !important;

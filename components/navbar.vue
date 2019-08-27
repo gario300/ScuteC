@@ -7,7 +7,7 @@
                         <a class="Elz" href="#" @click="home"><span><i class="fas fa-camera-retro fa-lg"></i></span></a>
                     </div>
                     <div class="column">
-                        <a href="#" class="Elz" @click="notificationspush" ><span><i class="fas fa-bell fa-lg"></i>{{notif.length}}</span></a>
+                        <a href="#" class="Elz" @click="notificationspush" ><span ><i class="fas fa-bell fa-lg"></i>{{notif.length}}</span></a>
                     </div>
                     <div class="column ">
                         <a href="#" class="Elz"><span><i class="fas fa-envelope fa-lg"></i></span></a>
@@ -34,7 +34,6 @@ import goals  from '@/components/goals'
         components: {
             goals
         },
-        
         data(){
             return{
                 homenav: false,
