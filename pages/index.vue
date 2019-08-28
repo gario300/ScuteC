@@ -230,7 +230,7 @@ h3{
   position: absolute;
   height:100%;
   overflow-x:hidden !important;
-  overflow-y: visible;
+  overflow-y: hidden;
   background-repeat: repeat 
 }
 
@@ -256,7 +256,7 @@ h1{
 }
 
 #box2{
-  margin-top: .5em;
+  margin-top: 0px;
 }
 #error, input{
   margin-bottom: 0px !important;
