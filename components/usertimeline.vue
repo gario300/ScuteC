@@ -4,7 +4,7 @@
         <article class="media">
     <div class="media-left">
       <figure class="image is-64x64">
-        <img :src="post.user.avatar" alt="Image">
+        <img class="is-rounded" :src="post.user.avatar" alt="Image">
       </figure>
     </div>
     <div id="barra" class="media-content">
@@ -72,6 +72,15 @@ let moment = require ('moment')
 #barra{
     height: auto !important;
     overflow-y: hidden !important;
+}
+
+figure img{
+  width: 64px;
+  height: 64px;
+  min-width: 64px;
+  max-width: 64px;
+  min-height: 64px;
+  max-heigth: 64px;
 }
 
 </style>
