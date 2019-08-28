@@ -134,6 +134,9 @@ import profilebody from '@/components/profilebody.vue';
             
         },
         methods: {
+            replace(){
+                this.$parent.userdata();
+            },
             onFileChange(e) {
                 let files = e.target.files || e.dataTransfer.files;
                 if (!files.length)
@@ -157,7 +160,7 @@ import profilebody from '@/components/profilebody.vue';
 				await this.$axios.put('/account/updateportada', {
                   portada: this.portada
                 })
-                this.infousuario()
+                this.replace()
                 this.portadapreview = false
                 },
                 primeracarga(){

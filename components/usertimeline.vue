@@ -80,7 +80,7 @@ figure img{
   min-width: 64px;
   max-width: 64px;
   min-height: 64px;
-  max-heigth: 64px;
+  max-height: 64px;
 }
 
 </style>

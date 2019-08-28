@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <div class="columns is-multiline">
-            <div class="column is-2" v-for="ufavorite in ufavorites" v-if="ufavorite.post.image !== null">
+            <div class="column is-2" v-for="ufavorite in ufavorites" v-if="ufavorite.post.image !== null && ufavorite.post !== null">
                 <nuxt-link :to="`/reply/${ufavorite.post.id}`"><div id="favoriteimage" 
                 v-bind:style="{ 'background-image': 'url(' + ufavorite.post.image + ')' }"
                 class="image is-2by3">
@@ -59,8 +59,6 @@
                 type: Object,
                 required: true
             }
-        },
-        methods:{
         }
     }
 </script>
