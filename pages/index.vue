@@ -16,7 +16,7 @@
                 <form @submit.prevent="login">
                 <div class="field">
                   <div class="control">
-                    <input type="mail" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo4}" v-model="email" placeholder="Escribe tu Email">
+                    <input type="mail" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo4}" v-model="email" name="email"  placeholder="Escribe tu Email">
                   </div>
                 </div>
                 <div class="field">
@@ -43,19 +43,19 @@
                <div class="field">
                     <div class="control">
                       <label>Escribe tu nombre</label>
-                      <input type="text" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo3}" v-model="name" v-name="name" v-validate="'required'" placeholder="No mayor a 10 Caracteres">
+                      <input type="text" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo3}" v-model="name" name="name" v-validate="'required'" placeholder="No mayor a 10 Caracteres">
                     </div>
                   </div>
                   <div class="field">
                     <div class="control">
                       <label>Escribe tu nombre de usuario</label>
-                      <input type="text" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo3}" v-name="username" v-validate="'required'" v-model="username" placeholder="No mayor a 10 Caracteres">
+                      <input type="text" class="input is-fullwidth" v-bind:class="{'input is-fullwidth is-danger': error.tipo3}" name="username" v-validate="'required'" v-model="username" placeholder="No mayor a 10 Caracteres">
                     </div>
                   </div>
                   <div class="field">
                     <div class="control">
                       <label>Escribe tu Email</label>
-                      <input type="email" v-bind:class="{'input is-fullwidth is-danger': error.tipo3}" class="input is-fullwidth" v-name="email" v-validate="'required'" v-model="email" placeholder="Una dirección Valida">
+                      <input type="email" v-bind:class="{'input is-fullwidth is-danger': error.tipo3}" class="input is-fullwidth" name="email" v-validate="'required'" v-model="email" placeholder="Una dirección Valida">
                     </div>
                   </div>
                   <div class="field">
@@ -97,7 +97,7 @@
 </template>
 
 <script>
-
+import VeeValidate from 'vee-validate'
 
 /*class uregister{
   constructor(name, username, email, password){
@@ -222,11 +222,7 @@ h3{
 .box{
   background-color: black;
   opacity: .70; 
-}
-
-html, body{
-  height:100%
-  margin 0;
+  padding: 10px;
 }
 
 #contenedorprincipal{
@@ -234,7 +230,6 @@ html, body{
   position: absolute;
   height:100%;
   overflow-x:hidden !important;
-  overflow-y:hidden !important;
 }
 
 #formtitle{

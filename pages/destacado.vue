@@ -33,8 +33,9 @@
             <div class="columns is-centered">
                 <div id="column" class="column is-12">
                     <div class="buttons has-addons">
-                        <button class="button is-success">Siguiendo</button>
-                        <button id="suscripciones" class="button is-success">Suscripciones</button>
+                        <button class="button is-success is-outlined">Siguiendo</button>
+                        <button class="button is-primary is-outlined">Descubre</button>
+                        <button id="suscripciones" class="button is-success is-outlined">Suscripciones</button>
                     </div>
                 </div>
             </div>
@@ -180,7 +181,13 @@ h2{
 }
 
 #suscripciones{
+    background-color: transparent;
+    border-color: #8a2be2;
+    color: #8a2be2;
+}
+#suscripciones:hover{
     background-color: #8a2be2;
+    border-color: #8a2be2;
     color: white;
 }
 #column{
