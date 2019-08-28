@@ -1,7 +1,7 @@
 <template>
     <div id="contenedor_principal">
         <navbar/>
-        <div id="slider">
+        <div v-if="destamenu.dibujo == true && destamenu.comicbook == false" id="slider">
             <h1 class="title is-3">Popular</h1>
             <ul>
                 <li v-for="destacado in destacados">
@@ -24,7 +24,7 @@
         </div>
         <div class="tabs">
             <ul>
-                <li><a>Dibujo</a></li>
+                <li v-bind:class="{'is-active': destamenu.dibujo}"><a>Dibujo</a></li>
                 <li><a>Comic-book</a></li>
             </ul>
         </div>
@@ -33,9 +33,19 @@
             <div class="columns is-centered">
                 <div id="column" class="column is-12">
                     <div class="buttons has-addons">
-                        <button class="button is-success is-outlined">Siguiendo</button>
+                        <button v-bind:class="{'button is-success': usermenu.seguidores,'button is-success is-outlined': !usermenu.seguidores }">Siguiendo</button>
                         <button class="button is-primary is-outlined">Descubre</button>
                         <button id="suscripciones" class="button is-success is-outlined">Suscripciones</button>
+                    </div>
+                </div>
+            </div>
+            <div  class="columns is-centered is-mobile">
+                <div class="column is-12">
+                    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit" class="contenedor">
+                    <usertimeline
+                    :posts="timelines"
+                    :currentuser="currentuser"
+                    />
                     </div>
                 </div>
             </div>
@@ -47,12 +57,13 @@
 <script>
 import navbar from '@/components/navbar'
 import favorite from '@/components/favorite'
+import usertimeline from '@/components/usertimeline'
 import {mapState} from 'vuex'
 let moment = require ('moment')
     export default {
         middleware: ['auth'],
         components: {
-            navbar, favorite
+            navbar, favorite,usertimeline
         },
         computed:{
         ...mapState([
@@ -61,12 +72,20 @@ let moment = require ('moment')
         },
         data(){
             return{
-                destacados: []
+                destacados: [],
+                timelines:[],
+                //scroll
+                busy : false,
+                limit: 10,
+                //menus
+                destamenu: {dibujo: true, comicbook:false},
+                usermenu: {seguidores: true, descubre:false, suscripciones: false}
             }
         },
         created(){
             this.$store.dispatch('getusuario')
             this.destacado()
+            this.loadMore()
         },
         mounted(){
 
@@ -77,11 +96,35 @@ let moment = require ('moment')
                 .then(response => {
                     this.destacados = response.data.data
                     
-                    console.log (destacados)
                 }).catch (e =>{
                     console.log(e)
                 })
-            }
+            },
+            async usertimeline(){
+              await  this.$axios.get('/usertimeline')
+                .then(response => {
+                    this.timelines = response.data.data
+                    
+                }).catch (e =>{
+                    console.log(e)
+                })
+            },
+            loadMore() {
+                console.log("scrolling");
+                
+                this.busy = true;   
+                this.$axios.get("/usertimeline").then(response => {
+                    const append = response.data.data.slice (this.timelines.length,this.timelines.length + this.limit )
+                    this.timelines = this.timelines.concat(append);
+                    
+                this.busy = false;
+                }).catch( (err) => {
+                    console.log(err)
+                    this.busy = false;
+                })
+                    
+                
+                }
         }
         
     }
