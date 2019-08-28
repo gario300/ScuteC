@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="contenedor_principal">
         <navbar/>
         <div id="slider">
             <h1 class="title is-3">Popular</h1>
@@ -87,6 +87,10 @@ let moment = require ('moment')
 </script>
 
 <style scoped>
+#contenedor_principal{
+     overflow-x:hidden;
+     overflow-y:hidden;
+}
 #slider{
     width: 100%;
     height: 400px;
