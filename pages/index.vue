@@ -230,7 +230,8 @@ h3{
   position: absolute;
   height:100%;
   overflow-x:hidden !important;
-  background-repeat: repeat; 
+  overflow-y: visible;
+  background-repeat: repeat 
 }
 
 #formtitle{
