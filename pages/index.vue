@@ -93,6 +93,10 @@
           </div>
         </div>
     </div>
+    <div class="notification is-success">
+  <button class="delete"></button>
+  <p>Tendrás que volver a registrarte debido a un error con la base de datos, lamentamos las molestias</p>
+</div>
   </div>
 </template>
 
@@ -230,7 +234,7 @@ h3{
   position: absolute;
   height:100%;
   overflow-x:hidden !important;
-  overflow-y: hidden;
+  overflow-y: visible;
   background-repeat: repeat 
 }
 
