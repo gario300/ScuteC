@@ -27,7 +27,7 @@
                         <form @submit.prevent="post(currentuser.id)">
                             <div class="field has-addons">
                                 <div class="control">
-                                    <input class="input is-large is-success" type="text" v-on:keyup="countdown" v-model="textbox" placeholder="Escribe algo rapido...">                                   
+                                    <input class="input is-large is-success" type="text" v-on:keyup="countdown" v-model="textbox" :placeholder="placeholder">                                   
                                 </div>
                                 <div class="field">
                                     <div class="file is-right is-success is-large" v-if="cargandopost == false">
@@ -138,6 +138,7 @@ import favorites from '@/components/favorites.vue'
                 textbox:'',
                 postpreview: false,
                 cargandopost: false,
+                placeholder: 'Escribe algo rapido',
                 //contador
                 maxCount: 300,
                 remainingCount: 300,
@@ -198,6 +199,10 @@ import favorites from '@/components/favorites.vue'
                 
                 post (){
                 this.cargandopost = true
+                if(this.textbox.length == 0){
+                    this.placeholder = 'No puede estar vacio'
+                    this.cargandopost = false
+                } else {
                 this.$axios.post('/post', {
                     post: this.textbox,
                     image : this.postimage
@@ -213,6 +218,7 @@ import favorites from '@/components/favorites.vue'
                 }).catch (e =>{
                     console.log(e)
                 })
+                }
             }
         
     }

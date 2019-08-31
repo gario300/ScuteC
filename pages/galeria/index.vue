@@ -207,6 +207,7 @@ let moment = require ('moment')
                 this.cargandopost = true
                 if(this.textinbox.length == 0){
                     this.placeholder = 'No puede estar vacio'
+                    this.cargandopost = false
                 } else {
                 this.$axios.post('/post', {
                     post: this.textinbox,
