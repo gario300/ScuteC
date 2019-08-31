@@ -26,7 +26,7 @@
                          </div>
                     </div>
                     <div class="field">
-                        <div class="button is-success is-loading is-fullwidth" v-if="cargandoimagen == true">Subir e ir a Home!</div>
+                        <div class="button is-success is-loading" v-if="cargandoimagen == true">Subir e ir a Home!</div>
                         <button v-else v-show="mostrarsubir == true" class="button is-success">Subir e ir a Galería!</button>
                         
                     </div>

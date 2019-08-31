@@ -25,7 +25,7 @@
                                         </div>
                                         <div class="column" >
                                             
-                                            <div class="file is-success  is-fullwidth">
+                                            <div v-if="cargandopost == false" class="file is-success  is-fullwidth">
                                                 <label class="file-label">
                                                     <input class="file-input" type="file" name="image" accept="image/png, image/jpeg" @change="onFileChange">
                                                     <span class="file-cta">
@@ -33,8 +33,16 @@
                                                     </span>
                                                 </label>
                                             </div>
+                                            <div v-else class="file is-success is-fullwidth">
+                                               <label class="file-label">
+                                                    <span class="file-cta">
+                                                        <i class="far fa-images fa-lg"></i>
+                                                    </span>
+                                                </label> 
+                                            </div>
                                            
-                                            <button id="post" class="button  is-normal is-success">Post</button>
+                                            <button v-if="cargandopost == false" id="post" class="button  is-normal is-success">Post</button>
+                                            <div v-else id="post" class="button is-normal is-success is-loading">Post</div>
                                         </div>
                                     </div>
                                 </form>
@@ -155,7 +163,9 @@ let moment = require ('moment')
                 //contador
                 maxCount: 300,
                 remainingCount: 300,
-                hasError: false
+                hasError: false,
+                //bloqueodebotones
+                cargandopost: false
             }
         },
         created(){
@@ -194,6 +204,7 @@ let moment = require ('moment')
                 },
                 //postear
             post (){
+                this.cargandopost = true
                 if(this.textinbox.length == 0){
                     this.placeholder = 'No puede estar vacio'
                 } else {
@@ -208,10 +219,12 @@ let moment = require ('moment')
                     this.textinbox = '';
                     this.imagepreview = false;
                     this.remainingCount = 300
+                    this.cargandopost = false
                     this.timeline()
                 }).catch (e =>{
                     console.log(e)
-                })}
+                })
+                }
             },
             
             async timeline(){

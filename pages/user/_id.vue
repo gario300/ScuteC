@@ -30,8 +30,7 @@
                                     <input class="input is-large is-success" type="text" v-on:keyup="countdown" v-model="textbox" placeholder="Escribe algo rapido...">                                   
                                 </div>
                                 <div class="field">
-                                    <div class="file is-right is-success is-large">
-                                        
+                                    <div class="file is-right is-success is-large" v-if="cargandopost == false">
                                         <label class="file-label">
                                             <input class="file-input" type="file" name="postimage" accept="image/png, image/jpeg" @change="onFileChange2">
                                             <span class="file-cta">
@@ -40,10 +39,22 @@
                                                 </span>
                                             </span>
                                         </label>
-                                    </div>                                    
+                                    </div>   
+
+                                    <div class="file is-right is-success is-large" v-else>
+                                        <label class="file-label">
+                                            <span class="file-cta">
+                                                <span class="file-icon">
+                                                    <i class="fas fa-images"></i>
+                                                </span>
+                                            </span>
+                                        </label>
+                                    </div>
+
                                 </div>
                             </div>
-                            <button class="button is-success is-fullwidth">Postear</button>
+                            <button v-if="cargandopost == false" class="button is-success is-fullwidth">Postear</button>
+                            <div v-else class="button is-success is-fullwidth is-loading"></div>
                         </form>
                             <template v-if="postpreview == true" >
                             <div class="columns is-centered is-mobile">
@@ -126,6 +137,7 @@ import favorites from '@/components/favorites.vue'
                 postfile: {} ,
                 textbox:'',
                 postpreview: false,
+                cargandopost: false,
                 //contador
                 maxCount: 300,
                 remainingCount: 300,
@@ -185,6 +197,7 @@ import favorites from '@/components/favorites.vue'
                 },
                 
                 post (){
+                this.cargandopost = true
                 this.$axios.post('/post', {
                     post: this.textbox,
                     image : this.postimage
@@ -195,6 +208,7 @@ import favorites from '@/components/favorites.vue'
                     this.textbox = '';
                     this.postpreview = false;
                     this.remainingCount= 300
+                    this.cargandopost = false
                     this.userdata()
                 }).catch (e =>{
                     console.log(e)
