@@ -16,7 +16,7 @@
                         <a href="#" @click="destacado" class="Elz"><span><i class="fas fa-star fa-lg"></i></span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" class="Elz"><span><i class="fas fa-search fa-lg"></i></span></a>
+                        <a href="#" @click="finder" class="Elz"><span><i class="fas fa-search fa-lg"></i></span></a>
                     </div>
                     <div class="column">
                         <a href="#" @click="menu" class="Elz"><span><i class="fas fa-bars fa-lg"></i></span></a>
@@ -63,6 +63,9 @@ import goals  from '@/components/goals'
                 async notificationspush(){
                     this.$router.push('/user/notifications')
                 
+                },
+                finder(){
+                    this.$router.push('/finder')
                 },
 
                 async getnotif(){
