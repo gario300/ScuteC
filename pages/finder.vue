@@ -15,7 +15,7 @@
                 </div>
             </div>
                 <h1 v-if="error.busqueda == true && error.error == false" class="title is-4">Busca a un usuario...</h1>
-                <h1 v-if="error.error == true" class="title is-4 is-danger">{{danger}}</h1>
+    
             <div class="columns" v-for="usuario in usuarios">
                 <div class="column is-12">
                     
@@ -85,7 +85,6 @@ import {mapState} from 'vuex'
                 }).catch (e =>{
                     console.log(e)
                     this.danger = e
-                    this.error.error = true
                 })
             }
         }
