@@ -20,10 +20,11 @@
                 <div class="column is-12">
                     
                     <div class="box">
+                        <nuxt-link id="link" :to="`/user/${usuario.username}`">
                         <article class="media">
                             <div class="media-left">
                             <figure class="image is-64x64">
-                                <img :src="usuario.avatar">
+                                <img class="is-rounded" :src="usuario.avatar">
                             </figure>
                             </div>
                             <div class="media-content">
@@ -33,9 +34,14 @@
                                 <br>
                                 {{usuario.bio}}
                                 </p>
+                                <p id="inline">
+                                <span class="help is-success">Seguidores: {{usuario.followers.length}} </span>
+                                <span class="help is-primary"> &nbsp;&nbsp; Siguiendo: {{usuario.following.length}}</span>
+                                </p>
                             </div>
                             </div>
                         </article>
+                        </nuxt-link>
                     </div>
                 </div>
             </div>
@@ -90,5 +96,22 @@ import {mapState} from 'vuex'
 <style scoped>
 .field{
 margin-top : 10px;
+}
+
+#inline{
+    display: flex;
+}
+
+figure img{
+    max-width: 64px;
+    max-height: 64px;
+    width: 64px;
+    height: 64px;
+    min-width: 64px;
+    min-height: 64px;
+}
+
+#link{
+    color: black;
 }
 </style>
