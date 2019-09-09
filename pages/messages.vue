@@ -4,22 +4,16 @@
         <div class="container">
             <div class="columns is-hidden-desktop is-gapless is-multiline">
                 <div class="column is-12">
-                        <table class="table table is-fullwidth is-bordered is-striped">
-                            <tbody id="menumobile">
-                                <tr>
                                     <div class="tabs">
                                         <ul>
                                             <li v-for="conversation in conversations" ><a @click="current(conversation.id)">
                                             <figure class="image is-48x48">
-                                                <img v-if="currentuser.id !== conversation.Emisorid" class="is-rounded" :src="conversation.Emisoravatar" alt="Image">
-                                                <img v-else class="is-rounded" :src="conversation.Receptoravatar" alt="Image">
+                                                <img id="contacts" v-if="currentuser.id !== conversation.Emisorid" class="is-rounded" :src="conversation.Emisoravatar" alt="Image">
+                                                <img v-else id="contacts" class="is-rounded" :src="conversation.Receptoravatar" alt="Image">
                                             </figure>
                                             </a></li>
                                         </ul>
                                     </div>
-                                </tr>
-                            </tbody>
-                        </table>
                     </div>
                     <div class="column is-12">
 
@@ -35,7 +29,7 @@
                                         <article class="media">
                                             <div class="media-left">
                                                 <figure class="image is-64x64">
-                                                    <img class="is-rounded" :src="busqueda.avatar" alt="Image">
+                                                    <img id="contactos2" class="is-rounded" :src="busqueda.avatar" alt="Image">
                                                 </figure>
                                             </div>
                                             <div class="media-content">
@@ -103,7 +97,7 @@
                                         <div class="media-left">
                                             <figure class="image is-64x64">
                                                 <img v-if="currentuser.id !== conversation.Emisorid" class="is-rounded" :src="conversation.Emisoravatar" alt="Image">
-                                                <img v-else class="is-rounded" :src="conversation.Receptoravatar" alt="Image">
+                                                <img v-else id="contacts2" class="is-rounded" :src="conversation.Receptoravatar" alt="Image">
                                             </figure>
                                         </div>
                                         <div class="media-content">
@@ -258,7 +252,7 @@ import { async } from 'q';
             async getconversations (){
                 await this.$axios.get ('/mensajeria/conversations')
                 .then(response => {
-                    this.conversations = (response.data.data)
+                    this.conversations = response.data.data.reverse()
                     console.log(this.conversations)
                 })
             },
@@ -270,6 +264,7 @@ import { async } from 'q';
                 this.enviando = false
                 this.find =''
                 this.busquedas = []
+                this.getconversations()
             },
             async current (id){
                 await this.$axios.get (`/mensajeria/${id}`)
@@ -394,5 +389,21 @@ ul li{
 }
 small{
     display: flex;
+}
+#contacts{
+    height: 48px;
+    width: 48px;
+    max-width: 48px ;
+    min-width: 48px;
+    max-height: 48px;
+    min-height: 48px;
+}
+#contacts2{
+    height: 64px;
+    width: 64px;
+    max-width: 64px ;
+    min-width: 64px;
+    max-height: 64px;
+    min-height: 64px;
 }
 </style>
