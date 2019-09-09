@@ -10,7 +10,7 @@
                         <a href="#" class="Elz" @click="notificationspush" ><span ><i class="fas fa-bell fa-lg"></i>{{notif.length}}</span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" class="Elz"><span><i class="fas fa-envelope fa-lg"></i></span></a>
+                        <a href="#" class="Elz"><span><i class="fas fa-envelope fa-lg"></i>{{notisend.length}}</span></a>
                     </div>
                     <div class="column ">
                         <a href="#" @click="destacado" class="Elz"><span><i class="fas fa-star fa-lg"></i></span></a>
@@ -37,7 +37,8 @@ import goals  from '@/components/goals'
         data(){
             return{
                 homenav: false,
-                notif: []
+                notif: [],
+                notisend: []
             }
         },
         created (){
@@ -73,9 +74,10 @@ import goals  from '@/components/goals'
                     .then(response => {
                     this.notif = response.data.data
                     })
-
-                    
-
+                    await this.$axios.get('mensajeria/notisender')
+                    .then(response => {
+                    this.notisend = response.data.data
+                    })
                 }
             
         }
