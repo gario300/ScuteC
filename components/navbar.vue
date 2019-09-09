@@ -10,7 +10,7 @@
                         <a href="#" class="Elz" @click="notificationspush" ><span ><i class="fas fa-bell fa-lg"></i>{{notif.length}}</span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" class="Elz"><span><i class="fas fa-envelope fa-lg"></i>{{notisend.length}}</span></a>
+                        <a href="#" class="Elz" @click="messages" ><span><i class="fas fa-envelope fa-lg"></i>{{notisend.length}}</span></a>
                     </div>
                     <div class="column ">
                         <a href="#" @click="destacado" class="Elz"><span><i class="fas fa-star fa-lg"></i></span></a>
@@ -38,16 +38,18 @@ import goals  from '@/components/goals'
             return{
                 homenav: false,
                 notif: [],
-                notisend: []
+                notisend: {}
             }
         },
         created (){
             this.getnotif()
+            this.getseenders()
 
         },
         mounted(){
             setInterval(() => {
             this.getnotif()
+            this.getseenders()
             }, 30000)
         },
         methods: {
@@ -57,6 +59,9 @@ import goals  from '@/components/goals'
             },
             destacado(){
                this.$router.push('/destacado') 
+            },
+            messages(){
+                this.$router.push('/messages') 
             },
             menu(){
                 this.$router.push('/menu')
@@ -74,7 +79,9 @@ import goals  from '@/components/goals'
                     .then(response => {
                     this.notif = response.data.data
                     })
-                    await this.$axios.get('mensajeria/notisender')
+                },
+                async getseenders(){
+                    await this.$axios.get('notif/notisending')
                     .then(response => {
                     this.notisend = response.data.data
                     })

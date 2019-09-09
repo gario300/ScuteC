@@ -114,7 +114,9 @@
                                                     </strong>
                                                     <strong v-else>
                                                         {{conversation.Receptor}}
-                                                    </strong>
+                                                    </strong> <br>
+                                                    <strong v-if="conversation.seenders.length == 0" class="help is-primary">Mensajes nuevos: {{conversation.seenders.length}}</strong>
+                                                    <strong v-else class="help is-danger">Mensajes nuevos: {{conversation.seenders.length}}</strong>
                                                 </p>
                                             </div>
                                         </div>
@@ -273,11 +275,13 @@ import { async } from 'q';
                 await this.$axios.get (`/mensajeria/${id}`)
                 .then(response => {
                     this.currentconversations = (response.data.data)
-                    this.seenders = (response.data.seenders)
-                    console.log(this.seenders)
-                    this.state.currentconversation = true
-                    
                 })
+                await this.$axios.get (`/mensajeria/timline/${id}`)
+                .then(response => {
+                    this.seenders = (response.data.data)
+                    })
+                await this.$axios.put(`/mensajeria/isreaded/${id}`)    
+                this.state.currentconversation = true
                 await this.scroll()
             },
             async newmensaje (converid, user1, user2){

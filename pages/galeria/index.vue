@@ -237,7 +237,6 @@ let moment = require ('moment')
                 })
             },
             loadMore() {
-      console.log("scrolling");
       
       this.busy = true;   
       this.$axios.get("users/timeline").then(response => {
