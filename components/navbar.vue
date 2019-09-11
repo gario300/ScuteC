@@ -24,11 +24,15 @@
                 </div>
             </div>
         </nav>
+        <goals
+        :goals="goals"
+        />
     </div>
 </template>
 
 <script>
 import goals  from '@/components/goals'
+import { async } from 'q';
     export default {
         name: 'navbar',
         components: {
@@ -38,18 +42,17 @@ import goals  from '@/components/goals'
             return{
                 homenav: false,
                 notif: [],
-                notisend: {}
+                notisend: {},
+                goals:[]
             }
         },
         created (){
             this.getnotif()
-            this.getseenders()
 
         },
         mounted(){
             setInterval(() => {
             this.getnotif()
-            this.getseenders()
             }, 30000)
         },
         methods: {
@@ -78,14 +81,25 @@ import goals  from '@/components/goals'
                     await  this.$axios.get('notif/getnotiview')
                     .then(response => {
                     this.notif = response.data.data
+                    this.getseenders()
                     })
+                    await  this.$axios.post('/account/goals')
+                    this.getgoal()
                 },
                 async getseenders(){
                     await this.$axios.get('notif/notisending')
                     .then(response => {
                     this.notisend = response.data.data
                     })
+                },
+
+                async getgoal(){
+                    await  this.$axios.get('/account/getgoal')
+                    .then(response => {
+                    this.goals = response.data.data
+                    })
                 }
+
             
         }
   

@@ -3,11 +3,23 @@
 
         <div class="columns">
             <div class="column is-4 is-offset-8">
-                <div id="notificacion" class="notification is-primary">
-                    <button class="delete"></button>
-                        Primar lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit lorem ipsum dolor. <strong>Pellentesque risus mi</strong>, tempus quis placerat ut, porta nec nulla. Vestibulum rhoncus ac ex sit amet fringilla. Nullam gravida purus diam, et dictum <a>felis venenatis</a> efficitur. Sit amet,
-                        consectetur adipiscing elit
+                <div id="notificacion" v-for="goal in goals" class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-64x64">
+                                    <img :src="goal.goal.placa">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>¡Logro desbloqueado! <br> <strong>{{goal.goal.title}}</strong>
+                                    {{goal.goal.description}}</p>
+                                </div>
+                            </div>
+                            <div class="media-rigth">
+                                <button @click="view(goal.goal.id)" class="delete"></button>
+                            </div>
+                        </article>
                     </div>
                 </div>
         </div>
@@ -18,7 +30,20 @@
 
 <script>
     export default {
-        name: 'goals'
+        name: 'goals',
+        props:{
+            goals:{
+                type: Array,
+                required: true
+            }
+
+        },
+        methods:{
+            async view(id){
+                await this.$axios.put(`/account/readgoal/${id}`)
+                this.$parent.getgoal();
+            }
+        }
         
     }
 </script>
@@ -28,10 +53,11 @@
 
 #notificacion{
     background-color: black !important;
-    opacity: .70;
-    position:fixed;
-    z-index: 3;
+    opacity: .90;
+    position: fixed;
+    z-index: 10;
 
 }
+
 
 </style>

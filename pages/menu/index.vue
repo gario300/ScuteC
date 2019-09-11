@@ -16,7 +16,7 @@
                         <strong id="contadordepuntos">{{yo.puntos}}</strong>
                     </li>
                     <li class="list-item">
-                        <strong>Logros</strong>
+                        <nuxt-link to="menu/logros"><strong>Logros</strong></nuxt-link>
                     </li>
                     <li class="list-item">
                         <strong>

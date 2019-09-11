@@ -33,8 +33,8 @@
             <div class="columns is-centered">
                 <div id="column" class="column is-12">
                     <div class="buttons has-addons">
-                        <button v-bind:class="{'button is-success': usermenu.seguidores,'button is-success is-outlined': !usermenu.seguidores }">Siguiendo</button>
-                        <button class="button is-primary is-outlined">Descubre</button>
+                        <button @click="seguidores" v-bind:class="{'button is-success': usermenu.seguidores,'button is-success is-outlined': !usermenu.seguidores }">Siguiendo</button>
+                        <button @click="battle" v-bind:class="{'button is-primary': usermenu.batle,'button is-primary is-outlined': !usermenu.batle }">Battle Royale</button>
                         <button id="suscripciones" class="button is-success is-outlined">Suscripciones</button>
                     </div>
                 </div>
@@ -42,11 +42,14 @@
             <div  class="columns is-centered is-mobile">
                 <div class="column is-12">
                     <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit" class="contenedor">
-                    <usertimeline
+                    <usertimeline v-if="usermenu.seguidores == true && usermenu.batle == false"
                     :posts="timelines"
                     :currentuser="currentuser"
                     />
                     </div>
+                    <royal v-if="usermenu.batle == true && usermenu.seguidores == false"
+                    :positions="positions"
+                    />
                 </div>
             </div>
         </div>
@@ -58,12 +61,14 @@
 import navbar from '@/components/navbar'
 import favorite from '@/components/favorite'
 import usertimeline from '@/components/usertimeline'
+import royal from '@/components/royal'
 import {mapState} from 'vuex'
+import { async } from 'q';
 let moment = require ('moment')
     export default {
         middleware: ['auth'],
         components: {
-            navbar, favorite,usertimeline
+            navbar, favorite,usertimeline,royal
         },
         computed:{
         ...mapState([
@@ -77,9 +82,11 @@ let moment = require ('moment')
                 //scroll
                 busy : false,
                 limit: 10,
+                positions: [],
                 //menus
+                busysobrebusy : false,
                 destamenu: {dibujo: true, comicbook:false},
-                usermenu: {seguidores: true, descubre:false, suscripciones: false}
+                usermenu: {seguidores: true, batle:false, suscripciones: false}
             }
         },
         created(){
@@ -111,8 +118,10 @@ let moment = require ('moment')
             },
             loadMore() {
                 console.log("scrolling");
-                
-                this.busy = true;   
+                if(this.busysobrebusy == true){
+                this.busy = false; 
+                } else {
+                this.busy = true
                 this.$axios.get("/usertimeline").then(response => {
                     const append = response.data.data.slice (this.timelines.length,this.timelines.length + this.limit )
                     this.timelines = this.timelines.concat(append);
@@ -122,12 +131,29 @@ let moment = require ('moment')
                     console.log(err)
                     this.busy = false;
                 })
-                    
-                
                 }
-        }
-        
+                
+                },
+                async battle(){
+                    this.busysobrebusy = true
+                    this.usermenu.seguidores = false
+                    this.usermenu.batle = true
+                        await this.$axios.get('/royal')
+                        .then(response => {
+                            this.positions = response.data.data
+                        })
+                },
+
+                 seguidores(){
+                    this.busysobrebusy = false
+                    this.usermenu.seguidores = true
+                    this.usermenu.batle = false
+                }
+
     }
+}
+        
+    
 </script>
 
 <style scoped>

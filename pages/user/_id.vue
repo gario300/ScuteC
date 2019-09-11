@@ -240,5 +240,10 @@ import favorites from '@/components/favorites.vue'
      overflow-y:hidden !important;
 }
 
+figure img {
+    position: relative;
+    z-index: 2;
+}
+
 
 </style>
