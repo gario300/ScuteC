@@ -4,7 +4,7 @@
         <div class="container">
             <div class="columns">
                 <div class="column is-12">
-                    <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                    <table class="table is-bordered is-striped is-hoverable is-fullwidth">
                         <tbody>
                             <tr v-for="goal in goals">
                                 <td class="has-text-centered"><img class="image is-48x48" :src="goal.placa"></td>
@@ -39,6 +39,11 @@ import {mapState} from 'vuex'
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
+
+.container{
+    overflow-y: hidden;
+    overflow-x: hidden;
+}
 
 </style>
