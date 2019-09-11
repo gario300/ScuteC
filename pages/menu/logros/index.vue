@@ -9,7 +9,6 @@
                             <tr v-for="goal in goals">
                                 <td class="has-text-centered"><img class="image is-48x48" :src="goal.placa"></td>
                                 <td><p class="has-text-centered"><strong>{{goal.title}}</strong></p></td>
-                                <td><p class="has-text-centered"><strong>{{goal.description}}</strong></p></td>
                             </tr>
                         </tbody>
                     </table>
@@ -42,8 +41,14 @@ import {mapState} from 'vuex'
 <style scoped>
 
 .container{
-    overflow-y: hidden;
-    overflow-x: hidden;
+     overflow-x:hidden !important;
+     overflow-y:hidden !important;
 }
+
+td{
+    display: flex;
+    justify-content: center
+}
+
 
 </style>

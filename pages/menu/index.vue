@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="contenedorprincipal">
         <navbar></navbar>
         <div class="columns is-centered">
             <div class="column is-12">
@@ -116,6 +116,10 @@ li figure, #contadordepuntos {
 }
 #Configuracion{
     background-color: #e6ef2d !important;
+}
+#contenedorprincipal{
+     overflow-x:hidden !important;
+     overflow-y:hidden !important;
 }
 
 </style>
