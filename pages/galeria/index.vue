@@ -74,56 +74,48 @@
 
 
         <!-- Post-box -->
-        <div class="colums">
-            <div class="column is-8 is-offset-2">
-            <div id="contenedor" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">   
-  <div  v-for="post in posts" :posts.sync="posts"
-    :user="currentuser" :key="post.id" class="box">
-  <article  class="media">
-    <div  class="media-left">
-      <figure  class="image is-64x64">
-        <nuxt-link :to="`/user/${post.user.username}`"><img id="postuserimage" class="is-rounded" :src="post.user.avatar"></nuxt-link>
-      </figure>
-      <small v-if="post.user.Partner == true"  id="partner" class="button is-small is-rounded is-outlined"> <span>Partner</span></small>
-    </div>
-    <div id="barra" class="media-content">
-      <div class="content">     
-        <p>
-           <nuxt-link id="link" :to="`/user/${post.user.username}`"><strong>{{post.user.username}}</strong></nuxt-link>  <small>{{moment(post.created_at).fromNow()}}</small>  <small>
-            <button v-if="post.user_id == currentuser.id" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button>
-            <span id="seguir"><i class="fas fa-star"></i></span>
-          </small>
-          <br>
-          {{post.post}} 
-        </p>
+        <div class="colums" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">
+                <div class="column is-8 is-offset-2">
+            <div  v-for="(post, id) in posts" :key="id" :posts.sync="posts"
+                :user="currentuser" class="box">
+                    <article  class="media">
+                        <div  class="media-left">
+                        <figure  class="image is-64x64">
+                            <nuxt-link :to="`/user/${post.user.username}`"><img id="postuserimage" class="is-rounded" :src="post.user.avatar"></nuxt-link>
+                        </figure>
+                        <small v-if="post.user.Partner == true"  id="partner" class="button is-small is-rounded is-outlined"> <span>Partner</span></small>
+                        </div>
+                        <div id="barra" class="media-content">
+                        <div class="content">     
+                            <p>
+                            <nuxt-link id="link" :to="`/user/${post.user.username}`"><strong>{{post.user.username}}</strong></nuxt-link>  <small>{{moment(post.created_at).fromNow()}}</small>  <small>
+                                <button v-if="post.user_id == currentuser.id" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button>
+                                <span id="seguir"><i class="fas fa-star"></i></span>
+                            </small>
+                            <br>
+                            {{post.post}} 
+                            </p>
+                            
+                        </div>  
+                            <div id="postimage" class="image is-4by3" v-show="post.image !== null" v-bind:style="{ 'background-image': 'url(' + post.image + ')' }">
+
+                            </div>
+                            <favorite
+                        :post="post"
+                        :replies.sync="post.replies"
+                        :favorites.sync="post.favorites"
+                        :user="currentuser"
+                        /> 
+                        </div>
+            </article>
         
-      </div>  
-        <div id="postimage" class="image is-4by3" v-show="post.image !== null" v-bind:style="{ 'background-image': 'url(' + post.image + ')' }">
-
-        </div>
-          <favorite
-    :post="post"
-    :replies.sync="post.replies"
-    :favorites.sync="post.favorites"
-    :user="currentuser"
-    /> 
-    </div>
-    
-  </article>
-    
-</div>
- 
-</div> 
-   
-</div>
-
-        </div>
-        <!-- Post-box -->
-        <div v-show="busy == true" class="columns is-centered">
-            <div class="column is-half">
-                <button class="button is-fullwidth is-loading"></button>
             </div>
-        </div>
+    
+        </div> 
+   
+
+    </div>
+        <!-- Post-box -->
          </div>
         
 
@@ -157,7 +149,7 @@ let moment = require ('moment')
                 moment : moment,
                 prueba: [],
                 busy : false,
-                limit: 10,
+                limit: 8,
                 results: [],
                 placeholder: 'Publica algo',
                 //contador
@@ -221,7 +213,7 @@ let moment = require ('moment')
                     this.imagepreview = false;
                     this.remainingCount = 300
                     this.cargandopost = false
-                    this.timeline()
+                    this.loadMore()
                 }).catch (e =>{
                     console.log(e)
                 })
@@ -229,6 +221,7 @@ let moment = require ('moment')
             },
             
             async timeline(){
+                this.posts = ['']
               await  this.$axios.get('users/timeline')
                 .then(response => {
                     this.posts = (response.data.data)
@@ -237,24 +230,21 @@ let moment = require ('moment')
                 })
             },
             loadMore() {
-      
-      this.busy = true;   
-      this.$axios.get("users/timeline").then(response => {
-        const append = response.data.data.slice (this.posts.length,this.posts.length + this.limit )
-        this.posts = this.posts.concat(append);
-        
-      this.busy = false;
-      }).catch( (err) => {
-          console.log(err)
-        this.busy = false;
-      })
-        
-    
-    },
+                this.busy = true;   
+                this.$axios.get("users/timeline").then(response => {
+                    const append = response.data.data.slice (this.posts.length,this.posts.length + this.limit )
+                    this.posts = this.posts.concat(append);
+                    
+                this.busy = false;
+                }).catch( (err) => {
+                    console.log(err)
+                    this.busy = false;
+                })
+            },
             eliminarpost(id){
                 this.$axios.delete('posts/destroy/'+id)
-                .then(data =>{                    
-                this.timeline();
+                .then(data =>{   
+
                 })
             },
             
@@ -318,7 +308,7 @@ let moment = require ('moment')
     background-repeat: no-repeat;
     background-color:black;
     background-position: center;
-    background-size: 100% auto ;
+    background-size: auto 100% ;
 }
 
 #link{
