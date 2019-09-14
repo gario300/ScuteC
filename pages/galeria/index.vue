@@ -74,7 +74,7 @@
 
 
         <!-- Post-box -->
-        <div class="colums" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">
+        <div id="scrollinfinite" class="colums" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">
                 <div class="column is-8 is-offset-2">
             <div  v-for="(post, id) in posts" :key="id" :posts.sync="posts"
                 :user="currentuser" class="box">
@@ -301,6 +301,7 @@ let moment = require ('moment')
 #contenedor_principal{
      overflow-x:hidden;
      overflow-y:hidden;
+     -webkit-user-drag: none;
 }
 
 #postimage{
@@ -317,6 +318,7 @@ let moment = require ('moment')
 #contador {
     float: right !important;
 }
+
 
 
 </style>
