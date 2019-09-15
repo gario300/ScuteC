@@ -1,5 +1,5 @@
 <template>
-    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit" id="contenedor_principal">
+    <div id="contenedor_principal">
         <navbar/>
         <!-- Userbox -->
     <div class="container">
@@ -116,6 +116,7 @@
    
 
     </div>
+    <infinite-loading @infinite="infinitehandler"></infinite-loading>
         <!-- Post-box -->
          </div>
         
@@ -147,6 +148,7 @@ let moment = require ('moment')
                 imagepreview : false,
                 vimodel: '',
                 posts:[],
+                page: 0,
                 moment : moment,
                 prueba: [],
                 busy : false,
@@ -158,15 +160,30 @@ let moment = require ('moment')
                 remainingCount: 300,
                 hasError: false,
                 //bloqueodebotones
-                cargandopost: false
+                cargandopost: false,
             }
         },
         created(){
             this.$store.dispatch('getusuario')
-            this.loadMore()
             
         },
         methods:{
+            async infinitehandler($state){
+            this.page ++
+              await this.$axios.get(`users/timeline/${this.page}`)
+                .then(response => {
+                    let lista = response.data.data.data
+                    console.log(response.data.data)
+                    if(lista.length){
+                        this.posts = this.posts.concat(lista)
+                        $state.loaded()
+                    }else {
+                        $state.complete()
+                    }
+                })
+
+            },
+            
             countdown: function() {
             this.remainingCount = this.maxCount - this.textinbox.length;
             this.hasError = this.remainingCount < 0;
@@ -214,33 +231,10 @@ let moment = require ('moment')
                     this.imagepreview = false;
                     this.remainingCount = 300
                     this.cargandopost = false
-                    this.loadMore()
                 }).catch (e =>{
                     console.log(e)
                 })
                 }
-            },
-            
-            async timeline(){
-                this.posts = ['']
-              await  this.$axios.get('users/timeline')
-                .then(response => {
-                    this.posts = (response.data.data)
-                }).catch (e =>{
-                    console.log(e)
-                })
-            },
-            loadMore() {
-                this.busy = true;   
-                this.$axios.get("users/timeline").then(response => {
-                    const append = response.data.data.slice (this.posts.length,this.posts.length + this.limit )
-                    this.posts = this.posts.concat(append);
-                    
-                this.busy = false;
-                }).catch( (err) => {
-                    console.log(err)
-                    this.busy = false;
-                })
             },
             eliminarpost(id){
                 this.$axios.delete('posts/destroy/'+id)
