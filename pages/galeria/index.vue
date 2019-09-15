@@ -1,5 +1,5 @@
 <template>
-    <div id="contenedor_principal">
+    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit" id="contenedor_principal">
         <navbar/>
         <!-- Userbox -->
     <div class="container">
@@ -74,10 +74,11 @@
 
 
         <!-- Post-box -->
-        <div id="scrollinfinite" class="colums" v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit">
-                <div class="column is-8 is-offset-2">
-            <div  v-for="(post, id) in posts" :key="id" :posts.sync="posts"
-                :user="currentuser" class="box">
+        <div id="scrollinfinite"  class="colums"
+        v-for="(post, id) in posts" :key="id" :posts.sync="posts"
+        :user="currentuser">
+                <div id="columna" class="column is-8 is-offset-2">
+            <div  class="box">
                     <article  class="media">
                         <div  class="media-left">
                         <figure  class="image is-64x64">
@@ -301,7 +302,7 @@ let moment = require ('moment')
 #contenedor_principal{
      overflow-x:hidden;
      overflow-y:hidden;
-     -webkit-user-drag: none;
+    -webkit-user-drag: none;
 }
 
 #postimage{
@@ -319,6 +320,17 @@ let moment = require ('moment')
     float: right !important;
 }
 
+#scrollinfinite{
+    -webkit-user-drag: none;
+}
+
+#scrollinfinite:last-child{
+    margin-bottom: 0px;
+}
+
+#columna:last-child{
+    margin-bottom: 0px;
+}
 
 
 </style>
