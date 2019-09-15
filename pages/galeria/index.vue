@@ -231,6 +231,9 @@ let moment = require ('moment')
                     this.imagepreview = false;
                     this.remainingCount = 300
                     this.cargandopost = false
+                    this.page = 0
+                    this.posts = []
+                    this.infinitehandler()
                 }).catch (e =>{
                     console.log(e)
                 })
@@ -239,7 +242,9 @@ let moment = require ('moment')
             eliminarpost(id){
                 this.$axios.delete('posts/destroy/'+id)
                 .then(data =>{   
-
+                    this.page = 0
+                    this.posts = []
+                    this.infinitehandler()
                 })
             },
             

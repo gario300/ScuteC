@@ -41,11 +41,9 @@
             </div>
             <div  class="columns is-centered is-mobile">
                 <div class="column is-12">
-                    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="limit" class="contenedor">
+                    <div class="contenedor">
                     <usertimeline v-if="usermenu.seguidores == true && usermenu.batle == false"
-                    :posts="timelines"
-                    :currentuser="currentuser"
-                    />
+                    :currentuser="currentuser"/>
                     </div>
                     <royal v-if="usermenu.batle == true && usermenu.seguidores == false"
                     :positions="positions"
@@ -78,21 +76,18 @@ let moment = require ('moment')
         data(){
             return{
                 destacados: [],
-                timelines:[],
                 //scroll
-                busy : false,
                 limit: 10,
                 positions: [],
                 //menus
                 busysobrebusy : false,
                 destamenu: {dibujo: true, comicbook:false},
-                usermenu: {seguidores: true, batle:false, suscripciones: false}
+                usermenu: {seguidores: true, batle:false, suscripciones: false},
             }
         },
         created(){
             this.$store.dispatch('getusuario')
             this.destacado()
-            this.loadMore()
         },
         mounted(){
 
@@ -107,35 +102,10 @@ let moment = require ('moment')
                     console.log(e)
                 })
             },
-            async usertimeline(){
-              await  this.$axios.get('/usertimeline')
-                .then(response => {
-                    this.timelines = response.data.data
-                    
-                }).catch (e =>{
-                    console.log(e)
-                })
-            },
-            loadMore() {
-                console.log("scrolling");
-                if(this.busysobrebusy == true){
-                this.busy = false; 
-                } else {
-                this.busy = true
-                this.$axios.get("/usertimeline").then(response => {
-                    const append = response.data.data.slice (this.timelines.length,this.timelines.length + this.limit )
-                    this.timelines = this.timelines.concat(append);
-                    
-                this.busy = false;
-                }).catch( (err) => {
-                    console.log(err)
-                    this.busy = false;
-                })
-                }
-                
-                },
+        
                 async battle(){
                     this.busysobrebusy = true
+                    this.page = 0
                     this.usermenu.seguidores = false
                     this.usermenu.batle = true
                         await this.$axios.get('/royal')

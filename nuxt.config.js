@@ -30,7 +30,6 @@ export default {
   */
   plugins: [
     '~plugins/vee-validate.js',
-    { src: '~plugins/vue-infinite-scroll.js', ssr: false },
     { src: '~plugins/infiniteloading', ssr: false }
   ],
   /*

@@ -28,6 +28,7 @@
     </div>
   </article>
 </div>
+<infinite-loading @infinite="infinitehandler"></infinite-loading>
     </div>
 </template>
 
@@ -42,19 +43,32 @@ let moment = require ('moment')
         data(){
             return{
                 moment: moment,
+                page : 0,
+                posts: []
             }
         },
         props:{
             currentuser: {
                 type: Object,
                 required: true
-            },
-            posts:{
-                type: Array,
-                required: true
             }
         },
-        methods: { 
+        methods: {
+            async infinitehandler($state){
+            this.page ++
+              await this.$axios.get(`/usertimeline/${this.page}`)
+                .then(response => {
+                    let lista = response.data.data.data
+                    console.log(response.data.data)
+                    if(lista.length){
+                        this.posts = this.posts.concat(lista)
+                        $state.loaded()
+                    }else {
+                        $state.complete()
+                    }
+                })
+
+            }
             
         }
         
