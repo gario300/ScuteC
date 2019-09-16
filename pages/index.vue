@@ -156,7 +156,6 @@ export default {
             password: this.password
           }
         })
-        await this.$axios.post('/account/goals')
         
         this.$router.push('putuser')
         

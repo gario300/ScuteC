@@ -1,7 +1,7 @@
 <template>
     <div id="contenedorprincipal">
         <navbar></navbar>
-        <div class="columns is-centered">
+        <div id="menu" class="columns is-centered">
             <div class="column is-12">
                 <div class="list is-hoverable">
                     <ul>
@@ -120,6 +120,12 @@ li figure, #contadordepuntos {
 #contenedorprincipal{
      overflow-x:hidden !important;
      overflow-y:hidden !important;
+}
+
+#menu{
+    position:relative;
+    margin-top: 0px;
+    bottom: 13px;
 }
 
 </style>
