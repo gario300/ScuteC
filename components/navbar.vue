@@ -83,7 +83,6 @@ import { async } from 'q';
                     this.notif = response.data.data
                     this.getseenders()
                     })
-                    await  this.$axios.post('/account/goals')
                     this.getgoal()
                 },
                 async getseenders(){

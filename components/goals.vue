@@ -13,7 +13,8 @@
                             <div class="media-content">
                                 <div class="content">
                                     <p>¡Logro desbloqueado! <br> <strong>{{goal.goal.title}}</strong>
-                                    {{goal.goal.description}}</p>
+                                    {{goal.goal.description}} recibiste <strong id="puntos" >{{goal.goal.recompensa}}</strong> puntos 
+                                     de recompensa </p>
                                 </div>
                             </div>
                             <div class="media-rigth">
@@ -57,6 +58,10 @@
     position: fixed;
     z-index: 10;
 
+}
+
+#puntos{
+    color:rgb(141, 141, 252);
 }
 
 
