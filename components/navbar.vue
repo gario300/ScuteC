@@ -1,25 +1,25 @@
 <template>
 <div>
-        <nav id="NavS">
+        <nav class="NavS">
             <div class="container" id="Cntainernav">
                 <div class="columns is-mobile is-gapless">
                     <div class="column" >
-                        <a class="Elz" href="#" @click="home"><span><i class="fas fa-camera-retro fa-lg"></i></span></a>
+                        <a class="green" href="#" @click="home"><span><i class="fas fa-camera-retro fa-lg"></i></span></a>
                     </div>
                     <div class="column">
-                        <a href="#" class="Elz" @click="notificationspush" ><span ><i class="fas fa-bell fa-lg"></i>{{notif.length}}</span></a>
+                        <a href="#" class="green" @click="notificationspush" ><span ><i class="fas fa-bell fa-lg"></i>{{notif.length}}</span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" class="Elz" @click="messages" ><span><i class="fas fa-envelope fa-lg"></i>{{notisend.length}}</span></a>
+                        <a href="#" class="green" @click="messages" ><span><i class="fas fa-envelope fa-lg"></i>{{notisend.length}}</span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" @click="destacado" class="Elz"><span><i class="fas fa-star fa-lg"></i></span></a>
+                        <a href="#" @click="destacado" class="green"><span><i class="fas fa-star fa-lg"></i></span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" @click="finder" class="Elz"><span><i class="fas fa-search fa-lg"></i></span></a>
+                        <a href="#" @click="finder" class="green"><span><i class="fas fa-search fa-lg"></i></span></a>
                     </div>
                     <div class="column">
-                        <a href="#" @click="menu" class="Elz"><span><i class="fas fa-bars fa-lg"></i></span></a>
+                        <a href="#" @click="menu" class="green"><span><i class="fas fa-bars fa-lg"></i></span></a>
                     </div>
                 </div>
             </div>
@@ -106,21 +106,64 @@ import { async } from 'q';
 </script>
 
 <style>
-#NavS{
+.NavP{
+    height: 32px;
+    width: 100%;
+    background-color: #00d1b2;
+}
+.NavS{
     height: 32px;
     width: 100%;
     background-color: #23d160;
 }
+.NavV{
+    height: 32px;
+    width: 100%;
+    background-color: #d444cd;
+}
+.NavB{
+    height: 32px;
+    width: 100%;
+    background-color: black;
+}
+.NavD{
+    height: 32px;
+    width: 100%;
+    background-color: #ff3860;
+}
+.NavW{
+    height: 32px;
+    width: 100%;
+    background-color: #ffdd57;
+}
+
 #Cntainernav{
     margin: none !important;
     padding-top: 3px;
 
 }
-.Elz{
+.green{
     text-decoration: none;
     color: #178d40;
 
 }
+.white{
+    text-decoration: none;
+    color: white;
+
+}
+.black{
+    text-decoration: none;
+    color: black;
+
+}
+
+.gray{
+    text-decoration: none;
+    color: gray;
+
+}
+
 #Cntainernav div{
     display: flex;
     justify-content: center;

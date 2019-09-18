@@ -1,6 +1,17 @@
 <template>
     <div id="contenedor_principal">
         <navbar></navbar>
+        <template v-if="cargando == true">
+            <div class="container">
+                <div class="columns">
+                    <div class="column is-12">
+                        <div class="button is-white is-fullwidth is-loading">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template v-if="cargando == false">
         <userheader
         :currentuser="currentuser"
         :yofollowing="following"
@@ -103,6 +114,7 @@
         :ufavorites="favorites"
         :currentuser="currentuser"
         />
+    </template>
     </div>
 </template>
 
@@ -148,12 +160,14 @@ import favorites from '@/components/favorites.vue'
                 postss:true, 
                 followers: false, 
                 following: false, 
-                favorites: false}
+                favorites: false},
+                cargando: true
             }
         },
         created(){
-            this.$store.dispatch('getusuario')
-            this.userdata()
+
+                this.$store.dispatch('getusuario')
+                this.userdata()
         },
         methods:{
                 countdown: function() {
@@ -172,6 +186,7 @@ import favorites from '@/components/favorites.vue'
                         if(this.user.id == this.currentuser.id){
                         this.actualuser =  true
                         }
+                        this.cargando = false
                     })
                 },
                 onFileChange2(e) {
