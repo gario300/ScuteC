@@ -1,6 +1,6 @@
 <template>
 <div>
-        <nav  :class="NavS">
+        <nav  class="NavS">
             <div class="container" id="Cntainernav">
                 <div class="columns is-mobile is-gapless">
                     <div class="column" >
