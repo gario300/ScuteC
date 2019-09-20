@@ -26,9 +26,8 @@ export const state = () => ({
       await this.$axios.get('notif/getnotiview')
         .then(response => {
           let notif = response.data.data
-          if ( notif > 0){
         commit('set_notif', notif)
-        }
+        
         })
       await this.$axios.get('notif/notisending')
         .then(response => {

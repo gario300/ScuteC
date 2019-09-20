@@ -96,7 +96,7 @@ import {mapState} from 'vuex'
     mounted(){
         setInterval(() => {
             this.getnoti()
-            }, 50000)
+            }, 30000)
     },
     methods: {
         async getnoti(){
