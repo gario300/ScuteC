@@ -1,25 +1,25 @@
 <template>
 <div>
-        <nav  :class="`${tema.estilonavbar} : ${tieneuntema}, NavS : ${!tieneuntema}`">
+        <nav  :class="NavS">
             <div class="container" id="Cntainernav">
                 <div class="columns is-mobile is-gapless">
                     <div class="column" >
-                        <a :class="`green : !${tieneuntema}, ${tema.estiloiconos} : ${tieneuntema} `" href="#" @click="home"><span><i class="fas fa-camera-retro fa-lg"></i></span></a>
+                        <a class="green" href="#" @click="home"><span><i class="fas fa-camera-retro fa-lg"></i></span></a>
                     </div>
                     <div class="column">
-                        <a href="#" :class="`green : !${tieneuntema}, ${tema.estiloiconos} : ${tieneuntema} `" @click="notificationspush" ><span ><i class="fas fa-bell fa-lg"></i>{{notif}}</span></a>
+                        <a href="#" class="green" @click="notificationspush" ><span ><i class="fas fa-bell fa-lg"></i>{{notif}}</span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" :class="`green : !${tieneuntema}, ${tema.estiloiconos} : ${tieneuntema} `" @click="messages" ><span><i class="fas fa-envelope fa-lg"></i>{{notis}}</span></a>
+                        <a href="#" class="green" @click="messages" ><span><i class="fas fa-envelope fa-lg"></i>{{notis}}</span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" @click="destacado" :class="`green : !${tieneuntema}, ${tema.estiloiconos} : ${tieneuntema} `"><span><i class="fas fa-star fa-lg"></i></span></a>
+                        <a href="#" @click="destacado" class="green"><span><i class="fas fa-star fa-lg"></i></span></a>
                     </div>
                     <div class="column ">
-                        <a href="#" @click="finder" :class="`green : !${tieneuntema}, ${tema.estiloiconos} : ${tieneuntema} `"><span><i class="fas fa-search fa-lg"></i></span></a>
+                        <a href="#" @click="finder" class="green"><span><i class="fas fa-search fa-lg"></i></span></a>
                     </div>
                     <div class="column">
-                        <a href="#" @click="menu" :class="`green : !${tieneuntema}, ${tema.estiloiconos} : ${tieneuntema} `"><span><i class="fas fa-bars fa-lg"></i></span></a>
+                        <a href="#" @click="menu" class="green"><span><i class="fas fa-bars fa-lg"></i></span></a>
                     </div>
                 </div>
             </div>
