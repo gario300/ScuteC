@@ -27,15 +27,17 @@
                                     {{post.post}}
                                     </p>
                                         </div>
-                                         <figure class="image is-5by3">
-                                         <img  :src="post.image" v-show="post.image !== null">
-                                         </figure> 
+                                        <div 
+                                        class="image is-5by3"
+                                        id="imagenpost"
+                                        v-bind:style="{ 'background-image': 'url(' + post.image + ')' }">
+                                        </div>
                                         <favorite
-                                    :post="post"
-                                    :replies="replies"
-                                    :favorites.sync="favorites"
-                                    :user="currentuser"
-                                    /> 
+                                        :post="post"
+                                        :replies="replies"
+                                        :favorites.sync="favorites"
+                                        :user="currentuser"
+                                        /> 
                                     <button class="button is-text" @click="regresar">Regresar</button>
                                         </div>
                     </article>
@@ -182,6 +184,12 @@ let moment = require ('moment')
 }
 textarea{
     max-height: 45px;
+}
+#imagenpost{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: auto 100% ;
+
 }
 
 </style>
