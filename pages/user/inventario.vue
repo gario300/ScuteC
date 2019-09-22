@@ -91,7 +91,7 @@ import { async } from 'q'
                     this.$axios.put('/theme/cambiartema',{
                         temaid: id
                     })
-                this.$router.go('/user/inventario')
+                this.$router.go('/galeria')
                 }
                 await this.$axios.post('/theme/change', {
                 temaid: id
@@ -100,12 +100,12 @@ import { async } from 'q'
                     }).catch (e =>{
                     console.log(e)
                     })
-                this.$router.go('/user/inventario')
+                this.$router.go('/galeria')
             },
             async quitartema(id){
                 this.$axios.delete('theme/quitar/'+id)
                 .then(data =>{   
-                this.$router.go('/user/inventario')
+                this.$router.go('/galeria')
                 })
             }
         }
