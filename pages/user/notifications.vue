@@ -1,11 +1,16 @@
 <template>
-    <div id="contenedorprincipal">
-    <navbar></navbar>
+    <div id="contenedorprincipal" v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }">
+    <navbar
+    :tema="tema"
+    :tieneuntema="tieneuntema"
+    />
     <div  class="container" >
         <div class="columns">
             <div class="column is-12">
                 
-                <div v-for="notification in notifications" v-if="notification.user.id !== currentuser.id"  class="box">
+                <div v-for="notification in notifications" v-if="notification.user.id !== currentuser.id"  
+                v-bind:style="{ 'background-image': 'url(' + tema.postbox+ ')' }"
+                class="box">
                         <template v-if="notification.post !== null">
                         <nuxt-link id="link" :to="`/reply/${notification.post.id}`">
                         <article  class="media">
@@ -16,7 +21,7 @@
                         </div>
                         <div class="media-content">
                         <div class="content">
-                            <p>
+                            <p :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">
                             <strong>{{notification.user.username}}</strong> <small>{{moment(notification.created_at).fromNow()}}</small>
                             <br>
                             {{notification.notification_type}}
@@ -33,7 +38,7 @@
                 </template>
 
                 <template v-else> 
-                    <nuxt-link id="link" :to="`/user/${currentuser.username}`">       
+                    <nuxt-link id="link" :to="`/user/${notification.user.username}`">       
                     <article class="media">
                         <div class="media-left">
                         <figure class="image is-48x48">
@@ -58,7 +63,7 @@
                 </nuxt-link>
                 </template>
                 </div>
-                
+                <infinite-loading @infinite="infinitehandler"></infinite-loading>
             </div>
         </div>
     </div>
@@ -78,36 +83,51 @@ import {mapState} from 'vuex'
 
     computed:{
         ...mapState([
-        'currentuser'
+        'currentuser' , 'tema', 'tieneuntema'
         ])
     },
 
     data(){
         return{
             moment:moment,
-            notifications: []
+            notifications: [],
+            page: 0
         }
     },
     created(){
         this.$store.dispatch('getusuario')
-        this.getnoti()   
         this.truenotif()
+        this.$store.dispatch('gettema')
+    },
+    beforeMount(){
+        
     },
     mounted(){
         setInterval(() => {
-            this.getnoti()
+            this.truenotif()
             }, 30000)
+
     },
     methods: {
-        async getnoti(){
-            await  this.$axios.get('notif/getnoti')
+            async infinitehandler($state){
+            this.page ++
+              await this.$axios.get(`notif/getnoti`, {
+                  params: {
+                        foo: this.page
+                    }
+              })
                 .then(response => {
-                    this.notifications = response.data.data
-                    console.log(this.notifications)
-                }).catch (e =>{
-                    console.log(e)
+                    let lista = response.data.data.data
+                    console.log(response.data.data.data)
+                    if(lista.length){
+                        this.notifications = this.notifications.concat(lista)
+                        $state.loaded()
+                    }else {
+                        $state.complete()
+                    }
                 })
-        },
+
+            },
     async truenotif(){
         await this.$axios.put('notif/notiview')
     }

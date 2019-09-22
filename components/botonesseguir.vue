@@ -3,8 +3,8 @@
         <div class="container">
                 <div class="columns is-centered is-mobile">
                     <div class="column is-narrow">
-                        <button class="button is-success" v-if="isFollowing" @click="unFollow(user.id)">No Seguir</button>
-                        <button class="button is-success" v-else @click="seguir(user.id)">Seguir</button>
+                        <button  :class="[ tieneuntema ? tema.buttons : 'button is-success' ]" :disabled="deshabilitar" v-if="isFollowing" @click="unFollow(user.id)">No Seguir</button>
+                        <button :class="[ tieneuntema ? tema.buttons : 'button is-success' ]" :disabled="deshabilitar" v-else @click="seguir(user.id)">Seguir</button>
                     </div>
                     <div class="column is-narrow">
                         <button id="suscribe" class="button is-success">Suscribirse</button>
@@ -29,6 +29,19 @@
             yofollowing:{
                 type: Array,
                 required: true
+            },
+            tema:{
+                type: Object,
+                required: true
+            },
+            tieneuntema:{
+                type: Boolean,
+                required: true
+            }
+        },
+        data(){
+            return{
+                deshabilitar: false
             }
         },
         computed:{
@@ -46,25 +59,30 @@
         },
         methods: {
             async seguir (userid) {
-
+                this.deshabilitar = true
                 await this.$axios.post('/users/follow', {
                     user_id: userid
                 })
                     .then(response => {
                         this.yofollowing.push({ id: userid })
+                        this.deshabilitar = false
                     })
                 let respuesta = 'Ahora te sigue'
                     await this.$axios.post(`/notif/newnoti`,{
                         notification_type : respuesta,
                         receptor_id :  userid
                     })
+                    
         },
         unFollow(Id) {
+                
+                this.deshabilitar = true
                 this.$axios.delete(`/users/unfollow/${this.user.id}`)
                     .then(response => {
                         this.yofollowing = this.yofollowing.filter(u => {
                             return u.id !== Id
                         })
+                this.deshabilitar = false
                     })
             }
         },

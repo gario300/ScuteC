@@ -32,9 +32,8 @@ export const state = () => ({
       await this.$axios.get('notif/notisending')
         .then(response => {
           let notisend = response.data.data
-          if(notisend > 0){
         commit('set_notis', notisend)
-       }
+       
         })
         
 
@@ -59,7 +58,16 @@ export const state = () => ({
           userbox:respuesta.userbox, 
           postbox: respuesta.postbox,
           estilotexto: 'has-text-'+respuesta.colortexto,
-          buttons: 'button is-'+respuesta.estilopagina}
+          buttons: 'button is-'+respuesta.estilopagina,
+          buttonfullwidth: 'button is-'+respuesta.estilopagina+' is-fullwidth',
+          file:'file is-'+respuesta.estilopagina,
+          filesmall:'file is-'+respuesta.estilopagina+' is-small',
+          inputrounded: 'input is-rounded is-'+respuesta.estilopagina,
+          inputreply:'input is-'+respuesta.estilopagina+' is-medium',
+          buttonreply: 'button is-'+respuesta.estilopagina+' is-medium',
+          select:'select is-rounded is-'+respuesta.estilopagina,
+          inputfullwidth:'input is-'+respuesta.estilopagina+' is-fullwidth',
+          temaid: respuesta.id, temanombre:respuesta.nombretema}
           
           commit('tiene_tema', tieneuntema)
           commit('set_tema', tema)

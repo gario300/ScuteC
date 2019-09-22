@@ -1,6 +1,9 @@
 <template>
-    <div id="contenedor_principal">
-        <navbar/>
+    <div id="contenedor_principal" v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }">
+        <navbar
+        :tema="tema"
+        :tieneuntema="tieneuntema"
+        />
         <div v-if="destamenu.dibujo == true && destamenu.comicbook == false" id="slider">
             <h1 class="title is-3">Popular</h1>
             <ul>
@@ -25,7 +28,7 @@
         <div class="tabs">
             <ul>
                 <li v-bind:class="{'is-active': destamenu.dibujo}"><a>Dibujo</a></li>
-                <li><a>Comic-book</a></li>
+                <li><a v-bind:class="tema.estilotexto">Comic-book</a></li>
             </ul>
         </div>
 
@@ -43,7 +46,10 @@
                 <div class="column is-12">
                     <div class="contenedor">
                     <usertimeline v-if="usermenu.seguidores == true && usermenu.batle == false"
-                    :currentuser="currentuser"/>
+                    :currentuser="currentuser"
+                    :tema="tema"
+                    :tieneuntema="tieneuntema"
+                    />
                     </div>
                     <royal v-if="usermenu.batle == true && usermenu.seguidores == false"
                     :positions="positions"
@@ -70,7 +76,7 @@ let moment = require ('moment')
         },
         computed:{
         ...mapState([
-        'currentuser'
+        'currentuser', 'tema', 'tieneuntema'
         ])
         },
         data(){
@@ -90,7 +96,7 @@ let moment = require ('moment')
             this.destacado()
         },
         mounted(){
-
+        this.$store.dispatch('gettema')
         },
         methods:{
             async destacado(){

@@ -6,12 +6,18 @@
         <div class="column is-12">
             <div id="menu" class="tabs is-centered">
                 <ul>
-                    <li v-bind:class="{'is-active': click.postss}"> <a @click="postss"> Posts <br> <strong> {{ posts.length }} </strong></a></li>
-                    <li><button class="button is-white is-normal">Albums </button></li>
-                    <li><button class="button is-white is-normal">Suscriptores</button></li>
-                    <li id="seguidores" v-bind:class="{'is-active': click.followers}"> <a @click="followers">Seguidores <br> <strong> {{ ufollowers.length }} </strong> </a> </li>
-                    <li id="siguiendo" v-bind:class="{'is-active': click.following}"> <a @click="following" > Siguiendo <br> <strong> {{ ufollowing.length }} </strong>  </a></li>
-                    <li v-bind:class="{'is-active': click.favorites}"> <a @click="favorites" > Favoritos <br> <strong>{{ufavorites.length}}</strong></a></li>
+                    <li v-bind:class="{'is-active' : click.postss}"> <a :class="{'has-text-black' : !click.postss}" @click="postss"> 
+                        Posts <br> <strong> {{ posts.length }} </strong></a></li>
+                    <li><a :class="'has-text-black'">
+                    Albums</a></li>
+                    <li><a :class="'has-text-black'"> 
+                    Suscriptores</a></li>
+                    <li id="seguidores" v-bind:class="{'is-active': click.followers}"> <a  :class="{'has-text-black' : !click.followers}"
+                    @click="followers">Seguidores <br> <strong> {{ ufollowers.length }} </strong> </a> </li>
+                    <li id="siguiendo" v-bind:class="{'is-active': click.following}"> <a :class="{'has-text-black' : !click.followinw}"
+                    @click="following" > Siguiendo <br> <strong> {{ ufollowing.length }} </strong>  </a></li>
+                    <li v-bind:class="{'is-active': click.favorites}"> <a :class="{'has-text-black' : !click.favorites}"
+                    @click="favorites" > Favoritos <br> <strong>{{ufavorites.length}}</strong></a></li>
                 </ul>      
         </div>
     </div>
@@ -53,6 +59,14 @@
                 required: true
             },
             click: {
+                type: Object,
+                required: true
+            },
+            tema: {
+                type: Object,
+                required: true
+            },
+            tieneuntema: {
                 type: Object,
                 required: true
             }

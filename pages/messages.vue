@@ -1,6 +1,9 @@
 <template>
-    <div>
-        <navbar></navbar>
+    <div id="contenedorprincipal" v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }">
+        <navbar
+        :tema="tema"
+        :tieneuntema="tieneuntema"
+        />
         <div class="container">
             <div class="columns is-hidden-desktop is-gapless is-multiline">
                 <div class="column is-12">
@@ -25,7 +28,7 @@
                                         </span>
                                     </p>
                                 </div>
-                                    <div id="buscador" class="box" v-for="busqueda in busquedas">
+                                    <div id="buscador" class="box" v-for="busqueda in busquedas" >
                                         <article class="media">
                                             <div class="media-left">
                                                 <figure class="image is-64x64">
@@ -53,9 +56,10 @@
             </div>
             <div class="columns is-gapless">
                 <div class="column is-4 is-hidden-touch">
-                    <table class="table is-fullwidth is-bordered is-striped">
+                    <table class="table is-fullwidth is-bordered is-striped"
+                    v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }" >
                         <thead>
-                            <th>
+                            <th :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">
                                 Mensajes
                             </th>
                         </thead>
@@ -91,8 +95,10 @@
                                         </article>
                                     </div>
                             </tr>
-                            <tr v-for="conversation in conversations" v-if="conversation.seenders.length !== null ">
-                                  <a @click="current(conversation.id)"> <div id="conversaciones" class="box">
+                            <tr v-for="conversation in conversations" v-if="conversation.seenders.length !== null">
+                                  <a @click="current(conversation.id)"> 
+                                  <div id="conversaciones" class="box"
+                                  v-bind:style="{ 'background-image': 'url(' + tema.postbox + ')' }">
                                     <article class="media">
                                         <div class="media-left">
                                             <figure class="image is-64x64">
@@ -103,10 +109,10 @@
                                         <div class="media-content">
                                             <div class="content">
                                                 <p>
-                                                    <strong v-if="currentuser.id !== conversation.Emisorid">
+                                                    <strong :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]" v-if="currentuser.id !== conversation.Emisorid">
                                                         {{conversation.Emisor}}
                                                     </strong>
-                                                    <strong v-else>
+                                                    <strong :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]" v-else>
                                                         {{conversation.Receptor}}
                                                     </strong> <br>
                                                     <strong v-if="conversation.seenders.length == 0" class="help is-primary">Mensajes nuevos: {{conversation.seenders.length}}</strong>
@@ -126,24 +132,31 @@
                     </table>
                     </div>
                 <div class="column">
-                    <table v-for="currentconversation in currentconversations" class="table is-fullwidth is-bordered is-striped">
+                    <table v-for="currentconversation in currentconversations" class="table is-fullwidth is-bordered is-striped"
+                        v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }">
                         <thead>
                             <th>
                                 <span v-if="state.currentconversation == true">
-                                    <strong v-if="currentuser.id !== currentconversation.Emisorid"> {{currentconversation.Emisor}}</strong>
-                                    <strong v-else >{{currentconversation.Receptor}}</strong>
+                                    <strong
+                                    :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]"
+                                     v-if="currentuser.id !== currentconversation.Emisorid"> {{currentconversation.Emisor}}</strong>
+                                    <strong 
+                                    :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]"
+                                    v-else >{{currentconversation.Receptor}}</strong>
                                 </span>
                             </th>
                         </thead>
                         <tbody id="chatbox">
                             <tr v-for="seender in seenders">
-                                <div  v-if="seender.user.id == currentuser.id" class="columns is-mobile">
+                                <div v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }" v-if="seender.user.id == currentuser.id" class="columns is-mobile">
                                     <div id="barramensajes" class="column is-6 is-offset-6">
-                                <div class="box">
-                                    <p>{{seender.mensaje}}</p>
+                                <div class="box" id="mensaje" v-bind:style="{ 'background-image': 'url(' + tema.postbox + ')' }">
+                                    <p :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">{{seender.mensaje}}</p>
                                 </div>
-                                   <p v-if="seender.regalo !== 0" class="help is-success"> <strong v-if="seender.user.id == currentuser.id" class="help is-success"> Haz enviado un Regalo <i class="fas fa-gift"></i></strong>
-                                        <strong v-else class="help is-success"> Te ha Enviado un Regalo <i class="fas fa-gift"></i></strong>
+                                   <p v-if="seender.regalo !== 0" :class="[ tieneuntema ? tema.estilohelp : 'help is-success' ]"> <strong v-if="seender.user.id == currentuser.id" 
+                            
+                                   :class="[ tieneuntema ? tema.estilohelp : 'help is-success' ]"> Haz enviado un Regalo <i class="fas fa-gift"></i></strong>
+                                        <strong v-else :class="[ tieneuntema ? tema.estilohelp : 'help is-success' ]"> Te ha Enviado un Regalo <i class="fas fa-gift"></i></strong>
                                         <small><figure class="image is-16x16"> 
                                             <img src="https://res.cloudinary.com/scute/image/upload/v1566231592/logros/monedasandi_msautl.png">
                                         </figure>{{seender.regalo}}
@@ -152,13 +165,17 @@
                                 
                                     </div>
                                 </div>
-                                <div  v-else class="columns is-mobile">
+                                <div v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }" v-else class="columns is-mobile">
                                     <div  id="barramensajes" class="column is-6">
-                                <div class="box">
-                                    <p>{{seender.mensaje}}</p>
+                                <div class="box" id="mensaje" v-bind:style="{ 'background-image': 'url(' + tema.postbox + ')' }">
+                                    <p :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">{{seender.mensaje}}</p>
                                 </div>
-                                <p v-if="seender.regalo !== 0" class="help is-success"> <strong v-if="seender.user.id == currentuser.id" class="help is-success"> Haz enviado un Regalo <i class="fas fa-gift"></i></strong>
-                                        <strong v-else class="help is-success"> Te ha Enviado un Regalo <i class="fas fa-gift"></i></strong>
+                                <p v-if="seender.regalo !== 0" :class="[ tieneuntema ? tema.estilohelp : 'help is-success' ]"> 
+                                    <strong v-if="seender.user.id == currentuser.id" :class="[ tieneuntema ? tema.estilohelp : 'help is-success' ]"> 
+                                        Haz enviado un Regalo <i class="fas fa-gift"></i></strong>
+                                        
+                                        <strong v-else :class="[ tieneuntema ? tema.estilohelp : 'help is-success' ]"> Te ha Enviado un Regalo <i class="fas fa-gift"></i></strong>
+                                        
                                         <small><figure class="image is-16x16"> 
                                             <img src="https://res.cloudinary.com/scute/image/upload/v1566231592/logros/monedasandi_msautl.png">
                                         </figure>{{seender.regalo}}
@@ -169,15 +186,16 @@
                             </tr>
                         </tbody>
                         <tfoot>
-                            <td>
+                            <td v-bind:style="{ 'background-image': 'url(' + tema.userbox + ')' }">
                                 <form v-if="state.currentconversation == false">
-                                    <textarea class="textarea  is-success" disabled></textarea>
+                                    <textarea :class="[ tieneuntema ? tema.estilotextarea : 'textarea is-large is-success' ]" disabled></textarea>
                                 </form>
                                 <form @submit.prevent="(newmensaje(currentconversation.id, currentconversation.Emisorid, currentconversation.Receptorid))" v-else>
-                                    <textarea v-model="mensaje" class="textarea  is-success"></textarea>
-                                    <div v-if="state.enviando == true" class="button is-success is-fullwidth is-loading"></div>
-                                    <button v-else class="button is-success is-fullwidth">Enviar</button>
-                                    <div id="regaloinp" class="box">
+                                    <textarea v-model="mensaje" :class="[ tieneuntema ? tema.estilotextarea : 'textarea is-large is-success' ]"></textarea>
+                                    <button :disabled="state.enviando" :class="[ tieneuntema ? tema.buttonfullwidth : 'button is-success is-fullwidth' ]" >Enviar</button>
+                                    <div id="regaloinp" class="box"
+                                    v-bind:style="{ 'background-image': 'url(' + tema.userbox + ')' }"
+                                    >
                                         <figure class="image is-24x24">
                                             <img src="https://res.cloudinary.com/scute/image/upload/v1566231592/logros/monedasandi_msautl.png">
                                         </figure> <br>
@@ -215,7 +233,7 @@ import { async } from 'q';
         },
         computed:{
             ...mapState([
-        'currentuser'
+        'currentuser' , 'tema', 'tieneuntema'
         ])
         },
         data(){
@@ -238,6 +256,9 @@ import { async } from 'q';
             this.$store.dispatch('getusuario')
             this.getconversations()
 
+        },
+        mounted(){
+        this.$store.dispatch('gettema')
         },
         methods:{
             async buscar(){
@@ -267,6 +288,7 @@ import { async } from 'q';
                 this.getconversations()
             },
             async current (id){
+                await this.$axios.put(`/mensajeria/isreaded/${id}`) 
                 await this.$axios.get (`/mensajeria/${id}`)
                 .then(response => {
                     this.currentconversations = (response.data.data)
@@ -274,10 +296,10 @@ import { async } from 'q';
                 await this.$axios.get (`/mensajeria/timline/${id}`)
                 .then(response => {
                     this.seenders = (response.data.data)
-                    })
-                await this.$axios.put(`/mensajeria/isreaded/${id}`)    
-                this.state.currentconversation = true
-                await this.scroll()
+                    }) 
+                    this.state.currentconversation = true
+                    await this.scroll() 
+                   await this.$store.dispatch('notificaciones')
             },
             async newmensaje (converid, user1, user2){
                 this.state.enviando = true
@@ -321,8 +343,8 @@ import { async } from 'q';
 
 <style scoped>
 #buscador{
-    position: absolute;
-    z-index: 3 !important;
+    position: relative;
+    z-index: 30 !important;
     margin-top: 0px;
 }
 #busqueda{
@@ -338,7 +360,7 @@ a{
     color:black;
 }
 tbody{
-    height:330px;
+    height:302px;
     overflow-y: scroll;
     overflow-x: hidden;
     width: 100%;
@@ -406,4 +428,16 @@ small{
     max-height: 64px;
     min-height: 64px;
 }
+#contenedorprincipal{
+     overflow-x:hidden !important;
+}
+textarea{
+    max-height: 120px !important;
+}
+#mensaje, #conversaciones{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100% ;
+}
+
 </style>

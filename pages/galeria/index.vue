@@ -1,11 +1,15 @@
 <template>
-    <div id="contenedor_principal">
-        <navbar/>
+    <div class="contenedor_principal" v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }">
+        <navbar
+        :tieneuntema="tieneuntema"
+        :tema="tema"
+        />
         <!-- Userbox -->
+       
     <div class="container">
        <div id="columnbox" class="columns is-centered ">
                 <div class="column is-half">                    
-                    <div class="box">
+                    <div id="usuariof" class="box" v-bind:style="{ 'background-image': 'url(' + tema.userbox + ')' }">
                         <article id="media" class="media">
                         <div class="media-left">
                                 <figure class="image is-256x256">
@@ -17,32 +21,29 @@
                                 <form @submit.prevent="post">
                                     <div class="columns is-centered is-mobile">
                                         <div class="column is-9">
-                                            <textarea v-model="textinbox" v-on:keyup="countdown" class="textarea is-success is-large" :placeholder="placeholder"  @postinbox="vimodel = $event"></textarea>
-                                            <span id="contador" class="help is-success" v-bind:class="{'help is-danger': hasError }">
+                                            <textarea v-model="textinbox" v-on:keyup="countdown" 
+                                            id="textarea" 
+                                            :class="[ tieneuntema ? tema.estilotextarea : 'textarea is-success is-large' ]"
+                                            :placeholder="placeholder"  @postinbox="vimodel = $event"></textarea>
+                                            <span id="contador" :class="[ tieneuntema ? tema.estilohelp : 'help is-success' ]"> 
                                                 {{remainingCount}}
                                             </span>
 
                                         </div>
                                         <div class="column" >
                                             
-                                            <div v-if="cargandopost == false" class="file is-success  is-fullwidth">
+                                            <div id="file" :class="[ tieneuntema ? tema.estilofileindex : 'file is-success is-fullwidth' ]">
                                                 <label class="file-label">
-                                                    <input class="file-input" type="file" name="image" accept="image/png, image/jpeg" @change="onFileChange">
+                                                    <input class="file-input" :disabled="cargandopost" type="file" name="image" accept="image/png, image/jpeg" @change="onFileChange">
                                                     <span class="file-cta">
                                                         <i class="far fa-images fa-lg"></i>
                                                     </span>
                                                 </label>
                                             </div>
-                                            <div v-else class="file is-success is-fullwidth">
-                                               <label class="file-label">
-                                                    <span class="file-cta">
-                                                        <i class="far fa-images fa-lg"></i>
-                                                    </span>
-                                                </label> 
-                                            </div>
                                            
-                                            <button v-if="cargandopost == false" id="post" class="button  is-normal is-success">Post</button>
-                                            <div v-else id="post" class="button is-normal is-success is-loading">Post</div>
+                                            <button id="post" 
+                                            :class="[ tieneuntema ? tema.estilobuttonindex : 'button is-success is-normal' ]"
+                                            :disabled="cargandopost">Post</button>
                                         </div>
                                     </div>
                                 </form>
@@ -78,7 +79,7 @@
         v-for="(post, id) in posts" :key="id" :posts.sync="posts"
         :user="currentuser">
                 <div id="columna" class="column is-8 is-offset-2">
-            <div  class="box">
+                 <div id="postf" class="box" v-bind:style="{ 'background-image': 'url(' + tema.postbox + ')' }">
                     <article  class="media">
                         <div  class="media-left">
                         <figure  class="image is-64x64">
@@ -88,8 +89,8 @@
                         </div>
                         <div id="barra" class="media-content">
                         <div class="content">     
-                            <p>
-                            <nuxt-link id="link" :to="`/user/${post.user.username}`"><strong>{{post.user.username}}</strong></nuxt-link>  <small>{{moment(post.created_at).fromNow()}}</small>  <small>
+                            <p :class="tema.estilotexto">
+                            <nuxt-link id="link" :to="`/user/${post.user.username}`"><strong>{{post.user.username}}</strong></nuxt-link>  <small id="contador2">{{moment(post.created_at).fromNow()}}</small>  <small>
                                 <button v-if="post.user_id == currentuser.id" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button>
                                 <span id="seguir"><i class="fas fa-star"></i></span>
                             </small>
@@ -120,7 +121,6 @@
         <!-- Post-box -->
          </div>
         
-
     </div>
 </template>
 
@@ -137,7 +137,7 @@ let moment = require ('moment')
         },
         computed: {
         ...mapState([
-        'currentuser'
+        'currentuser', 'tieneuntema', 'tema',
         ])
         },
         data(){
@@ -152,7 +152,6 @@ let moment = require ('moment')
                 moment : moment,
                 prueba: [],
                 busy : false,
-                limit: 8,
                 results: [],
                 placeholder: 'Publica algo',
                 //contador
@@ -161,11 +160,14 @@ let moment = require ('moment')
                 hasError: false,
                 //bloqueodebotones
                 cargandopost: false,
+                segundacarga: true
             }
         },
         created(){
-            this.$store.dispatch('getusuario')
-            
+            this.cargaruno()
+        },
+        mounted(){
+            this.$store.dispatch('gettema')
         },
         methods:{
             async infinitehandler($state){
@@ -247,6 +249,11 @@ let moment = require ('moment')
                     this.infinitehandler()
                 })
             },
+             
+            async cargaruno(){
+            await this.$store.dispatch('getusuario')
+            this.primeracarga = false
+            }
             
     }
 }
@@ -280,6 +287,10 @@ let moment = require ('moment')
     margin-top: 25px;
 }
 
+textarea{
+    max-height: 120px !important;
+}
+
 
 #togglepost{
     display:inline-block;
@@ -298,7 +309,7 @@ let moment = require ('moment')
     color:rgb(124, 28, 133) !important;
     border-color:rgb(124, 28, 133) !important;
 }
-#contenedor_principal{
+.contenedor_principal{
      overflow-x:hidden;
      overflow-y:hidden;
     -webkit-user-drag: none;
@@ -329,6 +340,12 @@ let moment = require ('moment')
 
 #columna:last-child{
     margin-bottom: 0px;
+}
+
+.box{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100% ;
 }
 
 

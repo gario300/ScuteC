@@ -1,11 +1,16 @@
 <template>
-    <div id="contenedor_principal">
-    <navbar></navbar>
+    <div id="contenedor_principal" 
+    v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }">
+    <navbar
+    :tema="tema"
+    :tieneuntema="tieneuntema"
+    />
     <div class="container">
         <div id="contenedor" class="columns">
             <div class="column is-10 is-offset-1">
                 <!-- post -->
-                <div class="box is-mobile">
+                <div class="box is-mobile"
+                v-bind:style="{ 'background-image': 'url(' + tema.postbox + ')' }">
                     <article class="media">
                         <div class="media-left">
                         <figure class="image is-64x64">
@@ -16,7 +21,7 @@
                         </div>
                         <div class="media-content">
                             <div class="content">
-                                <p>
+                                <p :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">
                                    <nuxt-link id="link" :to="`/user/${postuser.username}`" ><strong>{{postuser.username}}</strong></nuxt-link> <small>{{moment(post.created_at).fromNow()}}</small>
                                     <br>
                                     {{post.post}}
@@ -53,9 +58,11 @@
                             <figure  class="image is-64x64">
                         <img id="avatar" class="is-rounded" :src="currentuser.avatar" alt="">
                     </figure>
-                            <textarea v-model="reply" placeholder="Responde" class="input is-success is-medium"></textarea>
+                            <textarea v-model="reply" placeholder="Responde" 
+                            :class="[ tieneuntema ? tema.inputreply : 'input is-success is-medium' ]">
+                            </textarea>
                         <div class="control">
-                            <button class="button is-success is-medium"><i class="fas fa-reply"></i></button>
+                            <button :class="[ tieneuntema ? tema.buttonreply : 'button is-success is-medium' ]"><i class="fas fa-reply"></i></button>
                         </div>
                         </div>
                     </form>
@@ -65,7 +72,9 @@
 
 
         <!-- replies -->
-            <replies :replies="replies"/>
+            <replies :replies="replies"
+            :tema="tema"
+            :tieneuntema="tieneuntema"/>
         <!-- replies -->
     </div>
     </div>
@@ -86,7 +95,7 @@ let moment = require ('moment')
         },
         computed: {
         ...mapState([
-        'currentuser'
+        'currentuser', 'tieneuntema', 'tema'
         ])
         },
         data(){
@@ -103,6 +112,10 @@ let moment = require ('moment')
         created(){
             this.$store.dispatch('getusuario')
             this.getpost()
+            this.$store.dispatch('gettema')
+
+        },
+        mounted(){
 
         },
             methods:{
@@ -134,7 +147,8 @@ let moment = require ('moment')
                  regresar (){
                      this.$router.go(-1)
                  }
-            }
+    }
+
 }
         
     
@@ -159,6 +173,22 @@ let moment = require ('moment')
 }
 #link{
   color: black
+}
+html{
+    height: 100%
+}
+#__nuxt{
+    height: 100%
+}.box{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100% ;
+}
+textarea{
+    max-height: 45px;
+}
+#contenedor_principal{
+height: 100vmax;
 }
 
 </style>

@@ -1,12 +1,15 @@
 <template>
-    <div>
-        <navbar></navbar>
-        <div class="container">
+    <div id="contenedor_principal">
+        <navbar
+        :tema="tema"
+        :tieneuntema="tieneuntema"
+        />
+        <div class="container" >
             <div class="columns">
                 <div class="column is-12">
                         <div class="field">
                             <p class="control has-icons-left has-icons-right">
-                                <input class="input is-rounded is-success" v-model="find" v-on:keyup="buscar" type="text" placeholder="Buscar...">
+                                <input :class="[ tieneuntema ? tema.inputrounded : 'input is-rounded is-success' ]" v-model="find" v-on:keyup="buscar" type="text" placeholder="Buscar...">
                                 <span class="icon is-small is-left">
                                 <i class="fas fa-search"></i>
                                 </span>
@@ -16,10 +19,11 @@
             </div>
                 <h1 v-if="error.busqueda == true && error.error == false" class="title is-4">Busca a un usuario...</h1>
     
-            <div class="columns" v-for="usuario in usuarios">
+            <div class="columns" v-for="usuario in usuarios" >
                 <div class="column is-12">
                     
-                    <div class="box">
+                    <div class="box"
+                    v-bind:style="{ 'background-image': 'url(' + tema.postbox + ')' }">
                         <nuxt-link id="link" :to="`/user/${usuario.username}`">
                         <article class="media">
                             <div class="media-left">
@@ -60,11 +64,13 @@ import {mapState} from 'vuex'
         },
         computed:{
         ...mapState([
-        'currentuser'
+        'currentuser','tema', 'tieneuntema'
         ])
         },
         created(){
             this.$store.dispatch('getusuario')
+            this.$store.dispatch('gettema')
+
 
         },
         data(){
@@ -112,5 +118,9 @@ figure img{
 
 #link{
     color: black;
+}
+#contenedor_principal{
+     overflow-x:hidden;
+     overflow-y:hidden;
 }
 </style>

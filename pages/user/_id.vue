@@ -1,6 +1,9 @@
 <template>
-    <div id="contenedor_principal">
-        <navbar></navbar>
+    <div id="contenedor_principal" v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }">
+        <navbar
+        :tieneuntema="tieneuntema"
+        :tema="tema"
+        />
         <template v-if="cargando == true">
             <div class="container">
                 <div class="columns">
@@ -11,26 +14,28 @@
                 </div>
             </div>
         </template>
-        <template v-if="cargando == false">
-        <userheader
+        <template  v-if="cargando == false">
+        <userheader ref="portada"
         :currentuser="currentuser"
         :yofollowing="following"
         :user="user"
-        :posts="posts"
+        :posts="pests"
         :followers="ufollowers"
         :ufollowing="ufollowings"
         :actualuser="actualuser"
         :ufavorites="favorites"
         :click="click"
+        :tema="tema"
+        :tieneuntema="tieneuntema"
         />
         <template v-if="currentuser.id == user.id && click.postss == true">
         <div id="textbox" class="container">
             <div class="columns is-centered is-mobile">
                 <div class="column is-narrow">
-                    <div class="box">
+                    <div class="box" v-bind:style="{ 'background-image': 'url(' + tema.userbox + ')' }">
                         <div id="asd" class="columns is-gapless is-mobile">
                             <div class="column is-12">
-                                <span id="contador" class="help is-success" v-bind:class="{'help is-danger': hasError }">
+                                <span id="contador" :class="[ tieneuntema ? tema.estilohelp : 'help is-success' ]">
                                     {{remainingCount}}
                                  </span>
                             </div>
@@ -38,34 +43,24 @@
                         <form @submit.prevent="post(currentuser.id)">
                             <div class="field has-addons">
                                 <div class="control">
-                                    <input class="input is-large is-success" type="text" v-on:keyup="countdown" v-model="textbox" :placeholder="placeholder">                                   
+                                    <textarea :class="[ tieneuntema ? tema.estilotextarea : 'textarea is-large is-success' ]" type="text" v-on:keyup="countdown" v-model="textbox" :placeholder="placeholder">                                   
+                                    </textarea>
                                 </div>
                                 <div class="field">
-                                    <div class="file is-right is-success is-large" v-if="cargandopost == false">
+                                    <div id="prueba" :class="[ tieneuntema ? tema.filesmall : 'file is-success is-small' ]">
                                         <label class="file-label">
-                                            <input class="file-input" type="file" name="postimage" accept="image/png, image/jpeg" @change="onFileChange2">
+                                            <input :disabled="cargandopost" class="file-input" type="file" name="postimage" accept="image/png, image/jpeg" @change="onFileChange2">
                                             <span class="file-cta">
                                                 <span class="file-icon">
                                                     <i class="fas fa-images"></i>
                                                 </span>
                                             </span>
                                         </label>
-                                    </div>   
-
-                                    <div class="file is-right is-success is-large" v-else>
-                                        <label class="file-label">
-                                            <span class="file-cta">
-                                                <span class="file-icon">
-                                                    <i class="fas fa-images"></i>
-                                                </span>
-                                            </span>
-                                        </label>
-                                    </div>
-
+                                        </div> 
+                                        
                                 </div>
                             </div>
-                            <button v-if="cargandopost == false" class="button is-success is-fullwidth">Postear</button>
-                            <div v-else class="button is-success is-fullwidth is-loading"></div>
+                            <button :disabled="cargandopost" :class="[ tieneuntema ? tema.buttonfullwidth : 'button is-success is-fullwidth' ]">Post</button>
                         </form>
                             <template v-if="postpreview == true" >
                             <div class="columns is-centered is-mobile">
@@ -85,13 +80,15 @@
         </div>
         </template>
 
-        <posts v-if="click.postss == true 
+        <posts ref="load" v-if="click.postss == true 
         && click.followers == false 
         && click.following == false
         && click.favorites == false"
+        :id="id"
         :currentuser="currentuser"
-        :posts="posts"
         :actualuser="actualuser"
+        :tema="tema"
+        :tieneuntema="tieneuntema"
         />
         <followers v-if="click.followers == true 
         && click.postss == false 
@@ -99,6 +96,8 @@
         && click.favorites == false"
         :followers="ufollowers"
         :currentuser="currentuser"
+        :tema="tema"
+        :tieneuntema="tema"
         />
         <following v-if="click.following == true 
         && click.postss == false 
@@ -106,6 +105,8 @@
         && click.favorites == false"
         :ufollowings="ufollowings"
         :currentuser="currentuser"
+        :tema="tema"
+        :tieneuntema="tema"
         />
         <favorites v-if="click.favorites == true 
         && click.postss == false 
@@ -113,6 +114,8 @@
         && click.following == false"
         :ufavorites="favorites"
         :currentuser="currentuser"
+        :tema="tema"
+        :tieneuntema="tieneuntema"
         />
     </template>
     </div>
@@ -133,7 +136,7 @@ import favorites from '@/components/favorites.vue'
         },
         computed : {
             ...mapState([
-        'currentuser', 'following'
+        'currentuser', 'following', 'tema', 'tieneuntema'
         ])
         },
         data(){
@@ -142,7 +145,7 @@ import favorites from '@/components/favorites.vue'
                 ufollowers: [],
                 ufollowings: [],
                 favorites: [],
-                posts: [],
+                pests: [],
                 actualuser: false,
                 //posteo
                 postimage: '' ,
@@ -161,13 +164,18 @@ import favorites from '@/components/favorites.vue'
                 followers: false, 
                 following: false, 
                 favorites: false},
-                cargando: true
+                cargando: true,
+                id: 0,
             }
         },
         created(){
 
                 this.$store.dispatch('getusuario')
-                this.userdata()
+                this.userdata();
+        },
+        mounted(){
+            this.$store.dispatch('gettema')
+
         },
         methods:{
                 countdown: function() {
@@ -177,9 +185,10 @@ import favorites from '@/components/favorites.vue'
                 async userdata() {
                     await this.$axios.get(`account/${this.$route.params.id}`)
                     .then(response => {
+                        this.pests = response.data.data.posts
+                        this.id =response.data.data.id
                         this.user = response.data.data
                         this.ufollowers = response.data.data.followers
-                        this.posts=response.data.data.posts.reverse()
                         this.ufollowings=response.data.data.following
                         this.favorites = response.data.data.favorites.reverse()
 
@@ -229,12 +238,15 @@ import favorites from '@/components/favorites.vue'
                     this.postpreview = false;
                     this.remainingCount= 300
                     this.cargandopost = false
-                    this.userdata()
+                    this.$refs.load.page = 0;
+                    this.$refs.load.posts= [];
+                    this.$refs.load.infinitehandler();
                 }).catch (e =>{
                     console.log(e)
                 })
                 }
             }
+            
         
     }
 }
@@ -255,9 +267,14 @@ import favorites from '@/components/favorites.vue'
      overflow-y:hidden !important;
 }
 
+    
 figure img {
     position: relative;
     z-index: 2;
+}
+
+textarea{
+    max-height: 120px !important;
 }
 
 

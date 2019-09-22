@@ -4,10 +4,10 @@
             <div id="contenedorportada" v-if="actualuser == true">
             <form @submit.prevent="subirportada">
                 <div class="field">
-                    <div class="file is-success">
+                    <div :class="[ tieneuntema ? tema.file : 'file is-success' ]">
                         <label class="file-label">
-                            <input class="file-input" type="file" name="resume" @change="onFileChange">
-                            <button v-show="portadapreview == true" class="button is-success">Subir</button> 
+                            <input id="fileinput" class="file-input" type="file" name="resume" @change="onFileChange">
+                            <button v-show="portadapreview == true" id="buttonportada1" :class="[ tieneuntema ? tema.buttons : 'button is-success' ]" >Subir</button> 
                                 <span class="file-cta">
                                     <i class="fas fa-camera"></i>                        
                                 </span>
@@ -26,10 +26,10 @@
             <div id="contenedorportada" v-if="actualuser == true">
             <form @submit.prevent="subirportada">
                 <div class="field">
-                    <div class="file is-success">
+                    <div :class="[ tieneuntema ? tema.file : 'file is-success' ]">
                         <label class="file-label">
                             <input v-show="portadapreview == false" class="file-input" type="file" accept="image/png, image/jpeg" name="resume" @change="onFileChange">
-                            <button v-show="portadapreview == true" class="button is-success">Subir</button>    
+                            <button v-show="portadapreview == true" id="buttonportada2" :class="[ tieneuntema ? tema.buttons : 'button is-success' ]">Subir</button>    
                                 <span class="file-cta">
                                     <i class="fas fa-camera"></i>                        
                                 </span>
@@ -45,16 +45,21 @@
                 </div>               
         </div>
         <div id="caja2">
-            <h2 class="title is-3">{{user.username}}</h2>
+            <h2 class="title is-3" :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">
+                {{user.username}}
+            </h2>
         </div>
         <template v-if="actualuser == false">
             <div class="container">
                 <div class="columns is-centered">
                     <div class="column is-12">     
-                        <botones 
+                        <botones v-if="user.id !== currentuser.id"
                         :user="user"
                         :usuarioactual="currentuser"
                         :yofollowing="yofollowing"
+                        :posts="posts"
+                        :tema="tema"
+                        :tieneuntema="tieneuntema"
                         />
                     </div>
                 </div>
@@ -68,6 +73,8 @@
             :ufavorites="ufavorites"
             :currentuser="currentuser"
             :click="click"
+            :tema="tema"
+            :tieneuntema="tieneuntema"
             />
     </div>
 </template>
@@ -116,6 +123,14 @@ import profilebody from '@/components/profilebody.vue';
             },
             click:{
                 type: Object,
+                required: true
+            },
+            tema:{
+                type:Object,
+                required: true
+            },
+            tieneuntema:{
+                type:Boolean,
                 required: true
             }
         },

@@ -1,6 +1,8 @@
 <template>
     <div id="contenedorprincipal">
-        <navbar></navbar>
+        <navbar
+        :tema="tema"
+        :mitema="mitema"/>
         <div id="menu" class="columns is-centered">
             <div class="column is-12">
                 <div class="list is-hoverable">
@@ -13,16 +15,19 @@
                         <figure class="image is-24x24">
                             <img src="https://res.cloudinary.com/scute/image/upload/v1566231592/logros/monedasandi_msautl.png">
                         </figure>
-                        <strong id="contadordepuntos">{{yo.puntos}}</strong>
+                        <strong id="contadordepuntos">{{currentuser.puntos}}</strong>
                     </li>
-                    <li class="list-item">
-                        <nuxt-link to="menu/logros"><strong>Logros</strong></nuxt-link>
-                    </li>
+                    <nuxt-link to="/user/inventario" class="list-item">
+                        <strong>Mi inventario</strong>
+                    </nuxt-link>
                     <li class="list-item">
                         <strong>
-                            Tienda de Puntos
+                            Tienda
                         </strong>
                     </li>
+                    <nuxt-link to="/themegenerator" class="list-item">
+                        <strong>Creador de Temas</strong>
+                    </nuxt-link>
                     <a id="Ayuda" class="list-item is-active">
                         Ayuda
                     </a>
@@ -77,31 +82,31 @@
 <script>
 
 import navbar from '@/components/navbar'
+import {mapState} from 'vuex'
     export default {
         middleware: ['auth'],
         name:'menu',
         components: {
             navbar,
         },
+        computed:{
+        ...mapState([
+        'currentuser', 'tema', 'tieneuntema'
+        ])
+        },
+        created(){
+            this.$store.dispatch('getusuario')
+            this.$store.dispatch('gettema')
+        },
         data(){
             return {
                 yo: {}
             }
         },
-        created(){
-            this.me()
-        },
         methods:{
             async logout(){
             await this.$auth.logout()
             },
-            me(){
-                this.$axios.get('/account/me')
-                    .then(response => {
-                        this.yo = response.data.data;
-                        console.log(this.yo)
-                    })
-            }
         }
         
     }

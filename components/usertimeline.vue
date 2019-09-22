@@ -1,6 +1,6 @@
 <template>
     <div class="container">
-        <div v-for="post in posts" class="box" >
+        <div v-for="post in posts" class="box" v-bind:style="{ 'background-image': 'url(' + tema.postbox + ')' }">
         <article class="media">
     <div class="media-left">
       <figure class="image is-64x64">
@@ -9,8 +9,8 @@
     </div>
     <div id="barra" class="media-content">
       <div class="content">
-        <p>
-          <strong>{{post.user.username}}</strong> <small>{{moment(post.created_at).fromNow()}}</small>
+        <p :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">
+          <strong :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">{{post.user.username}}</strong> <small>{{moment(post.created_at).fromNow()}}</small>
           <br>
           {{post.post}}
         </p>
@@ -50,6 +50,14 @@ let moment = require ('moment')
         props:{
             currentuser: {
                 type: Object,
+                required: true
+            },
+            tema: {
+                type: Object,
+                required: true
+            },
+            tieneuntema: {
+                type: Boolean,
                 required: true
             }
         },

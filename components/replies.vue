@@ -1,8 +1,10 @@
 <template>
-    <div class="container">
+    <div>
         <div class="columns is-centered">
             <div class="column is-12">
-                <div class="box" v-for="reply in replies">
+                <div class="box" v-for="reply in replies"
+                v-bind:style="{ 'background-image': 'url(' + tema.postbox + ')' }"
+                >
   <article class="media">
     <div class="media-left">
       <nuxt-link :to="`/user/${reply.user.username}`">
@@ -13,7 +15,7 @@
     </div>
     <div class="media-content">
       <div class="content">
-        <p>
+        <p :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">
           <nuxt-link id="link" :to="`/user/${reply.user.username}`">
             <strong>{{reply.user.username}}</strong> 
           </nuxt-link> <small>{{moment(reply.created_at).fromNow()}}</small>
@@ -38,6 +40,14 @@ let moment = require('moment')
             replies: {
                 type: Array,
                 required: true
+            },
+            tema: {
+                type: Object,
+                required: true
+            },
+            tieneuntema: {
+                type: Boolean,
+                required: true
             }
         },
         data(){
@@ -61,6 +71,11 @@ let moment = require('moment')
 
 #link{
   color: black
+}
+.box{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100% ;
 }
 
 </style>

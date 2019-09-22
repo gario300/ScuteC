@@ -1,8 +1,8 @@
 <template>
-    <div class="container">
+    <div class="container" v-bind:style="{ 'background-image': 'url(' + tema.background + ')' }">
         <div  class="columns is-centered is-tablet is-multiline">
             <div id="margin" v-for="follower in followers" class="column is-2">
-                <div class="box">
+                <div class="box" v-bind:style="{ 'background-image': 'url(' + tema.postbox + ')' }">
                     <div class="columns is-centered">
                         <div id="cajafollow" class="column is-12">
                             <figure class="image is-96x96">
@@ -47,6 +47,15 @@
                 type: Object,
                 required: true
             },
+            tema:{
+                type: Object,
+                required: true
+            },
+            
+            tieneuntema:{
+                type: Boolean,
+                required: true
+            }
         }
     }
 </script>
@@ -55,6 +64,9 @@
 #contenedor_principal{
      overflow-x:hidden !important;
      overflow-y:hidden !important;
+     height: 100%;
+     width: 100%;
+     position:absolute;
 }
 
 figure img{

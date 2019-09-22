@@ -1,9 +1,9 @@
 <template>
-    <div id="contenedor_principal">
+    <div id="contenedor_principal" >
         <div class="container">
             <div class="columns is-centered is-mobile">
                 <div class="column is-12">
-                    <div v-for="post in posts" class="box">
+                    <div v-for="post in posts" class="box" v-bind:style="{ 'background-image': 'url(' + tema.postbox + ')' }">
                         <article class="media">
                             <div class="media-left">
                                 <figure  class="image is-64x64">
@@ -12,7 +12,7 @@
                             </div>
                             <div id="barra" class="media-content">
                                 <div class="content">
-                                    <p>
+                                    <p :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">
                                         <strong>{{post.user.username}}</strong> <small>{{moment(post.created_at).fromNow()}}</small>
                                             <small id="eliminar">
                                                 <button v-if="actualuser == true" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button>
@@ -33,6 +33,7 @@
                                     </div>
                                 </article>
                                 </div>
+                            <infinite-loading @infinite="infinitehandler"></infinite-loading>
                                             </div>
                                         </div>
                                         </div>
@@ -51,12 +52,17 @@ let moment = require('moment')
         },
         data(){
             return{
-                moment: moment
+                moment: moment,
+                posts: [],
+                pages: 0
             }
         },
+        mounted(){
+             
+        },
         props:{
-            posts: {
-                type: Array,
+            id:{
+                type:  Number,
                 required: true
             },
             currentuser:{
@@ -66,16 +72,42 @@ let moment = require('moment')
             actualuser:{
                 type: Boolean,
                 required: true
+            },
+            tema:{
+                type: Object,
+                required: true
+            },
+            
+            tieneuntema:{
+                type: Boolean,
+                required: true
             }
         },
         methods:{
-            someMethod(){
-            this.$parent.userdata();
+            async infinitehandler($state){
+            this.page ++
+              await this.$axios.get(`/users/postusers/${this.id}`, {
+                  params: {
+                        foo: this.page
+                    }
+              })
+                .then(response => {
+                    let lista = response.data.data.data
+                    if(lista.length){
+                        this.posts = this.posts.concat(lista)
+                        $state.loaded()
+                    }else {
+                        $state.complete()
+                    }
+                })
+
             },
             eliminarpost(id){
                 this.$axios.delete('posts/destroy/'+id)
-                .then(data =>{                    
-                this.someMethod();
+                .then(data =>{
+                this.page = 0 
+                this.posts = []                  
+                this.infinitehandler()
                 })
         }
     }
