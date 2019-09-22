@@ -27,7 +27,7 @@
                                     {{post.post}}
                                     </p>
                                         </div>
-                                        <figure class="image">
+                                         <figure class="image is-5by3">
                                          <img  :src="post.image" v-show="post.image !== null">
                                          </figure> 
                                         <favorite
@@ -174,21 +174,14 @@ let moment = require ('moment')
 #link{
   color: black
 }
-html{
-    height: 100%
-}
-#__nuxt{
-    height: 100%
-}.box{
+
+.box{
     background-repeat: no-repeat;
     background-position: center;
     background-size: 100% 100% ;
 }
 textarea{
     max-height: 45px;
-}
-#contenedor_principal{
-height: 100vmax;
 }
 
 </style>
