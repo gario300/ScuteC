@@ -27,7 +27,7 @@
                                     {{post.post}}
                                     </p>
                                         </div>
-                                        <div 
+                                        <div v-if="post.image !== null"
                                         class="image is-5by3"
                                         id="imagenpost"
                                         v-bind:style="{ 'background-image': 'url(' + post.image + ')' }">
