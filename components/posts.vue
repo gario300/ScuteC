@@ -85,10 +85,10 @@ let moment = require('moment')
         },
         methods:{
             async infinitehandler($state){
-            this.page ++
+            this.pages ++
               await this.$axios.get(`/users/postusers/${this.id}`, {
                   params: {
-                        foo: this.page
+                        foo: this.pages
                     }
               })
                 .then(response => {
