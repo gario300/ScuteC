@@ -179,6 +179,10 @@ import {mapState} from 'vuex'
         'currentuser', 'tema', 'tieneuntema'
         ])
         },
+        created(){
+            this.$store.dispatch('getusuario')
+            this.$store.dispatch('gettema')
+        },
         data(){
             return{
                 name:'',

@@ -17,7 +17,7 @@
                         </figure>
                         <strong id="contadordepuntos">{{currentuser.puntos}}</strong>
                     </li>
-                    <nuxt-link to="/user/inventario" class="list-item">
+                    <nuxt-link to="/menu/inventario" class="list-item">
                         <strong>Mi inventario</strong>
                     </nuxt-link>
                     <li class="list-item">
