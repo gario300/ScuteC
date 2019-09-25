@@ -135,13 +135,12 @@ let moment = require ('moment')
                      await this.$axios.post(`/posts/reply/${this.post.id}`, {
                          reply : this.reply,
                          post_id : postid,
-                         user_id : this.currentuser.id
                      }).then(response => {
                         this.reply = ''
                     })
                     let respuesta = 'Respondió a tu publicación'
-                    await this.$axios.post(`/notif/newnoti/${this.post.id}`,{
-                        
+                    await this.$axios.post(`/notif/newnoti/`,{
+                        postid : postid,
                         notification_type : respuesta
                     })
                      this.getpost()

@@ -87,7 +87,7 @@ import {mapState} from 'vuex'
                 },
                 async notificationspush(){
                    await this.truenotif()
-                    this.$router.push('/user/notifications')
+                    this.$router.push('/notifications')
                     
                 
                 },

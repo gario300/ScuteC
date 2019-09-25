@@ -38,13 +38,13 @@
               {{ replies.length }}
             </span>
           </nuxt-link>
-          <a id="like" v-if="isFavoritedByUser || block == true" @click="quitarfavorito" class="level-item" aria-label="like">
+          <a id="like" v-if="isFavoritedByUser || block == true" @click="quitarfavorito()" class="level-item" aria-label="like">
             <span class="icon is-small">
               <i class="fas fa-heart" aria-hidden="true"></i>
               {{ favorites.length }}
             </span>
           </a>
-          <a id="nolike" v-else @click="favorite" class="level-item" aria-label="like">
+          <a id="nolike" v-else @click="favorite(post.id)" class="level-item" aria-label="like">
             <span class="icon is-small">
               <i class="fas fa-heart" aria-hidden="true"></i>
               {{ favorites.length }}
@@ -104,7 +104,7 @@
             }
         },
         methods:{
-            async favorite(){
+            async favorite(id){
               this.block = true
                 await this.$axios.post('/favorites/create', 
                    
@@ -114,8 +114,9 @@
                      this.favorites.push(response.data.data)
                     })
                     let respuesta = 'Añadió un ♥ a tu publicación '
-                    await this.$axios.post(`/notif/newnoti/${this.post.id}`,{
-                        notification_type : respuesta
+                    await this.$axios.post(`/notif/newnoti`,{
+                        postid : id,
+                        notification_type : respuesta,
                     })
                     this.block = false
                 

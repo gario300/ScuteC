@@ -8,7 +8,8 @@ export const state = () => ({
     primeracarga: true,
     segundacarga: false,
     notif: 0,
-    notis: 0
+    notis: 0,
+    userthemes:[]
   })
   
   export const actions = {
@@ -82,6 +83,15 @@ export const state = () => ({
 
         })
       
+    },
+    async temas(){
+      await this.$axios.get('/tienda/temasusuario')
+      .then(response => {
+        let userthemes = response.data.data.themes
+        console.log(userthemes)
+        commit ('set_themes', userthemes)
+
+      })
     }
 
         
@@ -93,19 +103,23 @@ export const state = () => ({
     },
     set_following(state, following){
       state.following = following
-  },
-  tiene_tema(state, tieneuntema){
-    state.tieneuntema = tieneuntema
-  },
-  set_tema(state, tema){
-    state.tema = tema
-  },
-  set_notif(state, notif){
-    state.notif = notif
-  },
-  set_notis(state, notis){
-    state.notis = notis
-  }
+    },
+    tiene_tema(state, tieneuntema){
+      state.tieneuntema = tieneuntema
+    },
+    set_tema(state, tema){
+      state.tema = tema
+    },
+    set_notif(state, notif){
+      state.notif = notif
+    },
+    set_notis(state, notis){
+      state.notis = notis
+    },
+    
+    set_themes(state, userthemes){
+      state.userthemes = userthemes
+    }
  
     
   }

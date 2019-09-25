@@ -68,7 +68,7 @@
                         this.deshabilitar = false
                     })
                 let respuesta = 'Ahora te sigue'
-                    await this.$axios.post(`/notif/newnoti`,{
+                    await this.$axios.post(`/notif/newnotifollow`,{
                         notification_type : respuesta,
                         receptor_id :  userid
                     })
