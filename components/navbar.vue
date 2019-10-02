@@ -69,7 +69,7 @@ import {mapState} from 'vuex'
         mounted(){
             setInterval(() => {
             this.$store.dispatch('notificaciones')
-            }, 30000)
+            }, 50000)
         },
         methods: {
             home(){

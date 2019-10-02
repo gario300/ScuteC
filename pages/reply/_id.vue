@@ -22,7 +22,7 @@
                         <div class="media-content">
                             <div class="content">
                                 <p :class="[ tieneuntema ? tema.estilotexto : 'has-text-black' ]">
-                                   <nuxt-link id="link" :to="`/user/${postuser.username}`" ><strong>{{postuser.username}}</strong></nuxt-link> <small>{{moment(post.created_at).fromNow()}}</small>
+                                   <nuxt-link id="link" :class="tema.estilotexto"  :to="`/user/${postuser.username}`" ><strong>{{postuser.username}}</strong></nuxt-link> <small>{{moment(post.created_at).fromNow()}}</small>
                                     <br>
                                     {{post.post}}
                                     </p>
