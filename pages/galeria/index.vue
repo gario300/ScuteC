@@ -90,7 +90,7 @@
                         <div id="barra" class="media-content">
                         <div class="content">     
                             <p :class="tema.estilotexto">
-                            <nuxt-link id="link" :to="`/user/${post.user.username}`"><strong>{{post.user.username}}</strong></nuxt-link>  <small id="contador2">{{moment(post.created_at).fromNow()}}</small>  <small>
+                            <nuxt-link :class="tema.estilotexto" id="link" :to="`/user/${post.user.username}`"><strong>{{post.user.username}}</strong></nuxt-link>  <small id="contador2">{{moment(post.created_at).fromNow()}}</small>  <small>
                                 <button v-if="post.user_id == currentuser.id" @click="eliminarpost(post.id)" class="button is-small is-rounded is-text" id="menupost">Eliminar</button>
                                 <span id="seguir"><i class="fas fa-star"></i></span>
                             </small>

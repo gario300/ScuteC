@@ -92,7 +92,7 @@ import { async } from 'q'
                         temaid: id
                     })
                 this.$router.go('/galeria')
-                }
+                } else{
                 await this.$axios.post('/theme/change', {
                 temaid: id
                 }).then(userresponse => {
@@ -101,6 +101,7 @@ import { async } from 'q'
                     console.log(e)
                     })
                 this.$router.go('/user/inventario')
+            }
             },
             async quitartema(id){
                 this.$axios.delete('theme/quitar/'+id)
