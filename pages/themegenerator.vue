@@ -279,7 +279,7 @@ import {mapState} from 'vuex'
                         precio: this.precio
                     }).then(userresponse => {
                         console.log('Listo');
-                        this.$router.push('/user/inventario')
+                        this.$router.push('/menu/inventario')
                         }).catch (e =>{
                             console.log(e)
                         })
