@@ -130,6 +130,14 @@
             image3:{
                 type: String,
                 required: true
+            },
+            width:{
+                type: String,
+                required: false
+            },
+            heigth:{
+                type: String,
+                required: false
             }
         }
         

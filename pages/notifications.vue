@@ -51,38 +51,20 @@
                             <strong>{{notification.user.username}}</strong> <small>{{moment(notification.created_at).fromNow()}}</small>
                             <br>
                             {{notification.notification_type}}
+                            <span v-if="notification.theme !== null">
+                               <strong :class="[ tieneuntema ? tema.estilotexto : 'has-text-success' ]">
+                                   "{{notification.theme.nombretema}}""
+                                </strong>
+                            </span>
                             </p>
                         </div>
                         </div>
                         <div class="media-right">
-                        <figure class="image is-64x64">
+                        <figure v-if="notification.theme == null" class="image is-64x64">
                             <img id="destinatario" class="is-rounded " :src="currentuser.avatar">
                         </figure>
-                        </div>
-                    </article>
-                </nuxt-link>
-                </template>
-                <template v-if="notification.theme !== null"> 
-                    <nuxt-link id="link" :to="`/user/${notification.user.username}`">       
-                    <article class="media">
-                        <div class="media-left">
-                        <figure class="image is-48x48">
-                            <img id="remitente" class="is-rounded" :src="notification.user.avatar">
-                        </figure>
-                        </div>
-                        <div class="media-content">
-                        <div class="content">
-                            <p>
-                            <strong>{{notification.user.username}}</strong> <small>{{moment(notification.created_at).fromNow()}}</small>
-                            <br>
-                            {{notification.notification_type}}
-                            <strong class="has-text-success">{{notification.theme.nombretema}}</strong>
-                            </p>
-                        </div>
-                        </div>
-                        <div class="media-right">
-                        <figure class="image is-64x64">
-                            <img id="destinatario" class="is-rounded " :src="currentuser.avatar">
+                        <figure v-else class="image is-64x64">
+                            <img id="destinatario" class="is-rounded " :src="notification.theme.background">
                         </figure>
                         </div>
                     </article>

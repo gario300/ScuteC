@@ -21,9 +21,11 @@
                         <strong>Mi inventario</strong>
                     </nuxt-link>
                     <li class="list-item">
-                        <strong>
-                            Tienda
-                        </strong>
+                        <nuxt-link to="/menu/tienda" class="list-item">
+                            <strong>
+                                Tienda
+                            </strong>
+                        </nuxt-link>
                     </li>
                     <nuxt-link to="/themegenerator" class="list-item">
                         <strong>Creador de Temas</strong>

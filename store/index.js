@@ -84,7 +84,7 @@ export const state = () => ({
         })
       
     },
-    async temas(){
+    async temas({ commit }){
       await this.$axios.get('/tienda/temasusuario')
       .then(response => {
         let userthemes = response.data.data.themes
