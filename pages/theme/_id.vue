@@ -111,6 +111,8 @@ import {mapState} from 'vuex'
                         creadorname: usercreador,
                         themeid : temaid,
                         notification_type : respuesta
+                    }).then(response =>{
+                    this.$router.push('/menu/inventario')
                     })
                 }
         
