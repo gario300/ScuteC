@@ -9,7 +9,7 @@
                     :navbr="theme.estilonavbar"
                     :icons="theme.estiloiconos"
                     :apariencia="theme.estilopagina"
-                    :text="theme.estilotexto"
+                    :text="theme.colortexto"
                     :image1="theme.background"
                     :image2="theme.userbox"
                     :image3="theme.postbox"
