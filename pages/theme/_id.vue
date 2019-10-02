@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="contenedor_principal">
         <navbar
         :tema="tema"
         :tieneuntema="tieneuntema"
@@ -124,6 +124,11 @@ import {mapState} from 'vuex'
 #center{
    display: flex;
    justify-content:center;
+}
+
+#contenedorprincipal{
+     overflow-x:hidden !important;
+     overflow-y:hidden !important;
 }
 
 </style>
