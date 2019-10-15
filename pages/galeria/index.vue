@@ -98,10 +98,23 @@
                             {{post.post}} 
                             </p>
                             
-                        </div>  
-                            <div id="postimage" class="image is-4by3" v-show="post.image !== null" v-bind:style="{ 'background-image': 'url(' + post.image + ')' }">
+                        </div>
+                        <div id="imagebox"
+                        v-show="post.image 
+                        !== null">
+                        
+                        <div id="postimage" 
+                        class="image is-4by3" 
+                        v-bind:style="{ 'background-image': 'url(' + post.image + ')' }">
+                        </div>
+                        
+                        <div
+                        id="containerimage"
+                         v-bind:style="{ 'background-image': 'url(' + post.image + ')'  }">
+                        </div> 
 
-                            </div>
+
+                        </div>   
                             <favorite
                         :post="post"
                         :replies.sync="post.replies"
@@ -185,6 +198,8 @@ let moment = require ('moment')
                 })
 
             },
+
+            
             
             countdown: function() {
             this.remainingCount = this.maxCount - this.textinbox.length;
@@ -260,6 +275,8 @@ let moment = require ('moment')
 </script>
 
 <style scoped>
+
+
 #avatar{
     max-height: 80px !important;
     max-width: 80px !important;
@@ -316,11 +333,34 @@ textarea{
 }
 
 #postimage{
-    height: 100% !important;
+    position: relative;
+    height: 100%;
+    z-index: 30;
+    padding: 0px !important;
     background-repeat: no-repeat;
-    background-color:black;
+    background-color: transparent;
     background-position: center;
     background-size: auto 100% ;
+}
+#containerimage{
+    filter: blur(3px);
+    position: absolute;
+    padding: 0px !important;
+    bottom: 0px;
+    border-radius: 8px;
+    z-index: 0;
+    height: 100%;
+    background-repeat: repeat;
+    background-size: auto 100%;
+    background-color: transparent; 
+    width: 100%;
+}
+
+#imagebox{
+    background-position: left;
+    position:relative;
+    height: 70vh !important;
+    width: 100%;
 }
 
 #link{
