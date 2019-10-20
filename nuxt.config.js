@@ -30,7 +30,8 @@ export default {
   */
   plugins: [
     '~plugins/vee-validate.js',
-    { src: '~plugins/infiniteloading', ssr: false }
+    { src: '~plugins/infiniteloading', ssr: false },
+    '~/plugins/socket.io.js'
   ],
   /*
   ** Nuxt.js modules
@@ -41,9 +42,12 @@ export default {
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
     '@nuxtjs/auth',
-    ['@nuxtjs/moment', { locales: ['es'], defaultLocale: 'es' }]
+    ['@nuxtjs/moment', { locales: ['es'], defaultLocale: 'es' }],
   
   ],
+  env: {
+    SOCKET_HOST_URL: 'https://scute-serv.herokuapp.com'
+  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
