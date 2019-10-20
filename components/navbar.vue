@@ -32,6 +32,7 @@
 
 <script>
 import goals  from '@/components/goals'
+import socket from '~/plugins/socket.io.js'
 import { async } from 'q';
 import {mapState} from 'vuex'
     export default {
@@ -65,6 +66,9 @@ import {mapState} from 'vuex'
         created (){
             this.$store.dispatch('notificaciones')
 
+        },
+        beforeMount () {
+            
         },
         mounted(){
             setInterval(() => {

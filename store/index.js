@@ -1,3 +1,6 @@
+
+import socket from '~/plugins/socket.io'
+
 export const strict = false
 export const state = () => ({
   

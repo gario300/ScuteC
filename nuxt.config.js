@@ -30,8 +30,8 @@ export default {
   */
   plugins: [
     '~plugins/vee-validate.js',
-    { src: '~plugins/infiniteloading', ssr: false },
-    '~/plugins/socket.io.js'
+    '~/plugins/socket.io.js',
+    { src: '~plugins/infiniteloading', ssr: false }
   ],
   /*
   ** Nuxt.js modules
@@ -46,7 +46,7 @@ export default {
   
   ],
   env: {
-    SOCKET_HOST_URL: 'https://scute-serv.herokuapp.com'
+    SOCKET_HOST_URL: process.env.SOCKET_HOST_URL || 'http://localhost:3000'
   },
   /*
   ** Axios module configuration
@@ -79,7 +79,7 @@ export default {
   ** Build configuration
   */
   build: 
-  {vendor: ['vee-validate','vue-infinite-scroll'],
+  {vendor: ['vee-validate','vue-infinite-scroll', 'socket.io-client'], 
     postcss: {
       preset: {
         features: {
