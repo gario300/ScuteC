@@ -30,7 +30,6 @@ export default {
   */
   plugins: [
     '~plugins/vee-validate.js',
-    '~/plugins/socket.io.js',
     { src: '~plugins/infiniteloading', ssr: false }
   ],
   /*
@@ -45,9 +44,6 @@ export default {
     ['@nuxtjs/moment', { locales: ['es'], defaultLocale: 'es' }],
   
   ],
-  env: {
-    SOCKET_HOST_URL: process.env.SOCKET_HOST_URL || 'http://localhost:3000'
-  },
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options
@@ -79,7 +75,7 @@ export default {
   ** Build configuration
   */
   build: 
-  {vendor: ['vee-validate','vue-infinite-scroll', 'socket.io-client'], 
+  {vendor: ['vee-validate','vue-infinite-scroll'], 
     postcss: {
       preset: {
         features: {
